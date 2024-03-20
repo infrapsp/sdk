@@ -1,4 +1,3 @@
-export * from './mod.ts';
 export * from './types/result.ts';
 export * from './types/zod.ts';
 export * from './types/actions/base.ts';

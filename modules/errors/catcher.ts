@@ -16,7 +16,7 @@ export function catcher<T, U extends CommonError<unknown> = CommonError<unknown>
         message: 'internal server error. try again later.',
         stack: e.stack,
         status: 500,
-        internalMessage: `exception {e.name}: {e.message}`,
+        internalMessage: `exception ${e.name}: ${e.message}`,
       });
     }
     return err;
@@ -41,7 +41,7 @@ export async function catcherAsync<T, U extends CommonError<unknown> = CommonErr
         message: 'internal server error. try again later.',
         stack: e.stack,
         status: 500,
-        internalMessage: `exception {e.name}: {e.message}`,
+        internalMessage: `exception ${e.name}: ${e.message}`,
       });
     }
     return err;

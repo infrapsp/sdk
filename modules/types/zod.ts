@@ -5,7 +5,7 @@ import { DocumentType } from '../../modules/types/merchant/types.ts';
 
 export const ZodSchemas = {
   datetime: () => z.string().datetime().pipe(z.coerce.date()),
-  nanoid: () => z.string().length(21).regex(/^[0-9a-zA-Z_]+/),
+  nanoid: () => z.string().length(21).regex(/^[0-9a-zA-Z_]+$/),
   document: () =>
     z.custom<string>((data) => {
       if (typeof data === 'string') {
@@ -20,7 +20,7 @@ export const ZodSchemas = {
     }, { message: 'invalid document' }),
   cpf: () => z.custom<string>((data) => typeof data === 'string' ? isValidCpf(data) : false, { message: 'invalid document' }),
   cnpj: () => z.custom<string>((data) => typeof data === 'string' ? isValidCnpj(data) : false, { message: 'invalid document' }),
-  phone: () => z.string().regex(/^\+[0-9]{3,15}/),
+  phone: () => z.string().regex(/^\+[0-9]{3,15}$/),
 };
 
 export const ZodHelpers = {

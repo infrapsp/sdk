@@ -6,6 +6,7 @@ export enum TransferMethod {
 
 export enum TransferStatus {
   CREATED = 'created',
+  PROCESSING = 'processing',
   FAILED = 'failed',
   FINISHED = 'finished',
 }

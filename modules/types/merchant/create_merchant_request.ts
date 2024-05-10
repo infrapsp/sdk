@@ -1,4 +1,4 @@
-import { z } from 'https://deno.land/x/zod@v3.22.4/mod.ts';
+import { z } from 'https://deno.land/x/zod@v3.23.4/mod.ts';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
 import { DocumentType, MerchantAutoTransferFrequency } from '../../../modules/types/merchant/types.ts';
 import { ZodHelpers, ZodRefines } from '../../../modules/types/zod.ts';
@@ -10,11 +10,11 @@ export const CreateMerchantAutoTransferSettingsBodySchema = z.object({
   pixDictKey: z.string(),
   frequency: z.nativeEnum(MerchantAutoTransferFrequency),
   day: z.number().min(0).max(6).optional(),
-})).superRefine((val: Record<string, unknown>, ctx: z.RefinementCtx) => {
-  const dto = val as z.infer<typeof CreateMerchantAutoTransferSettingsBodySchema>;
+})).transform((dto, ctx) => {
   if (dto.isEnabled && dto.frequency === MerchantAutoTransferFrequency.WEEKLY && !dto.day) {
     ZodHelpers.issue(ctx, 'day', 'Required for autoTransferFrequency weekly.');
   }
+  return dto;
 });
 
 export const CreateMerchantSettingsBodySchema = z.object({
@@ -35,10 +35,8 @@ export const CreateMerchantBodySchema = z.object({
   responsableEmail: z.string().email().optional(),
   tradingName: z.string(),
   url: z.string(),
-  settings: CreateMerchantSettingsBodySchema,
-}).superRefine((val: Record<string, unknown>, ctx: z.RefinementCtx) => {
-  const dto = val as CreateMerchantBodyDto;
-
+  settings: CreateMerchantSettingsBodySchema.optional().default({}),
+}).transform((dto, ctx) => {
   for (const key of ['responsableName', 'responsableEmail'] as const) {
     if (dto.documentType === DocumentType.CNPJ && !dto[key]) {
       ZodHelpers.issue(ctx, key, 'Required for personType company.');
@@ -46,6 +44,7 @@ export const CreateMerchantBodySchema = z.object({
   }
 
   ZodRefines.matchDocument(ctx, dto.documentNumber, dto.documentType);
+  return dto;
 });
 
 export type CreateMerchantBodyDto = z.infer<typeof CreateMerchantBodySchema>;

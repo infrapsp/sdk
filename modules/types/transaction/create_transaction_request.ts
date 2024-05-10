@@ -1,8 +1,9 @@
-import { z } from 'https://deno.land/x/zod@v3.22.4/mod.ts';
-import { PaymentMethod } from '../../../modules/types/transaction/types.ts';
-import { DocumentType, Gender } from '../../../modules/types/merchant/types.ts';
-import { ZodRefines, ZodSchemas } from '../../../modules/types/zod.ts';
-import { CreateAddressBodySchema } from '../../../modules/types/address/create_address_request.ts';
+import { z } from 'https://deno.land/x/zod@v3.23.4/mod.ts';
+import { PaymentMethod } from './types.ts';
+import { DocumentType, Gender } from '../merchant/types.ts';
+import { ZodRefines, ZodSchemas } from '../zod.ts';
+import { CreateAddressBodySchema } from '../address/create_address_request.ts';
+import { EmptySchema } from '../base/requests.ts';
 
 export const CreateTransactionPixMethodSettingsBodySchema = z.object({
   expiresIn: z.number().positive().int(),
@@ -16,7 +17,7 @@ export const CreateTransactionBoletoMethodSettingsBodySchema = z.object({
 
 export const CreateTransactionMethodSettingsBodySchema = CreateTransactionPixMethodSettingsBodySchema.or(
   CreateTransactionBoletoMethodSettingsBodySchema,
-).or(z.object({}));
+).or(EmptySchema);
 
 export const CreateTransactionPaymentLinkSettingsBodySchema = z.object({ isEnabled: z.literal(false) }).or(
   z.object({
@@ -26,11 +27,6 @@ export const CreateTransactionPaymentLinkSettingsBodySchema = z.object({ isEnabl
     availablePaymentMethods: z.array(z.nativeEnum(PaymentMethod)),
   }),
 );
-
-export const CreateTransactionContextBodySchema = z.object({
-  ip: z.string().ip(),
-  userAgent: z.string().optional(),
-});
 
 export const CreateTransactionItemBodySchema = z.object({
   description: z.string(),
@@ -50,11 +46,16 @@ export const CreateTransactionShippingBodySchema = z.object({
   recipientPhones: z.array(ZodSchemas.phone()),
 });
 
+export const CreateTransactionSplitBodySchema = z.object({
+  merchantId: ZodSchemas.nanoid(),
+  amount: z.number().positive().int(),
+  isFeePayer: z.boolean(),
+});
+
 export const CreateTransactionBodySchema = z.object({
   method: z.nativeEnum(PaymentMethod),
   methodSettings: CreateTransactionMethodSettingsBodySchema,
   paymentLinkSettings: CreateTransactionPaymentLinkSettingsBodySchema,
-  context: CreateTransactionContextBodySchema,
   items: z.array(CreateTransactionItemBodySchema),
   shipping: CreateTransactionShippingBodySchema.optional().nullable(),
   amount: z.number().positive().int(),
@@ -70,18 +71,19 @@ export const CreateTransactionBodySchema = z.object({
   billingDocumentNumber: ZodSchemas.document(),
   billingAddress: CreateAddressBodySchema,
   notifyUrl: z.string().url().optional(),
+  splits: z.array(CreateTransactionSplitBodySchema).optional().default([]),
   externalId: z.string().optional(),
   metadata: z.record(z.string()).optional(),
-}).superRefine((val: Record<string, unknown>, ctx: z.RefinementCtx) => {
-  const dto = val as CreateTransactionBodyDto;
-
+}).transform((dto, ctx) => {
   ZodRefines.matchDocument(ctx, dto.customerDocumentNumber, dto.customerDocumentType);
   ZodRefines.matchDocument(ctx, dto.billingDocumentNumber, dto.billingDocumentType);
+  return dto;
 });
 
 export type CreateTransactionBodyDto = z.infer<typeof CreateTransactionBodySchema>;
 export type CreateTransactionShippingBodyDto = z.infer<typeof CreateTransactionShippingBodySchema>;
 export type CreateTransactionItemBodyDto = z.infer<typeof CreateTransactionItemBodySchema>;
-export type CreateTransactionContextBodyDto = z.infer<typeof CreateTransactionContextBodySchema>;
-export type CreateTransactionMethodSettingsBodyDto = z.infer<typeof CreateTransactionMethodSettingsBodySchema>;
+export type CreateTransactionPixMethodSettingsBodyDto = z.infer<typeof CreateTransactionPixMethodSettingsBodySchema>;
+export type CreateTransactionBoletoMethodSettingsBodyDto = z.infer<typeof CreateTransactionBoletoMethodSettingsBodySchema>;
 export type CreateTransactionPaymentLinkSettingsBodyDto = z.infer<typeof CreateTransactionPaymentLinkSettingsBodySchema>;
+export type CreateTransactionSplitBodyDto = z.infer<typeof CreateTransactionSplitBodySchema>;

@@ -1,17 +1,17 @@
 import { AsyncResult, Result } from '../../modules/types/result.ts';
-import { CommonError, CommonErrorCodes } from '../../modules/errors/common_error.ts';
+import { CommonError } from '../../modules/errors/common_error.ts';
 
 /** Converts an throwable function to an error-returning one. Additionally you can provide a mapper to handle the exception in a custom way */
 // deno-lint-ignore no-explicit-any
-export function catcher<T, U extends CommonError<unknown> = CommonError<unknown>>(fn: () => T, mapper?: (e: any) => U): Result<T> {
+export function catcher<T>(fn: () => T, mapper?: (e: any) => CommonError): Result<T> {
   try {
     return fn();
   } catch (e) {
-    let err: CommonError<unknown>;
+    let err: CommonError;
     if (mapper) {
       err = mapper(e);
     } else {
-      err = new CommonError<CommonErrorCodes>({
+      err = new CommonError({
         code: 'INTERNAL_SERVER_ERROR',
         message: 'internal server error. try again later.',
         stack: e.stack,
@@ -24,19 +24,19 @@ export function catcher<T, U extends CommonError<unknown> = CommonError<unknown>
 }
 
 /** Converts an throwable async function to an error-returning one. Additionally you can provide a mapper to handle the exception in a custom way */
-export async function catcherAsync<T, U extends CommonError<unknown> = CommonError<unknown>>(
+export async function catcherAsync<T>(
   promisefn: () => Promise<T>,
   // deno-lint-ignore no-explicit-any
-  mapper?: (e: any) => U,
+  mapper?: (e: any) => CommonError,
 ): AsyncResult<T> {
   try {
     return await promisefn();
   } catch (e) {
-    let err: CommonError<unknown>;
+    let err: CommonError;
     if (mapper) {
       err = mapper(e);
     } else {
-      err = new CommonError<CommonErrorCodes>({
+      err = new CommonError({
         code: 'INTERNAL_SERVER_ERROR',
         message: 'internal server error. try again later.',
         stack: e.stack,

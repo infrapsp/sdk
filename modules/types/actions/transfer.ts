@@ -1,5 +1,5 @@
-import { z } from 'https://deno.land/x/zod@v3.22.4/mod.ts';
-import { BaseActionBodySchema, BaseActionResponseSchema } from '../../../modules/types/actions/base.ts';
+import { z } from 'https://deno.land/x/zod@v3.23.4/mod.ts';
+import { BaseActionBodySchema, BaseActionResponseSchema, BaseWorkerBodySchema } from '../../../modules/types/actions/base.ts';
 
 export enum TransferAction {
   CREATE_TRANSFER_ON_PROVIDER = 'create-transfer-on-provider',
@@ -23,3 +23,6 @@ export type CreateTransferActionBodyDto = z.infer<typeof CreateTransferActionBod
 export const TransferActionResponseSchema = BaseActionResponseSchema.and(BaseTransferActionBodySchema);
 
 export type TransferActionResponseDto = z.infer<typeof TransferActionResponseSchema>;
+
+// Worker
+export const CreateTransferOnProviderWorkerBodySchema = BaseWorkerBodySchema.and(CreateTransferOnProviderBodySchema);

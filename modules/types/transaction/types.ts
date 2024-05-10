@@ -1,4 +1,4 @@
-import { EmptyObject } from '../../../modules/types/base/types.ts';
+import { EmptyObject } from '../base/types.ts';
 
 export enum TransactionStatus {
   CREATED = 'created',
@@ -8,6 +8,13 @@ export enum TransactionStatus {
   CANCELED = 'canceled',
   FAILED = 'failed',
   EXPIRED = 'expired',
+}
+
+export enum TransactionRefundStatus {
+  CREATED = 'created',
+  PROCESSING = 'processing',
+  REFUNDED = 'refunded',
+  FAILED = 'failed',
 }
 
 export enum PaymentMethod {
@@ -33,12 +40,6 @@ export type PixPaidData = {
   endToEndId: string;
 };
 
-export type PixRefundedData = {
-  returnId: string;
-  amount: number;
-  refundedAt: Date;
-};
-
 export type BoletoMethodSettings = {
   dueAt: Date;
 };
@@ -51,18 +52,11 @@ export type BoletoPaidData = {
   payer: string;
 };
 
-export type BoletoRefundedData = {
-  amount: number;
-  refundedAt: Date;
-};
-
 export type TransactionMethodSettings = EmptyObject | PixMethodSettings | BoletoMethodSettings;
 
 export type TransactionMethodData = EmptyObject | PixMethodData | BoletoMethodData;
 
 export type TransactionPaidData = EmptyObject | PixPaidData | BoletoPaidData;
-
-export type TransactionRefundedData = EmptyObject | PixRefundedData | BoletoRefundedData;
 
 export type TransactionPaymentLinkSettings = {
   isEnabled: false;

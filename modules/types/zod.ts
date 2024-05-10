@@ -1,10 +1,10 @@
-import { z } from 'https://deno.land/x/zod@v3.22.4/mod.ts';
-import { isValidCpf } from '../../modules/utils/cpf.ts';
-import { isValidCnpj } from '../../modules/utils/cnpj.ts';
-import { DocumentType } from '../../modules/types/merchant/types.ts';
+import { z } from 'https://deno.land/x/zod@v3.23.4/mod.ts';
+import { isValidCpf } from '../utils/cpf.ts';
+import { isValidCnpj } from '../utils/cnpj.ts';
+import { DocumentType } from './merchant/types.ts';
 
 export const ZodSchemas = {
-  datetime: () => z.string().datetime().pipe(z.coerce.date()),
+  datetime: () => z.string().datetime().pipe(z.coerce.date()).or(z.date()),
   nanoid: () => z.string().length(21).regex(/^[0-9a-zA-Z_]+$/),
   document: () =>
     z.custom<string>((data) => {
@@ -21,6 +21,7 @@ export const ZodSchemas = {
   cpf: () => z.custom<string>((data) => typeof data === 'string' ? isValidCpf(data) : false, { message: 'invalid document' }),
   cnpj: () => z.custom<string>((data) => typeof data === 'string' ? isValidCnpj(data) : false, { message: 'invalid document' }),
   phone: () => z.string().regex(/^\+[0-9]{3,15}$/),
+  enumStringArray: <T extends z.EnumLike>(e: T) => z.preprocess((val) => String(val ?? '').split(','), z.array(z.nativeEnum(e))),
 };
 
 export const ZodHelpers = {
@@ -41,6 +42,13 @@ export const ZodRefines = {
 
     if (type === DocumentType.CNPJ && number.length !== 14) {
       ZodHelpers.issue(ctx, 'documentNumber', 'invalid document');
+    }
+  },
+
+  validDateRange(ctx: z.RefinementCtx, from: Date, to: Date, maximumRangeMs: number, fieldName?: string) {
+    const range = to.getTime() - from.getTime();
+    if (range > maximumRangeMs) {
+      ZodHelpers.issue(ctx, fieldName ?? '', 'date range surpasses maximum range of ' + maximumRangeMs + 'ms');
     }
   },
 };

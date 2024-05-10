@@ -1,5 +1,5 @@
-import { z } from 'https://deno.land/x/zod@v3.22.4/mod.ts';
-import { BaseActionBodySchema, BaseActionResponseSchema } from '../../../modules/types/actions/base.ts';
+import { z } from 'https://deno.land/x/zod@v3.23.4/mod.ts';
+import { BaseActionBodySchema, BaseActionResponseSchema, BaseWorkerBodySchema } from '../../../modules/types/actions/base.ts';
 
 export enum MerchantAction {
   CREATE_MERCHANT_ON_PROVIDER = 'create-merchant-on-provider',
@@ -31,3 +31,6 @@ export type CreateMerchantActionBodyDto = z.infer<typeof CreateMerchantActionBod
 export const MerchantActionResponseSchema = BaseActionResponseSchema.and(BaseMerchantActionBodySchema);
 
 export type MerchantActionResponseDto = z.infer<typeof MerchantActionResponseSchema>;
+
+// Worker
+export const CreateMerchantOnProviderWorkerBodySchema = BaseWorkerBodySchema.and(CreateMerchantOnProviderBodySchema);

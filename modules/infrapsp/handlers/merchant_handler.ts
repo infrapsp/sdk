@@ -12,7 +12,7 @@ export class MerchantHandler {
   constructor(private readonly kyInstance: KyInstance) {}
 
   async create(body: CreateMerchantBodyDto, options?: Options): AsyncResult<MerchantResponseDto> {
-    const url = this.basePath;
+    const url = 'merchants';
 
     const response = await this.kyInstance.post(url, {
       ...options,
@@ -27,6 +27,17 @@ export class MerchantHandler {
 
   async find(id: string, options?: Options): AsyncResult<MerchantResponseDto> {
     const url = `${this.basePath}/${id}`;
+
+    const response = await this.kyInstance.get(url, options);
+
+    const data = await response.json<MerchantResponseDto>();
+    const status = response.status;
+
+    return validateResponse({ data, status });
+  }
+
+  async findMe(options?: Options): AsyncResult<MerchantResponseDto> {
+    const url = `${this.basePath}/me`;
 
     const response = await this.kyInstance.get(url, options);
 

@@ -1,5 +1,5 @@
 import { z } from 'https://deno.land/x/zod@v3.23.4/mod.ts';
-import { BaseActionBodySchema, BaseActionResponseSchema, BaseWorkerBodySchema } from '../../../modules/types/actions/base.ts';
+import { BaseWorkerBodySchema } from '../../../modules/types/actions/base.ts';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
 
 export enum TransactionAction {
@@ -28,21 +28,6 @@ export const RefundTransactionOnProvider = z.object({
   action: z.literal(TransactionAction.REFUND_TRANSACTION_ON_PROVIDER),
   payload: z.object({}),
 });
-
-export const BaseTransactionActionBodySchema = z.discriminatedUnion('action', [
-  CreateTransactionOnProviderBodySchema,
-  ProcessPixPaidTransactionBodySchema,
-  RefundTransactionOnProvider,
-]);
-
-export const CreateTransactionActionBodySchema = BaseActionBodySchema.and(BaseTransactionActionBodySchema);
-
-export type CreateTransactionActionBodyDto = z.infer<typeof CreateTransactionActionBodySchema>;
-
-// Response
-export const TransactionActionResponseSchema = BaseActionResponseSchema.and(BaseTransactionActionBodySchema);
-
-export type TransactionActionResponseDto = z.infer<typeof TransactionActionResponseSchema>;
 
 // Worker
 export const CreateTransactionOnProviderWorkerBodySchema = BaseWorkerBodySchema.and(CreateTransactionOnProviderBodySchema);

@@ -30,13 +30,11 @@ export const MerchantResponseSchema = z.object({
   segmentId: ZodSchemas.nanoid(),
   status: z.nativeEnum(MerchantStatus),
   statusMessage: z.string(),
-  tenantId: ZodSchemas.nanoid(),
   tradingName: z.string(),
   url: z.string(),
   changedBy: z.record(z.unknown()),
   createdAt: z.date(),
   updatedAt: z.date(),
-  deletedAt: z.date().nullable(),
   settings: MerchantSettingsResponseSchema,
   metadata: z.record(z.string().or(z.number())),
 });

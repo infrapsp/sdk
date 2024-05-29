@@ -1,9 +1,9 @@
 import { KyInstance, Options } from 'npm:ky@1.2.4';
-import { AsyncResult } from '../../types/result.ts';
-import { validateResponse } from '../validate_response.ts';
-import { CreateTransactionBodyDto } from '../../types/transaction/create_transaction_request.ts';
-import { TransactionResponseDto } from '../../types/transaction/transaction_response.ts';
-import { FindTransactionQueryDto } from '../../types/transaction/find_transaction_request.ts';
+import { AsyncResult } from '../../../modules/types/result.ts';
+import { validateResponse } from '../../../modules/infrapsp/validate_response.ts';
+import { CreateTransactionBodyDto } from '../../../modules/types/transaction/create_transaction_request.ts';
+import { TransactionResponseDto } from '../../../modules/types/transaction/transaction_response.ts';
+import { FindTransactionQueryDto } from '../../../modules/types/transaction/find_transaction_request.ts';
 
 export class TransactionHandler {
   private readonly basePath = 'v1/transactions';

@@ -1,8 +1,8 @@
-import { BaseParamsSchema, BaseQuerySchema } from '../base/requests.ts';
+import { BaseParamsSchema, BaseQuerySchema } from '../../../modules/types/base/requests.ts';
 import { z } from 'https://deno.land/x/zod@v3.23.4/mod.ts';
-import { PaymentMethod, TransactionStatus } from './types.ts';
-import { ZodRefines, ZodSchemas } from '../zod.ts';
-import { SortOrder } from '../base/types.ts';
+import { PaymentMethod, TransactionStatus } from '../../../modules/types/transaction/types.ts';
+import { ZodRefines, ZodSchemas } from '../../../modules/types/zod.ts';
+import { SortOrder } from '../../../modules/types/base/types.ts';
 
 export const FindTransactionQuerySchema = BaseQuerySchema.and(
   z.object({

@@ -36,7 +36,7 @@ export const BadRequestError = () =>
   new CommonError({
     message: 'bad request',
     code: 'BAD_REQUEST',
-    status: 500,
+    status: 400,
   });
 
 export const ConflictError = () =>

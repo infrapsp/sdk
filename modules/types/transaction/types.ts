@@ -1,4 +1,4 @@
-import { EmptyObject } from '../base/types.ts';
+import { EmptyObject } from '../../../modules/types/base/types.ts';
 
 export enum TransactionStatus {
   CREATED = 'created',

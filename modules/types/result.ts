@@ -1,4 +1,4 @@
-import { CommonError } from '../errors/common_error.ts';
+import { CommonError } from '../../modules/errors/common_error.ts';
 
 // Result types for function returns: used arrays for easy naming during destructuring assign
 export type Result<T> = T | CommonError;

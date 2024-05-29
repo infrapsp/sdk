@@ -1,9 +1,9 @@
 import { z } from 'https://deno.land/x/zod@v3.23.4/mod.ts';
-import { PaymentMethod } from './types.ts';
-import { DocumentType, Gender } from '../merchant/types.ts';
-import { ZodRefines, ZodSchemas } from '../zod.ts';
-import { CreateAddressBodySchema } from '../address/create_address_request.ts';
-import { EmptySchema } from '../base/requests.ts';
+import { PaymentMethod } from '../../../modules/types/transaction/types.ts';
+import { DocumentType, Gender } from '../../../modules/types/merchant/types.ts';
+import { ZodRefines, ZodSchemas } from '../../../modules/types/zod.ts';
+import { CreateAddressBodySchema } from '../../../modules/types/address/create_address_request.ts';
+import { EmptySchema } from '../../../modules/types/base/requests.ts';
 
 export const CreateTransactionPixMethodSettingsBodySchema = z.object({
   expiresIn: z.number().positive().int(),
@@ -42,7 +42,7 @@ export const CreateTransactionShippingBodySchema = z.object({
   description: z.string(),
   maxDeliveryDate: ZodSchemas.datetime().optional(),
   estimatedDeliveryDate: ZodSchemas.datetime().optional(),
-  recipientName: z.string(),
+  recipientName: ZodSchemas.name(),
   recipientPhones: z.array(ZodSchemas.phone()),
 });
 
@@ -59,20 +59,20 @@ export const CreateTransactionBodySchema = z.object({
   items: z.array(CreateTransactionItemBodySchema),
   shipping: CreateTransactionShippingBodySchema.optional().nullable(),
   amount: z.number().positive().int(),
-  customerPersonName: z.string().min(5),
+  customerPersonName: ZodSchemas.name(),
   customerDocumentType: z.nativeEnum(DocumentType),
   customerDocumentNumber: ZodSchemas.document(),
   customerBirthdate: ZodSchemas.datetime().optional(),
   customerGender: z.nativeEnum(Gender),
   customerPhones: z.array(ZodSchemas.phone()),
   customerAddress: CreateAddressBodySchema,
-  billingPersonName: z.string().min(5),
+  billingPersonName: ZodSchemas.name(),
   billingDocumentType: z.nativeEnum(DocumentType),
   billingDocumentNumber: ZodSchemas.document(),
   billingAddress: CreateAddressBodySchema,
   notifyUrl: z.string().url().optional(),
   splits: z.array(CreateTransactionSplitBodySchema).optional().default([]),
-  externalId: z.string().optional(),
+  externalId: z.string().max(128).optional(),
   metadata: z.record(z.string()).optional(),
 }).transform((dto, ctx) => {
   ZodRefines.matchDocument(ctx, dto.customerDocumentNumber, dto.customerDocumentType);

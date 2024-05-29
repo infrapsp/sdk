@@ -1,8 +1,10 @@
 export type Address = {
-  zipCode: string;
   line1: string;
   line2?: string;
-  city: string;
+  number: string;
+  neighborhood: string;
+  zipCode: string;
   state: string;
+  city: string;
   country: string;
 };

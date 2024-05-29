@@ -27,19 +27,22 @@ export type CreateMerchantSettingsBodyDto = z.infer<typeof CreateMerchantSetting
 export const CreateMerchantBodySchema = z.object({
   documentNumber: ZodSchemas.document(),
   documentType: z.nativeEnum(DocumentType),
-  externalId: z.string(),
-  personName: z.string(),
+  externalId: z.string().max(128),
+  personName: ZodSchemas.name(),
   segmentId: ZodSchemas.nanoid(),
-  tenantId: ZodSchemas.nanoid(),
-  responsableName: z.string().optional(),
-  responsableEmail: z.string().email().optional(),
-  tradingName: z.string(),
+  responsableName: ZodSchemas.name().optional(),
+  responsableEmail: z.string().email().max(320).optional(),
+  tradingName: z.string().max(120),
   url: z.string(),
   settings: CreateMerchantSettingsBodySchema.optional().default({}),
 }).transform((dto, ctx) => {
   for (const key of ['responsableName', 'responsableEmail'] as const) {
     if (dto.documentType === DocumentType.CNPJ && !dto[key]) {
-      ZodHelpers.issue(ctx, key, 'Required for personType company.');
+      ZodHelpers.issue(ctx, key, 'Required for documentType cnpj.');
+    }
+
+    if (dto.documentType === DocumentType.CPF && dto[key]) {
+      ZodHelpers.issue(ctx, key, 'Not allowed for documentType cpf.');
     }
   }
 

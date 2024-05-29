@@ -1,9 +1,9 @@
 import { z } from 'https://deno.land/x/zod@v3.23.4/mod.ts';
-import { PaymentMethod, TransactionStatus } from './types.ts';
-import { DocumentType, Gender } from '../merchant/types.ts';
-import { ZodSchemas } from '../zod.ts';
-import { AddressResponseSchema } from '../address/address_response.ts';
-import { TransactionRefundResponseSchema } from '../transaction_refund/transaction_refund_response.ts';
+import { PaymentMethod, TransactionStatus } from '../../../modules/types/transaction/types.ts';
+import { DocumentType, Gender } from '../../../modules/types/merchant/types.ts';
+import { ZodSchemas } from '../../../modules/types/zod.ts';
+import { AddressResponseSchema } from '../../../modules/types/address/address_response.ts';
+import { TransactionRefundResponseSchema } from '../../../modules/types/transaction_refund/transaction_refund_response.ts';
 
 export const TransactionPixMethodSettingsResponseSchema = z.object({
   expiresIn: z.number().positive().int(),
@@ -81,8 +81,8 @@ export const TransactionSplitResponseSchema = z.object({
 export const TransactionResponseSchema = z.object({
   id: ZodSchemas.nanoid(),
   merchantId: ZodSchemas.nanoid(),
-  tenantId: ZodSchemas.nanoid(),
   providerId: z.string().nullable().optional(),
+  provider: z.string(),
   status: z.nativeEnum(TransactionStatus),
   statusMessage: z.string(),
   method: z.nativeEnum(PaymentMethod),
@@ -114,7 +114,6 @@ export const TransactionResponseSchema = z.object({
   refundedAt: z.date().nullable(),
   createdAt: z.date(),
   updatedAt: z.date(),
-  deletedAt: z.date().nullable(),
 });
 
 export type TransactionResponseDto = z.infer<typeof TransactionResponseSchema>;

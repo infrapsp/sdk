@@ -1,12 +1,15 @@
 import { z } from 'https://deno.land/x/zod@v3.23.4/mod.ts';
+import { ZodSchemas } from '../../../modules/types/zod.ts';
 
 export const CreateAddressBodySchema = z.object({
-  zipCode: z.string(),
-  line1: z.string(),
-  line2: z.string().optional(),
-  city: z.string(),
-  state: z.string(),
-  country: z.string(),
+  line1: z.string().max(200),
+  line2: z.string().max(100).optional(),
+  number: ZodSchemas.alphanumeric().max(10),
+  neighborhood: z.string().max(100),
+  zipCode: ZodSchemas.numeric().max(15),
+  state: z.string().max(60),
+  city: z.string().max(60),
+  country: z.string().max(100),
 });
 
 export type CreateAddressBodyDto = z.infer<typeof CreateAddressBodySchema>;

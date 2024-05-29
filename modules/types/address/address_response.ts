@@ -1,11 +1,13 @@
 import { z } from 'https://deno.land/x/zod@v3.23.4/mod.ts';
 
 export const AddressResponseSchema = z.object({
-  zipCode: z.string(),
   line1: z.string(),
   line2: z.string().optional().nullable(),
-  city: z.string(),
+  number: z.string(),
+  neighborhood: z.string(),
+  zipCode: z.string(),
   state: z.string(),
+  city: z.string(),
   country: z.string(),
 });
 

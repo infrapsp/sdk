@@ -1,6 +1,6 @@
 import { z } from 'https://deno.land/x/zod@v3.23.4/mod.ts';
-import { ZodSchemas } from '../zod.ts';
-import { TransactionRefundStatus } from '../transaction/types.ts';
+import { ZodSchemas } from '../../../modules/types/zod.ts';
+import { TransactionRefundStatus } from '../../../modules/types/transaction/types.ts';
 
 export const TransactionRefundResponseSchema = z.object({
   id: ZodSchemas.nanoid(),

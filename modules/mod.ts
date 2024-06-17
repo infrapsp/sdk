@@ -1,4 +1,3 @@
-export * from './sdk/README.md';
 export * from './types/actions/base.ts';
 export * from './types/actions/merchant.ts';
 export * from './types/actions/transaction.ts';

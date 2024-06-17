@@ -1,5 +1,5 @@
-import { z } from 'https://deno.land/x/zod@v3.23.4/mod.ts';
-import { ZodSchemas } from '../../../modules/types/zod.ts';
+import { z } from 'zod';
+import { ZodSchemas } from '$modules/types/zod.ts';
 
 // Worker
 export const BaseWorkerBodySchema = z.object({

@@ -9,7 +9,7 @@ export class BalanceHandler {
   constructor(private readonly kyInstance: KyInstance) {}
 
   async find(options?: Options): AsyncResult<BalanceResponseDto> {
-    const url = '/';
+    const url = this.basePath;
 
     const response = await this.kyInstance.get(url, options);
 

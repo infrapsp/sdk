@@ -1,6 +1,6 @@
-import { Role, TokenType } from '../../../modules/types/auth/types.ts';
-import { z } from 'https://deno.land/x/zod@v3.23.4/mod.ts';
-import { ZodSchemas } from '../../../modules/types/zod.ts';
+import { Role, TokenType } from '$modules/types/auth/types.ts';
+import { z } from 'zod';
+import { ZodSchemas } from '$modules/types/zod.ts';
 
 export const OffloaderResponseSchema = z.object({
   role: z.nativeEnum(Role),

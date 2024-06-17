@@ -1,6 +1,6 @@
-import { z } from 'https://deno.land/x/zod@v3.23.4/mod.ts';
-import { BaseWorkerBodySchema } from '../../../modules/types/actions/base.ts';
-import { ZodSchemas } from '../../../modules/types/zod.ts';
+import { z } from 'zod';
+import { BaseWorkerBodySchema } from '$modules/types/actions/base.ts';
+import { ZodSchemas } from '$modules/types/zod.ts';
 
 export enum TransactionAction {
   CREATE_TRANSACTION_ON_PROVIDER = 'create-transaction-on-provider',

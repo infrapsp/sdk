@@ -1,5 +1,5 @@
-import { z } from 'https://deno.land/x/zod@v3.23.4/mod.ts';
-import { BaseWorkerBodySchema } from '../../../modules/types/actions/base.ts';
+import { z } from 'zod';
+import { BaseWorkerBodySchema } from '$modules/types/actions/base.ts';
 
 export enum MerchantAction {
   CREATE_MERCHANT_ON_PROVIDER = 'create-merchant-on-provider',

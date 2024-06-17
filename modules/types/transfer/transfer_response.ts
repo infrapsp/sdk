@@ -2,11 +2,23 @@ import { z } from 'https://deno.land/x/zod@v3.23.4/mod.ts';
 import { TransferMethod, TransferStatus } from '../../../modules/types/transfer/types.ts';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
 
+export const TransferPixMethodDestinationResponseSchema = z.object({
+  pixKey: z.string(),
+});
+
+export const TransferInterMethodDestinationResponseSchema = z.object({
+  merchantId: ZodSchemas.nanoid(),
+});
+
+export const TransferMethodDestinationResponseSchema = TransferPixMethodDestinationResponseSchema.or(TransferInterMethodDestinationResponseSchema).or(
+  z.object({}),
+);
+
 export const TransferResponseSchema = z.object({
   id: ZodSchemas.nanoid(),
   merchantId: ZodSchemas.nanoid(),
   method: z.nativeEnum(TransferMethod),
-  methodDestination: z.record(z.unknown()),
+  methodDestination: TransferMethodDestinationResponseSchema,
   amount: z.number().positive().int(),
   status: z.nativeEnum(TransferStatus),
   statusMessage: z.string(),

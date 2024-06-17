@@ -22,7 +22,6 @@ export const CreateTransactionMethodSettingsBodySchema = CreateTransactionPixMet
 export const CreateTransactionPaymentLinkSettingsBodySchema = z.object({ isEnabled: z.literal(false) }).or(
   z.object({
     isEnabled: z.literal(true),
-    maxAttempts: z.number().positive(),
     expirationDate: ZodSchemas.datetime(),
     availablePaymentMethods: z.array(z.nativeEnum(PaymentMethod)),
   }),
@@ -66,6 +65,7 @@ export const CreateTransactionBodySchema = z.object({
   customerGender: z.nativeEnum(Gender),
   customerPhones: z.array(ZodSchemas.phone()),
   customerAddress: CreateAddressBodySchema,
+  customerEmail: z.string().email().max(128),
   billingPersonName: ZodSchemas.name(),
   billingDocumentType: z.nativeEnum(DocumentType),
   billingDocumentNumber: ZodSchemas.document(),

@@ -28,24 +28,13 @@ export const CreateMerchantBodySchema = z.object({
   documentNumber: ZodSchemas.document(),
   documentType: z.nativeEnum(DocumentType),
   externalId: z.string().max(128),
-  personName: ZodSchemas.name(),
   segmentId: ZodSchemas.nanoid(),
-  responsableName: ZodSchemas.name().optional(),
-  responsableEmail: z.string().email().max(320).optional(),
+  responsableName: ZodSchemas.name(),
+  responsableEmail: z.string().email().max(320),
   tradingName: z.string().max(120),
   url: z.string(),
   settings: CreateMerchantSettingsBodySchema.optional().default({}),
 }).transform((dto, ctx) => {
-  for (const key of ['responsableName', 'responsableEmail'] as const) {
-    if (dto.documentType === DocumentType.CNPJ && !dto[key]) {
-      ZodHelpers.issue(ctx, key, 'Required for documentType cnpj.');
-    }
-
-    if (dto.documentType === DocumentType.CPF && dto[key]) {
-      ZodHelpers.issue(ctx, key, 'Not allowed for documentType cpf.');
-    }
-  }
-
   ZodRefines.matchDocument(ctx, dto.documentNumber, dto.documentType);
   return dto;
 });

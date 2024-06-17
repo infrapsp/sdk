@@ -24,7 +24,7 @@ export const ZodSchemas = {
   numeric: () => z.string().regex(/^[0-9]+$/),
   phone: () => z.string().regex(/^\+[0-9]{3,15}$/),
   name: () => z.string().regex(/^([ \u00c0-\u01ffa-zA-Z'\-])+$/i, 'special characters are not allowed').min(5).max(50),
-  enumStringArray: <T extends z.EnumLike>(e: T) => z.preprocess((val) => String(val ?? '').split(','), z.array(z.nativeEnum(e))),
+  stringArray: <T extends z.ZodType>(e: T) => z.preprocess((val) => String(val ?? '').split(','), z.array(e)),
 };
 
 export const ZodHelpers = {

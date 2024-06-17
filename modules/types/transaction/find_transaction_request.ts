@@ -7,9 +7,8 @@ import { SortOrder } from '../../../modules/types/base/types.ts';
 export const FindTransactionQuerySchema = BaseQuerySchema.and(
   z.object({
     method: z.nativeEnum(PaymentMethod).optional(),
-    providerId: z.string().optional(),
-    status: ZodSchemas.enumStringArray(TransactionStatus).optional(),
-    notStatus: ZodSchemas.enumStringArray(TransactionStatus).optional(),
+    status: ZodSchemas.stringArray(z.nativeEnum(TransactionStatus)).optional(),
+    notStatus: ZodSchemas.stringArray(z.nativeEnum(TransactionStatus)).optional(),
     sortField: z.enum(['createdAt', 'updatedAt', 'paidAt', 'refundedAt']).default('createdAt'),
     sortOrder: z.nativeEnum(SortOrder).default(SortOrder.DESC),
   }),

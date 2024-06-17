@@ -7,8 +7,8 @@ import { ZodRefines } from '../../../modules/types/zod.ts';
 
 export const FindTransferQuerySchema = BaseQuerySchema.and(
   z.object({
-    status: ZodSchemas.enumStringArray(TransferStatus).optional(),
-    notStatus: ZodSchemas.enumStringArray(TransferStatus).optional(),
+    status: ZodSchemas.stringArray(z.nativeEnum(TransferStatus)).optional(),
+    notStatus: ZodSchemas.stringArray(z.nativeEnum(TransferStatus)).optional(),
     sortField: z.enum(['createdAt', 'updatedAt']).default('createdAt'),
     sortOrder: z.nativeEnum(SortOrder).default(SortOrder.DESC),
   }),

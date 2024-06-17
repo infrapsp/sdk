@@ -21,8 +21,6 @@ export const TransactionMethodSettingsResponseSchema = TransactionPixMethodSetti
 export const TransactionPaymentLinkSettingsResponseSchema = z.object({ isEnabled: z.literal(false) }).or(
   z.object({
     isEnabled: z.literal(true),
-    isRetryUsed: z.boolean(),
-    maxAttempts: z.number().positive(),
     expirationDate: z.date(),
     availablePaymentMethods: z.array(z.nativeEnum(PaymentMethod)),
   }),
@@ -81,8 +79,6 @@ export const TransactionSplitResponseSchema = z.object({
 export const TransactionResponseSchema = z.object({
   id: ZodSchemas.nanoid(),
   merchantId: ZodSchemas.nanoid(),
-  providerId: z.string().nullable().optional(),
-  provider: z.string(),
   status: z.nativeEnum(TransactionStatus),
   statusMessage: z.string(),
   method: z.nativeEnum(PaymentMethod),
@@ -102,6 +98,7 @@ export const TransactionResponseSchema = z.object({
   customerGender: z.nativeEnum(Gender),
   customerPhones: z.array(ZodSchemas.phone()),
   customerAddress: AddressResponseSchema,
+  customerEmail: z.string().email(),
   billingPersonName: z.string().min(5),
   billingDocumentType: z.nativeEnum(DocumentType),
   billingDocumentNumber: ZodSchemas.document(),

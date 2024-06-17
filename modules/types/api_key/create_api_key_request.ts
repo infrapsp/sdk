@@ -3,7 +3,7 @@ import { z } from 'https://deno.land/x/zod@v3.23.4/mod.ts';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
 
 export const CreateApiKeyBodySchema = z.object({
-  role: z.nativeEnum(Role),
+  role: z.nativeEnum(Role).optional(),
   merchantId: ZodSchemas.nanoid().optional(),
   tenantId: ZodSchemas.nanoid().optional(),
   description: z.string(),

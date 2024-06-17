@@ -1,14 +1,10 @@
-import { Role } from '../../../modules/types/auth/types.ts';
 import { z } from 'https://deno.land/x/zod@v3.23.4/mod.ts';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
 
 export const ApiKeyResponseSchema = z.object({
   id: ZodSchemas.nanoid(),
   key: z.string(),
-  role: z.nativeEnum(Role),
-  merchantId: ZodSchemas.nanoid().optional().nullable(),
-  tenantId: ZodSchemas.nanoid().optional().nullable(),
-  description: z.string(),
+  description: z.string().max(120),
   expiresAt: z.date().optional().nullable(),
   createdAt: z.date(),
 });

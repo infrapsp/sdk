@@ -2,6 +2,7 @@ import { EmptyObject } from '../../../modules/types/base/types.ts';
 
 export enum TransferMethod {
   PIX = 'pix',
+  INTER = 'inter',
 }
 
 export enum TransferStatus {
@@ -11,4 +12,7 @@ export enum TransferStatus {
   FINISHED = 'finished',
 }
 
-export type TransferMethodDestination = EmptyObject | { merchantId: string } | { pixKey: string };
+export type TransferPixMethodDestination = { pixKey: string };
+export type TransferInterMethodDestination = { merchantId: string };
+
+export type TransferMethodDestination = EmptyObject | TransferPixMethodDestination | TransferInterMethodDestination;

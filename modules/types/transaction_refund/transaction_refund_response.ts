@@ -4,7 +4,6 @@ import { TransactionRefundStatus } from '../../../modules/types/transaction/type
 
 export const TransactionRefundResponseSchema = z.object({
   id: ZodSchemas.nanoid(),
-  providerId: z.string().nullable().optional(),
   amount: z.number(),
   status: z.nativeEnum(TransactionRefundStatus),
   createdAt: z.date(),

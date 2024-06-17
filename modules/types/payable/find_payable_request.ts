@@ -1,16 +1,21 @@
 import { BaseParamsSchema, BaseQuerySchema } from '../../../modules/types/base/requests.ts';
 import { z } from 'https://deno.land/x/zod@v3.23.4/mod.ts';
 import { ZodHelpers, ZodRefines, ZodSchemas } from '../../../modules/types/zod.ts';
+import { PayableMethod, PayableStatus, PayableType } from '../../../modules/types/payable/types.ts';
 import { SortOrder } from '../../../modules/types/base/types.ts';
-import { OperationStatus, OriginEntity, OriginMethod } from '../../../modules/types/operation/types.ts';
 
-export const FindOperationQuerySchema = BaseQuerySchema.and(
+export const FindPayableParamsSchema = BaseParamsSchema;
+
+export const FindPayableQuerySchema = BaseQuerySchema.and(
   z.object({
-    payableId: ZodSchemas.nanoid().optional(),
-    method: z.nativeEnum(OriginMethod).optional(),
-    entity: z.nativeEnum(OriginEntity).optional(),
-    status: ZodSchemas.stringArray(z.nativeEnum(OperationStatus)).optional(),
-    notStatus: ZodSchemas.stringArray(z.nativeEnum(OperationStatus)).optional(),
+    transactionId: ZodSchemas.nanoid().optional(),
+    transactionRefundId: ZodSchemas.nanoid().optional(),
+    transactionSplitId: ZodSchemas.nanoid().optional(),
+    transferId: ZodSchemas.nanoid().optional(),
+    type: z.nativeEnum(PayableType).optional(),
+    method: z.nativeEnum(PayableMethod).optional(),
+    status: ZodSchemas.stringArray(z.nativeEnum(PayableStatus)).optional(),
+    notStatus: ZodSchemas.stringArray(z.nativeEnum(PayableStatus)).optional(),
     sortField: z.enum(['createdAt', 'paymentDate']).default('createdAt'),
     sortOrder: z.nativeEnum(SortOrder).default(SortOrder.DESC),
     paymentDateLte: ZodSchemas.datetime().optional(),
@@ -31,7 +36,5 @@ export const FindOperationQuerySchema = BaseQuerySchema.and(
   return dto;
 });
 
-export const FindOperationParamsSchema = BaseParamsSchema;
-
-export type FindOperationParamsDto = z.infer<typeof FindOperationParamsSchema>;
-export type FindOperationQueryDto = z.infer<typeof FindOperationQuerySchema>;
+export type FindPayableParamsDto = z.infer<typeof FindPayableParamsSchema>;
+export type FindPayableQueryDto = z.infer<typeof FindPayableQuerySchema>;

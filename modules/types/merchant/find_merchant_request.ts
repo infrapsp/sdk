@@ -6,8 +6,8 @@ import { ZodRefines, ZodSchemas } from '../../../modules/types/zod.ts';
 
 export const FindMerchantQuerySchema = BaseQuerySchema.and(
   z.object({
-    status: ZodSchemas.enumStringArray(MerchantStatus).optional(),
-    notStatus: ZodSchemas.enumStringArray(MerchantStatus).optional(),
+    status: ZodSchemas.stringArray(z.nativeEnum(MerchantStatus)).optional(),
+    notStatus: ZodSchemas.stringArray(z.nativeEnum(MerchantStatus)).optional(),
     merchantIds: z.string().transform((v) => (v ?? '').split(',')).optional(),
     sortField: z.enum(['createdAt', 'updatedAt']).default('createdAt'),
     sortOrder: z.nativeEnum(SortOrder).default(SortOrder.DESC),

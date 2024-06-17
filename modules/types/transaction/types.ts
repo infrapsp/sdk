@@ -62,9 +62,6 @@ export type TransactionPaymentLinkSettings = {
   isEnabled: false;
 } | {
   isEnabled: true;
-  isRetryUsed: boolean;
-  attempts: number;
-  maxAttempts: number;
   expirationDate: Date;
   availablePaymentMethods: PaymentMethod[];
   sourceTransactionId?: string | null;

@@ -2,12 +2,18 @@ import { TransferMethod } from '../../../modules/types/transfer/types.ts';
 import { z } from 'https://deno.land/x/zod@v3.23.4/mod.ts';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
 
-export const CreateTransferMethodDestinationBodySchema = z.object({
+export const CreateTransferPixMethodDestinationBodySchema = z.object({
+  pixKey: z.string(),
+});
+
+export const CreateTransferInterMethodDestinationBodySchema = z.object({
   merchantId: ZodSchemas.nanoid(),
-}).or(
-  z.object({
-    pixKey: z.string(),
-  }),
+});
+
+export const CreateTransferMethodDestinationBodySchema = CreateTransferPixMethodDestinationBodySchema.or(
+  CreateTransferInterMethodDestinationBodySchema,
+).or(
+  z.object({}),
 );
 
 export const CreateTransferBodySchema = z.object({

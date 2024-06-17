@@ -1,7 +1,7 @@
 export enum PayableMethod {
   PIX = 'pix',
   BOLETO = 'boleto',
-  INTER_TRANSFER = 'inter_transfer',
+  INTER = 'inter',
 }
 
 export enum PayableStatus {

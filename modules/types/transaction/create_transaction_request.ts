@@ -19,14 +19,6 @@ export const CreateTransactionMethodSettingsBodySchema = CreateTransactionPixMet
   CreateTransactionBoletoMethodSettingsBodySchema,
 ).or(EmptySchema);
 
-export const CreateTransactionPaymentLinkSettingsBodySchema = z.object({ isEnabled: z.literal(false) }).or(
-  z.object({
-    isEnabled: z.literal(true),
-    expirationDate: ZodSchemas.datetime(),
-    availablePaymentMethods: z.array(z.nativeEnum(PaymentMethod)),
-  }),
-);
-
 export const CreateTransactionItemBodySchema = z.object({
   description: z.string(),
   amount: z.number().positive().int(),
@@ -51,32 +43,39 @@ export const CreateTransactionSplitBodySchema = z.object({
   isFeePayer: z.boolean(),
 });
 
+export const CreateTransactionCustomerBodySchema = z.object({
+  personName: ZodSchemas.name(),
+  documentType: z.nativeEnum(DocumentType),
+  documentNumber: ZodSchemas.document(),
+  birthdate: ZodSchemas.datetime().optional(),
+  gender: z.nativeEnum(Gender),
+  phones: z.array(ZodSchemas.phone()),
+  address: CreateAddressBodySchema,
+  email: z.string().email().max(128),
+});
+
+export const CreateTransactionBillingBodySchema = z.object({
+  personName: ZodSchemas.name(),
+  documentType: z.nativeEnum(DocumentType),
+  documentNumber: ZodSchemas.document(),
+  address: CreateAddressBodySchema,
+});
+
 export const CreateTransactionBodySchema = z.object({
   method: z.nativeEnum(PaymentMethod),
   methodSettings: CreateTransactionMethodSettingsBodySchema,
-  paymentLinkSettings: CreateTransactionPaymentLinkSettingsBodySchema,
   items: z.array(CreateTransactionItemBodySchema),
   shipping: CreateTransactionShippingBodySchema.optional().nullable(),
   amount: z.number().positive().int(),
-  customerPersonName: ZodSchemas.name(),
-  customerDocumentType: z.nativeEnum(DocumentType),
-  customerDocumentNumber: ZodSchemas.document(),
-  customerBirthdate: ZodSchemas.datetime().optional(),
-  customerGender: z.nativeEnum(Gender),
-  customerPhones: z.array(ZodSchemas.phone()),
-  customerAddress: CreateAddressBodySchema,
-  customerEmail: z.string().email().max(128),
-  billingPersonName: ZodSchemas.name(),
-  billingDocumentType: z.nativeEnum(DocumentType),
-  billingDocumentNumber: ZodSchemas.document(),
-  billingAddress: CreateAddressBodySchema,
+  customer: CreateTransactionCustomerBodySchema.optional(),
+  billing: CreateTransactionBillingBodySchema.optional(),
   notifyUrl: z.string().url().optional(),
   splits: z.array(CreateTransactionSplitBodySchema).optional().default([]),
   externalId: z.string().max(128).optional(),
   metadata: z.record(z.string()).optional(),
 }).transform((dto, ctx) => {
-  ZodRefines.matchDocument(ctx, dto.customerDocumentNumber, dto.customerDocumentType);
-  ZodRefines.matchDocument(ctx, dto.billingDocumentNumber, dto.billingDocumentType);
+  if (dto.customer) ZodRefines.matchDocument(ctx, dto.customer.documentNumber, dto.customer.documentType);
+  if (dto.billing) ZodRefines.matchDocument(ctx, dto.billing.documentNumber, dto.billing.documentType);
   return dto;
 });
 
@@ -85,5 +84,6 @@ export type CreateTransactionShippingBodyDto = z.infer<typeof CreateTransactionS
 export type CreateTransactionItemBodyDto = z.infer<typeof CreateTransactionItemBodySchema>;
 export type CreateTransactionPixMethodSettingsBodyDto = z.infer<typeof CreateTransactionPixMethodSettingsBodySchema>;
 export type CreateTransactionBoletoMethodSettingsBodyDto = z.infer<typeof CreateTransactionBoletoMethodSettingsBodySchema>;
-export type CreateTransactionPaymentLinkSettingsBodyDto = z.infer<typeof CreateTransactionPaymentLinkSettingsBodySchema>;
 export type CreateTransactionSplitBodyDto = z.infer<typeof CreateTransactionSplitBodySchema>;
+export type CreateTransactionCustomerBodyDto = z.infer<typeof CreateTransactionCustomerBodySchema>;
+export type CreateTransactionBillingBodyDto = z.infer<typeof CreateTransactionBillingBodySchema>;

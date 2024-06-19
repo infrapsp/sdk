@@ -58,12 +58,9 @@ export type TransactionMethodData = EmptyObject | PixMethodData | BoletoMethodDa
 
 export type TransactionPaidData = EmptyObject | PixPaidData | BoletoPaidData;
 
-export type TransactionPaymentLinkSettings = {
-  isEnabled: false;
-} | {
-  isEnabled: true;
+/* for table
+  export type TransactionPaymentLinkSettings = {
   expirationDate: Date;
   availablePaymentMethods: PaymentMethod[];
-  sourceTransactionId?: string | null;
-  previousTransactionId?: string | null;
-};
+  lastTransactionId: string;
+}; */

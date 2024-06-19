@@ -18,14 +18,6 @@ export const TransactionBoletoMethodSettingsResponseSchema = z.object({
 export const TransactionMethodSettingsResponseSchema = TransactionPixMethodSettingsResponseSchema.or(TransactionBoletoMethodSettingsResponseSchema)
   .or(z.object({}));
 
-export const TransactionPaymentLinkSettingsResponseSchema = z.object({ isEnabled: z.literal(false) }).or(
-  z.object({
-    isEnabled: z.literal(true),
-    expirationDate: z.date(),
-    availablePaymentMethods: z.array(z.nativeEnum(PaymentMethod)),
-  }),
-);
-
 export const TransactionPixMethodDataResponseSchema = z.object({
   qrCode: z.string(),
   expirationDate: z.date(),
@@ -76,6 +68,24 @@ export const TransactionSplitResponseSchema = z.object({
   isFeePayer: z.boolean(),
 });
 
+export const TransactionCustomerResponseSchema = z.object({
+  personName: ZodSchemas.name(),
+  documentType: z.nativeEnum(DocumentType),
+  documentNumber: ZodSchemas.document(),
+  birthdate: ZodSchemas.datetime().optional(),
+  gender: z.nativeEnum(Gender),
+  phones: z.array(ZodSchemas.phone()),
+  address: AddressResponseSchema,
+  email: z.string().email(),
+});
+
+export const TransactionBillingResponseSchema = z.object({
+  personName: ZodSchemas.name(),
+  documentType: z.nativeEnum(DocumentType),
+  documentNumber: ZodSchemas.document(),
+  address: AddressResponseSchema,
+});
+
 export const TransactionResponseSchema = z.object({
   id: ZodSchemas.nanoid(),
   merchantId: ZodSchemas.nanoid(),
@@ -88,21 +98,10 @@ export const TransactionResponseSchema = z.object({
   shipping: TransactionShippingResponseSchema.optional().nullable(),
   methodData: TransactionMethodDataResponseSchema,
   paidData: TransactionPaidDataResponseSchema,
-  paymentLinkSettings: TransactionPaymentLinkSettingsResponseSchema,
   amount: z.number().positive().int(),
   amountRefunded: z.number().nonnegative().int(),
-  customerPersonName: z.string().min(5),
-  customerDocumentType: z.nativeEnum(DocumentType),
-  customerDocumentNumber: ZodSchemas.document(),
-  customerBirthdate: z.date().nullable(),
-  customerGender: z.nativeEnum(Gender),
-  customerPhones: z.array(ZodSchemas.phone()),
-  customerAddress: AddressResponseSchema,
-  customerEmail: z.string().email(),
-  billingPersonName: z.string().min(5),
-  billingDocumentType: z.nativeEnum(DocumentType),
-  billingDocumentNumber: ZodSchemas.document(),
-  billingAddress: AddressResponseSchema,
+  customer: TransactionCustomerResponseSchema.optional().nullable(),
+  billing: TransactionBillingResponseSchema.optional().nullable(),
   notifyUrl: z.string().url().nullable(),
   splits: z.array(TransactionSplitResponseSchema),
   externalId: z.string().nullable(),
@@ -116,7 +115,6 @@ export const TransactionResponseSchema = z.object({
 export type TransactionResponseDto = z.infer<typeof TransactionResponseSchema>;
 export type TransactionItemResponseDto = z.infer<typeof TransactionItemResponseSchema>;
 export type TransactionShippingResponseDto = z.infer<typeof TransactionShippingResponseSchema>;
-export type TransactionPaymentLinkSettingsResponseDto = z.infer<typeof TransactionPaymentLinkSettingsResponseSchema>;
 export type TransactionPixMethodSettingsResponseDto = z.infer<typeof TransactionPixMethodSettingsResponseSchema>;
 export type TransactionBoletoMethodSettingsResponseDto = z.infer<typeof TransactionBoletoMethodSettingsResponseSchema>;
 export type TransactionPixMethodDataResponseDto = z.infer<typeof TransactionPixMethodDataResponseSchema>;
@@ -124,3 +122,5 @@ export type TransactionBoletoMethodDataResponseDto = z.infer<typeof TransactionB
 export type TransactionPixPaidDataResponseDto = z.infer<typeof TransactionPixPaidDataResponseSchema>;
 export type TransactionBoletoPaidDataResponseDto = z.infer<typeof TransactionBoletoPaidDataResponseSchema>;
 export type TransactionSplitResponseDto = z.infer<typeof TransactionSplitResponseSchema>;
+export type TransactionCustomerResponseDto = z.infer<typeof TransactionCustomerResponseSchema>;
+export type TransactionBillingResponseDto = z.infer<typeof TransactionBillingResponseSchema>;

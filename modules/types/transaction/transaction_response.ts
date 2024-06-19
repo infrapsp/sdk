@@ -72,7 +72,7 @@ export const TransactionCustomerResponseSchema = z.object({
   personName: ZodSchemas.name(),
   documentType: z.nativeEnum(DocumentType),
   documentNumber: ZodSchemas.document(),
-  birthdate: ZodSchemas.datetime().optional(),
+  birthdate: ZodSchemas.datetime().optional().nullable(),
   gender: z.nativeEnum(Gender),
   phones: z.array(ZodSchemas.phone()),
   address: AddressResponseSchema,

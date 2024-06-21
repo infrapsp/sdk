@@ -8,6 +8,7 @@ export const FindTransactionQuerySchema = BaseQuerySchema.and(
   z.object({
     method: z.nativeEnum(PaymentMethod).optional(),
     status: ZodSchemas.stringArray(z.nativeEnum(TransactionStatus)).optional(),
+    search: z.string().max(128).optional(),
     notStatus: ZodSchemas.stringArray(z.nativeEnum(TransactionStatus)).optional(),
     sortField: z.enum(['createdAt', 'updatedAt', 'paidAt', 'refundedAt']).default('createdAt'),
     sortOrder: z.nativeEnum(SortOrder).default(SortOrder.DESC),

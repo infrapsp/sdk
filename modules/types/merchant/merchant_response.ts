@@ -17,6 +17,12 @@ export const MerchantSettingsResponseSchema = z.object({
   updatedAt: z.date(),
 });
 
+export const MerchantStatusResponseSchema = z.object({
+  status: z.nativeEnum(MerchantStatus),
+  message: z.string(),
+  createdAt: z.date(),
+});
+
 export type MerchantSettingsResponseDto = z.infer<typeof MerchantSettingsResponseSchema>;
 
 export const MerchantResponseSchema = z.object({
@@ -29,6 +35,7 @@ export const MerchantResponseSchema = z.object({
   segmentId: ZodSchemas.nanoid(),
   status: z.nativeEnum(MerchantStatus),
   statusMessage: z.string(),
+  statusHistory: z.array(MerchantStatusResponseSchema),
   tradingName: z.string(),
   url: z.string(),
   createdAt: z.date(),

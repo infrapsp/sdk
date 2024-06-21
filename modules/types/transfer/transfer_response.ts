@@ -14,6 +14,12 @@ export const TransferMethodDestinationResponseSchema = TransferPixMethodDestinat
   z.object({}),
 );
 
+export const TransferStatusResponseSchema = z.object({
+  status: z.nativeEnum(TransferStatus),
+  message: z.string(),
+  createdAt: z.date(),
+});
+
 export const TransferResponseSchema = z.object({
   id: ZodSchemas.nanoid(),
   merchantId: ZodSchemas.nanoid(),
@@ -22,6 +28,7 @@ export const TransferResponseSchema = z.object({
   amount: z.number().positive().int(),
   status: z.nativeEnum(TransferStatus),
   statusMessage: z.string(),
+  statusHistory: z.array(TransferStatusResponseSchema),
   metadata: z.record(z.string().or(z.number())),
   createdAt: z.date(),
   updatedAt: z.date(),

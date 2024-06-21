@@ -86,11 +86,18 @@ export const TransactionBillingResponseSchema = z.object({
   address: AddressResponseSchema,
 });
 
+export const TransactionStatusResponseSchema = z.object({
+  status: z.nativeEnum(TransactionStatus),
+  message: z.string(),
+  createdAt: z.date(),
+});
+
 export const TransactionResponseSchema = z.object({
   id: ZodSchemas.nanoid(),
   merchantId: ZodSchemas.nanoid(),
   status: z.nativeEnum(TransactionStatus),
   statusMessage: z.string(),
+  statusHistory: z.array(TransactionStatusResponseSchema),
   method: z.nativeEnum(PaymentMethod),
   methodSettings: TransactionMethodSettingsResponseSchema,
   items: z.array(TransactionItemResponseSchema),

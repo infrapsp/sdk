@@ -1,4 +1,3 @@
-export * from './sdk/README.md';
 export * from './types/balance/balance_response.ts';
 export * from './types/payable_summary/find_payable_summary_request.ts';
 export * from './types/payable_summary/payable_summary_response.ts';

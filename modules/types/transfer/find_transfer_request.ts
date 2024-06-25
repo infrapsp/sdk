@@ -9,6 +9,7 @@ export const FindTransferQuerySchema = BaseQuerySchema.and(
   z.object({
     status: ZodSchemas.stringArray(z.nativeEnum(TransferStatus)).optional(),
     notStatus: ZodSchemas.stringArray(z.nativeEnum(TransferStatus)).optional(),
+    search: z.string().max(128).optional(),
     sortField: z.enum(['createdAt', 'updatedAt']).default('createdAt'),
     sortOrder: z.nativeEnum(SortOrder).default(SortOrder.DESC),
   }),

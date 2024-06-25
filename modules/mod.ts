@@ -1,4 +1,3 @@
-export * from './sdk/README.md';
 export * from './types/api_key/api_key_response.ts';
 export * from './types/api_key/create_api_key_request.ts';
 export * from './types/api_key/delete_api_key_request.ts';

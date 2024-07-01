@@ -25,6 +25,7 @@ export const TransferResponseSchema = z.object({
   merchantId: ZodSchemas.nanoid(),
   method: z.nativeEnum(TransferMethod),
   methodDestination: TransferMethodDestinationResponseSchema,
+  isAutoTransfer: z.boolean(),
   amount: z.number().positive().int(),
   status: z.nativeEnum(TransferStatus),
   statusMessage: z.string(),

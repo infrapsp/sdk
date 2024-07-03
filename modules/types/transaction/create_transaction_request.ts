@@ -28,7 +28,7 @@ export const CreateTransactionItemBodySchema = z.object({
 });
 
 export const CreateTransactionShippingBodySchema = z.object({
-  amount: z.number().positive().int(),
+  amount: z.number().nonnegative().int(),
   address: CreateAddressBodySchema,
   description: z.string(),
   maxDeliveryDate: ZodSchemas.datetime().optional(),
@@ -44,6 +44,7 @@ export const CreateTransactionSplitBodySchema = z.object({
 });
 
 export const CreateTransactionCustomerBodySchema = z.object({
+  companyName: ZodSchemas.alphanumeric().max(320).optional(),
   personName: ZodSchemas.name(),
   documentType: z.nativeEnum(DocumentType),
   documentNumber: ZodSchemas.document(),
@@ -55,6 +56,7 @@ export const CreateTransactionCustomerBodySchema = z.object({
 });
 
 export const CreateTransactionBillingBodySchema = z.object({
+  companyName: ZodSchemas.alphanumeric().max(320).optional(),
   personName: ZodSchemas.name(),
   documentType: z.nativeEnum(DocumentType),
   documentNumber: ZodSchemas.document(),
@@ -74,8 +76,16 @@ export const CreateTransactionBodySchema = z.object({
   externalId: z.string().max(128).optional(),
   metadata: z.record(z.string()).optional(),
 }).transform((dto, ctx) => {
-  if (dto.customer) ZodRefines.matchDocument(ctx, dto.customer.documentNumber, dto.customer.documentType);
-  if (dto.billing) ZodRefines.matchDocument(ctx, dto.billing.documentNumber, dto.billing.documentType);
+  if (dto.customer) {
+    ZodRefines.matchDocument(ctx, dto.customer.documentNumber, dto.customer.documentType);
+    ZodRefines.hasCompanyData(ctx, dto.customer.companyName, dto.customer.documentType);
+  }
+
+  if (dto.billing) {
+    ZodRefines.matchDocument(ctx, dto.billing.documentNumber, dto.billing.documentType);
+    ZodRefines.hasCompanyData(ctx, dto.billing.companyName, dto.billing.documentType);
+  }
+
   return dto;
 });
 

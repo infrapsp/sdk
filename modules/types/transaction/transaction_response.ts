@@ -53,7 +53,7 @@ export const TransactionItemResponseSchema = z.object({
 });
 
 export const TransactionShippingResponseSchema = z.object({
-  amount: z.number().positive().int(),
+  amount: z.number().nonnegative().int(),
   address: AddressResponseSchema,
   description: z.string(),
   maxDeliveryDate: z.date().optional().nullable(),
@@ -69,6 +69,7 @@ export const TransactionSplitResponseSchema = z.object({
 });
 
 export const TransactionCustomerResponseSchema = z.object({
+  companyName: z.string().nullable().optional(),
   personName: ZodSchemas.name(),
   documentType: z.nativeEnum(DocumentType),
   documentNumber: ZodSchemas.document(),
@@ -80,6 +81,7 @@ export const TransactionCustomerResponseSchema = z.object({
 });
 
 export const TransactionBillingResponseSchema = z.object({
+  companyName: z.string().nullable().optional(),
   personName: ZodSchemas.name(),
   documentType: z.nativeEnum(DocumentType),
   documentNumber: ZodSchemas.document(),

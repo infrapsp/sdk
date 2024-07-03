@@ -59,4 +59,13 @@ export const ZodRefines = {
       ZodHelpers.issue(ctx, fieldName ?? '', 'date range surpasses maximum range of ' + maximumRangeMs + 'ms');
     }
   },
+
+  hasCompanyData(ctx: z.RefinementCtx, companyName: string | undefined | null, documentType: DocumentType) {
+    if (companyName && documentType === DocumentType.CPF) {
+      ZodHelpers.issue(ctx, 'companyName', 'Cannot be set for documentType cpf.');
+    }
+    if (!companyName && documentType === DocumentType.CNPJ) {
+      ZodHelpers.issue(ctx, 'companyName', 'Required for documentType cnpj.');
+    }
+  },
 };

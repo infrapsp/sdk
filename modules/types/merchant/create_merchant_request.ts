@@ -29,13 +29,15 @@ export const CreateMerchantBodySchema = z.object({
   documentType: z.nativeEnum(DocumentType),
   externalId: z.string().max(128),
   segmentId: ZodSchemas.nanoid(),
-  responsableName: ZodSchemas.name(),
-  responsableEmail: z.string().email().max(320),
+  companyName: ZodSchemas.alphanumeric().max(320).optional(),
+  personName: ZodSchemas.name(),
+  personEmail: z.string().email().max(320),
   tradingName: z.string().max(120),
   url: z.string(),
   settings: CreateMerchantSettingsBodySchema.optional().default({}),
 }).transform((dto, ctx) => {
   ZodRefines.matchDocument(ctx, dto.documentNumber, dto.documentType);
+  ZodRefines.hasCompanyData(ctx, dto.companyName, dto.documentType);
   return dto;
 });
 

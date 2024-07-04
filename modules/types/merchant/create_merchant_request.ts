@@ -27,17 +27,17 @@ export type CreateMerchantSettingsBodyDto = z.infer<typeof CreateMerchantSetting
 export const CreateMerchantBodySchema = z.object({
   documentNumber: ZodSchemas.document(),
   documentType: z.nativeEnum(DocumentType),
-  externalId: z.string().max(128),
+  externalId: z.string().max(128).optional(),
   segmentId: ZodSchemas.nanoid(),
-  companyName: ZodSchemas.alphanumeric().max(320).optional(),
+  companyName: ZodSchemas.alphanumeric().max(128).optional(),
   personName: ZodSchemas.name(),
-  personEmail: z.string().email().max(320),
+  personEmail: z.string().email().max(128),
   tradingName: z.string().max(120),
   url: z.string(),
   settings: CreateMerchantSettingsBodySchema.optional().default({}),
 }).transform((dto, ctx) => {
   ZodRefines.matchDocument(ctx, dto.documentNumber, dto.documentType);
-  ZodRefines.hasCompanyData(ctx, dto.companyName, dto.documentType);
+  ZodRefines.hasCompanyData(ctx, dto.companyName, dto.documentType, 'companyName');
   return dto;
 });
 

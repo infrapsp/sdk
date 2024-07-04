@@ -20,11 +20,12 @@ export const ZodSchemas = {
     }, { message: 'invalid document' }),
   cpf: () => z.custom<string>((data) => typeof data === 'string' ? isValidCpf(data) : false, { message: 'invalid document' }),
   cnpj: () => z.custom<string>((data) => typeof data === 'string' ? isValidCnpj(data) : false, { message: 'invalid document' }),
-  alphanumeric: () => z.string().regex(/^[0-9a-zA-Z]+$/),
+  alphanumeric: () => z.string().regex(/^[0-9a-zA-Z ]+$/),
   numeric: () => z.string().regex(/^[0-9]+$/),
   phone: () => z.string().regex(/^\+[0-9]{3,15}$/),
   name: () => z.string().regex(/^([ \u00c0-\u01ffa-zA-Z'\-])+$/i, 'special characters are not allowed').min(5).max(50),
   stringArray: <T extends z.ZodType>(e: T) => z.preprocess((val) => String(val ?? '').split(','), z.array(e)),
+  booleanString: () => z.string().transform((data) => JSON.parse(data)).pipe(z.boolean()),
 };
 
 export const ZodHelpers = {
@@ -60,12 +61,12 @@ export const ZodRefines = {
     }
   },
 
-  hasCompanyData(ctx: z.RefinementCtx, companyName: string | undefined | null, documentType: DocumentType) {
+  hasCompanyData(ctx: z.RefinementCtx, companyName: string | undefined | null, documentType: DocumentType, fieldName?: string) {
     if (companyName && documentType === DocumentType.CPF) {
-      ZodHelpers.issue(ctx, 'companyName', 'Cannot be set for documentType cpf.');
+      ZodHelpers.issue(ctx, fieldName ?? '', 'Cannot be set for documentType cpf.');
     }
     if (!companyName && documentType === DocumentType.CNPJ) {
-      ZodHelpers.issue(ctx, 'companyName', 'Required for documentType cnpj.');
+      ZodHelpers.issue(ctx, fieldName ?? '', 'Required for documentType cnpj.');
     }
   },
 };

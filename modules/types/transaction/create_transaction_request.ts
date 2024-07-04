@@ -78,12 +78,12 @@ export const CreateTransactionBodySchema = z.object({
 }).transform((dto, ctx) => {
   if (dto.customer) {
     ZodRefines.matchDocument(ctx, dto.customer.documentNumber, dto.customer.documentType);
-    ZodRefines.hasCompanyData(ctx, dto.customer.companyName, dto.customer.documentType);
+    ZodRefines.hasCompanyData(ctx, dto.customer.companyName, dto.customer.documentType, 'customer.companyName');
   }
 
   if (dto.billing) {
     ZodRefines.matchDocument(ctx, dto.billing.documentNumber, dto.billing.documentType);
-    ZodRefines.hasCompanyData(ctx, dto.billing.companyName, dto.billing.documentType);
+    ZodRefines.hasCompanyData(ctx, dto.billing.companyName, dto.billing.documentType, 'billing.companyName');
   }
 
   return dto;

@@ -52,3 +52,23 @@ export const isValidCnpj = (number: string): boolean => {
 
   return numbers.substring(-2) === number.substring(-2);
 };
+
+export function generateCnpj(): string {
+  const randomDigits = () => Math.floor(Math.random() * 9);
+
+  const cnpjArray = Array.from({ length: 12 }, () => randomDigits());
+
+  const calculateDigit = (cnpjArray: number[], factors: number[]) => {
+    const total = cnpjArray.reduce((sum, digit, index) => sum + digit * factors[index], 0);
+    const remainder = total % 11;
+    return remainder < 2 ? 0 : 11 - remainder;
+  };
+
+  const firstFactors = [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
+  const secondFactors = [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
+
+  const firstDigit = calculateDigit(cnpjArray, firstFactors);
+  const secondDigit = calculateDigit([...cnpjArray, firstDigit], secondFactors);
+
+  return [...cnpjArray, firstDigit, secondDigit].join('');
+}

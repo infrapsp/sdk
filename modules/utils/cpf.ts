@@ -51,3 +51,20 @@ export const isValidCpf = (number: string): boolean => {
 
   return numbers.substring(-2) === number.substring(-2);
 };
+
+export function generateCpf(): string {
+  const randomDigits = () => Math.floor(Math.random() * 9);
+
+  const cpfArray = Array.from({ length: 9 }, () => randomDigits());
+
+  const calculateDigit = (cpfArray: number[], factor: number) => {
+    const total = cpfArray.reduce((sum, digit) => sum + digit * factor--, 0);
+    const remainder = total % 11;
+    return remainder < 2 ? 0 : 11 - remainder;
+  };
+
+  const firstDigit = calculateDigit(cpfArray, 10);
+  const secondDigit = calculateDigit([...cpfArray, firstDigit], 11);
+
+  return [...cpfArray, firstDigit, secondDigit].join('');
+}

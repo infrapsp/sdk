@@ -1,9 +1,16 @@
 import { z } from 'https://deno.land/x/zod@v3.23.4/mod.ts';
 import { TransferMethod, TransferStatus } from '../../../modules/types/transfer/types.ts';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
+import { DocumentType } from '../../../modules/types/merchant/types.ts';
 
 export const TransferPixMethodDestinationResponseSchema = z.object({
   pixKey: z.string(),
+  name: z.string().optional().nullable(),
+  bank: z.string().optional().nullable(),
+  ispb: z.string().optional().nullable(),
+  documentNumber: z.string().optional().nullable(),
+  accountType: z.string().optional().nullable(),
+  documentType: z.nativeEnum(DocumentType).optional().nullable(),
 });
 
 export const TransferInterMethodDestinationResponseSchema = z.object({

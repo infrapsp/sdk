@@ -22,6 +22,7 @@ export const TransactionPixMethodDataResponseSchema = z.object({
   qrCode: z.string(),
   expirationDate: z.date(),
   url: z.string(),
+  qrCodeData: z.string().optional().nullable(),
 });
 
 export const TransactionBoletoMethodDataResponseSchema = z.object({

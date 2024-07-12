@@ -12,10 +12,16 @@ export const UpdateMerchantAutoTransferSettingsBodySchema = z.object({
   pixDictKey: z.string(),
   frequency: z.nativeEnum(MerchantAutoTransferFrequency),
   day: z.number().min(0).max(6).optional(),
+  date: z.number().min(1).max(25).optional(),
 })).transform((dto, ctx) => {
   if (dto.isEnabled && dto.frequency === MerchantAutoTransferFrequency.WEEKLY && !dto.day) {
     ZodHelpers.issue(ctx, 'day', 'Required for autoTransferFrequency weekly.');
   }
+
+  if (dto.isEnabled && dto.frequency === MerchantAutoTransferFrequency.MONTLHY && !dto.date) {
+    ZodHelpers.issue(ctx, 'date', 'Required for autoTransferFrequency monthly.');
+  }
+
   return dto;
 });
 

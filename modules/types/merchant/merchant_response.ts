@@ -9,6 +9,7 @@ export const MerchantAutoTransferSettingsResponseSchema = z.object({
   pixDictKey: z.string(),
   frequency: z.nativeEnum(MerchantAutoTransferFrequency),
   day: z.number().min(0).max(6).optional(),
+  date: z.number().min(1).max(25).optional(),
 }));
 
 export const MerchantSettingsResponseSchema = z.object({

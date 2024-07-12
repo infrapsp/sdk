@@ -20,6 +20,7 @@ export enum DocumentType {
 export enum MerchantAutoTransferFrequency {
   DAILY = 'daily',
   WEEKLY = 'weekly',
+  MONTLHY = 'monthly',
 }
 
 export type MerchantAutoTransferSettings = { isEnabled: false } | {

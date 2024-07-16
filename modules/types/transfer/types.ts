@@ -10,7 +10,7 @@ export enum TransferStatus {
   CREATED = 'created',
   PROCESSING = 'processing',
   FAILED = 'failed',
-  FINISHED = 'finished',
+  COMPLETED = 'completed',
 }
 
 export type TransferPixMethodDestination = {

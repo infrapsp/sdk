@@ -6,6 +6,7 @@ export const TransactionRefundResponseSchema = z.object({
   id: ZodSchemas.nanoid(),
   amount: z.number(),
   status: z.nativeEnum(TransactionRefundStatus),
+  refundedAt: z.date().optional(),
   createdAt: z.date(),
   updatedAt: z.date(),
 });

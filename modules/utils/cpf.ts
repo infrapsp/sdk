@@ -30,11 +30,6 @@ const verifierDigit = (digits: string): number => {
 };
 
 export const isValidCpf = (number: string): boolean => {
-  // CPF must be defined
-  if (!number) {
-    return false;
-  }
-
   // CPF must have 11 chars
   if (number.length !== 11) {
     return false;

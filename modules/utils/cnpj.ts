@@ -31,11 +31,6 @@ const verifierDigit = (digits: string): number => {
 };
 
 export const isValidCnpj = (number: string): boolean => {
-  // CNPJ must be defined
-  if (!number) {
-    return false;
-  }
-
   // CNPJ must have 14 chars
   if (number.length !== 14) {
     return false;

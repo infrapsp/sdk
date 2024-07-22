@@ -2,6 +2,7 @@ import { z } from 'https://deno.land/x/zod@v3.23.4/mod.ts';
 import { BaseParamsSchema } from '../../../modules/types/base/requests.ts';
 import { ZodHelpers } from '../../../modules/types/zod.ts';
 import { MerchantAutoTransferFrequency } from '../../../modules/types/merchant/types.ts';
+import { UpdateAddressBodySchema } from '../../../modules/types/address/update_address_request.ts';
 
 export const UpdateMerchantParamsSchema = BaseParamsSchema;
 
@@ -30,9 +31,15 @@ export const UpdateMerchantSettingsBodySchema = z.object({
   autoTransferSettings: UpdateMerchantAutoTransferSettingsBodySchema.optional(),
 });
 
+export const UpdateMerchantBillingBodySchema = z.object({
+  email: z.string().email().max(128),
+  address: UpdateAddressBodySchema,
+}).partial();
+
 export const UpdateMerchantBodySchema = z.object({
   metadata: z.record(z.string().or(z.number())),
   settings: UpdateMerchantSettingsBodySchema,
+  billing: UpdateMerchantBillingBodySchema,
 }).partial().transform((dto, ctx) => {
   if (Object.keys(dto).length === 0) {
     ZodHelpers.issue(ctx, 'body', 'At least one field must be provided');

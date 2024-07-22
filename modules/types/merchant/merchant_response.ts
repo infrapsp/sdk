@@ -1,6 +1,7 @@
 import { z } from 'https://deno.land/x/zod@v3.23.4/mod.ts';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
 import { DocumentType, MerchantAutoTransferFrequency, MerchantStatus } from '../../../modules/types/merchant/types.ts';
+import { AddressResponseSchema } from '../../../modules/types/address/address_response.ts';
 
 export const MerchantAutoTransferSettingsResponseSchema = z.object({
   isEnabled: z.literal(false),
@@ -24,7 +25,10 @@ export const MerchantStatusResponseSchema = z.object({
   createdAt: z.date(),
 });
 
-export type MerchantSettingsResponseDto = z.infer<typeof MerchantSettingsResponseSchema>;
+export const MerchantBillingResponseSchema = z.object({
+  email: z.string().email().max(128),
+  address: AddressResponseSchema,
+});
 
 export const MerchantResponseSchema = z.object({
   id: ZodSchemas.nanoid(),
@@ -42,8 +46,11 @@ export const MerchantResponseSchema = z.object({
   url: z.string(),
   createdAt: z.date(),
   updatedAt: z.date(),
+  billing: MerchantBillingResponseSchema,
   settings: MerchantSettingsResponseSchema,
   metadata: z.record(z.string().or(z.number())),
 });
 
+export type MerchantSettingsResponseDto = z.infer<typeof MerchantSettingsResponseSchema>;
+export type MerchantBillingResponseDto = z.infer<typeof MerchantBillingResponseSchema>;
 export type MerchantResponseDto = z.infer<typeof MerchantResponseSchema>;

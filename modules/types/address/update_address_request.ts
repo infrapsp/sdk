@@ -1,7 +1,7 @@
 import { z } from 'https://deno.land/x/zod@v3.23.4/mod.ts';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
 
-export const CreateAddressBodySchema = z.object({
+export const UpdateAddressBodySchema = z.object({
   line1: z.string().max(200),
   line2: z.string().max(100).optional(),
   number: ZodSchemas.alphanumeric().max(10),
@@ -13,4 +13,4 @@ export const CreateAddressBodySchema = z.object({
   ibgeCode: ZodSchemas.numeric().max(10).optional(),
 });
 
-export type CreateAddressBodyDto = z.infer<typeof CreateAddressBodySchema>;
+export type UpdateAddressBodyDto = z.infer<typeof UpdateAddressBodySchema>;

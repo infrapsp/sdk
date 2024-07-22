@@ -9,6 +9,7 @@ export const AddressResponseSchema = z.object({
   state: z.string(),
   city: z.string(),
   country: z.string(),
+  ibgeCode: z.string().optional().nullable(),
 });
 
 export type AddressResponseDto = z.infer<typeof AddressResponseSchema>;

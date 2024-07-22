@@ -7,4 +7,5 @@ export type Address = {
   state: string;
   city: string;
   country: string;
+  ibgeCode?: string;
 };

@@ -32,6 +32,7 @@ export * from './types/transfer/types.ts';
 export * from './types/address/address_response.ts';
 export * from './types/address/create_address_request.ts';
 export * from './types/address/types.ts';
+export * from './types/address/update_address_request.ts';
 export * from './types/webhook/types.ts';
 export * from './types/api_key/api_key_response.ts';
 export * from './types/api_key/create_api_key_request.ts';

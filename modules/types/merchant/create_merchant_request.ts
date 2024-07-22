@@ -2,6 +2,7 @@ import { z } from 'https://deno.land/x/zod@v3.23.4/mod.ts';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
 import { DocumentType, MerchantAutoTransferFrequency } from '../../../modules/types/merchant/types.ts';
 import { ZodHelpers, ZodRefines } from '../../../modules/types/zod.ts';
+import { CreateAddressBodySchema } from '../../../modules/types/address/create_address_request.ts';
 
 export const CreateMerchantAutoTransferSettingsBodySchema = z.object({
   isEnabled: z.literal(false),
@@ -28,7 +29,10 @@ export const CreateMerchantSettingsBodySchema = z.object({
   autoTransferSettings: CreateMerchantAutoTransferSettingsBodySchema.optional(),
 });
 
-export type CreateMerchantSettingsBodyDto = z.infer<typeof CreateMerchantSettingsBodySchema>;
+export const CreateMerchantBillingBodySchema = z.object({
+  email: z.string().email().max(128),
+  address: CreateAddressBodySchema,
+});
 
 export const CreateMerchantBodySchema = z.object({
   documentNumber: ZodSchemas.document(),
@@ -39,6 +43,7 @@ export const CreateMerchantBodySchema = z.object({
   personName: ZodSchemas.name(),
   personEmail: z.string().email().max(128),
   tradingName: z.string().max(120),
+  billing: CreateMerchantBillingBodySchema,
   url: z.string(),
   settings: CreateMerchantSettingsBodySchema.optional().default({}),
 }).transform((dto, ctx) => {
@@ -47,4 +52,6 @@ export const CreateMerchantBodySchema = z.object({
   return dto;
 });
 
+export type CreateMerchantBillingBodyDto = z.infer<typeof CreateMerchantBillingBodySchema>;
+export type CreateMerchantSettingsBodyDto = z.infer<typeof CreateMerchantSettingsBodySchema>;
 export type CreateMerchantBodyDto = z.infer<typeof CreateMerchantBodySchema>;

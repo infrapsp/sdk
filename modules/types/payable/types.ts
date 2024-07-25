@@ -1,6 +1,5 @@
 export enum PayableMethod {
   PIX = 'pix',
-  BOLETO = 'boleto',
   INTER = 'inter',
 }
 

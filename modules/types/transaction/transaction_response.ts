@@ -11,12 +11,7 @@ export const TransactionPixMethodSettingsResponseSchema = z.object({
   payerRequest: z.string().max(140).nullable().optional(),
 });
 
-export const TransactionBoletoMethodSettingsResponseSchema = z.object({
-  dueAt: z.date(),
-});
-
-export const TransactionMethodSettingsResponseSchema = TransactionPixMethodSettingsResponseSchema.or(TransactionBoletoMethodSettingsResponseSchema)
-  .or(z.object({}));
+export const TransactionMethodSettingsResponseSchema = TransactionPixMethodSettingsResponseSchema.or(z.object({}));
 
 export const TransactionPixMethodDataResponseSchema = z.object({
   qrCode: z.string(),
@@ -25,11 +20,7 @@ export const TransactionPixMethodDataResponseSchema = z.object({
   qrCodeImgBase64: z.string().optional().nullable(),
 });
 
-export const TransactionBoletoMethodDataResponseSchema = z.object({
-  barcode: z.string(),
-});
-
-export const TransactionMethodDataResponseSchema = TransactionPixMethodDataResponseSchema.or(TransactionBoletoMethodDataResponseSchema).or(
+export const TransactionMethodDataResponseSchema = TransactionPixMethodDataResponseSchema.or(
   z.object({}),
 );
 
@@ -38,11 +29,7 @@ export const TransactionPixPaidDataResponseSchema = z.object({
   endToEndId: z.string(),
 });
 
-export const TransactionBoletoPaidDataResponseSchema = z.object({
-  payer: z.string(),
-});
-
-export const TransactionPaidDataResponseSchema = TransactionPixPaidDataResponseSchema.or(TransactionBoletoPaidDataResponseSchema).or(
+export const TransactionPaidDataResponseSchema = TransactionPixPaidDataResponseSchema.or(
   z.object({}),
 );
 export const TransactionItemResponseSchema = z.object({
@@ -126,11 +113,8 @@ export type TransactionResponseDto = z.infer<typeof TransactionResponseSchema>;
 export type TransactionItemResponseDto = z.infer<typeof TransactionItemResponseSchema>;
 export type TransactionShippingResponseDto = z.infer<typeof TransactionShippingResponseSchema>;
 export type TransactionPixMethodSettingsResponseDto = z.infer<typeof TransactionPixMethodSettingsResponseSchema>;
-export type TransactionBoletoMethodSettingsResponseDto = z.infer<typeof TransactionBoletoMethodSettingsResponseSchema>;
 export type TransactionPixMethodDataResponseDto = z.infer<typeof TransactionPixMethodDataResponseSchema>;
-export type TransactionBoletoMethodDataResponseDto = z.infer<typeof TransactionBoletoMethodDataResponseSchema>;
 export type TransactionPixPaidDataResponseDto = z.infer<typeof TransactionPixPaidDataResponseSchema>;
-export type TransactionBoletoPaidDataResponseDto = z.infer<typeof TransactionBoletoPaidDataResponseSchema>;
 export type TransactionSplitResponseDto = z.infer<typeof TransactionSplitResponseSchema>;
 export type TransactionCustomerResponseDto = z.infer<typeof TransactionCustomerResponseSchema>;
 export type TransactionBillingResponseDto = z.infer<typeof TransactionBillingResponseSchema>;

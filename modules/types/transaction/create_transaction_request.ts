@@ -11,13 +11,7 @@ export const CreateTransactionPixMethodSettingsBodySchema = z.object({
   payerRequest: z.string().max(140).nullable().optional(),
 });
 
-export const CreateTransactionBoletoMethodSettingsBodySchema = z.object({
-  dueAt: ZodSchemas.datetime(),
-});
-
-export const CreateTransactionMethodSettingsBodySchema = CreateTransactionPixMethodSettingsBodySchema.or(
-  CreateTransactionBoletoMethodSettingsBodySchema,
-).or(EmptySchema);
+export const CreateTransactionMethodSettingsBodySchema = CreateTransactionPixMethodSettingsBodySchema.or(EmptySchema);
 
 export const CreateTransactionItemBodySchema = z.object({
   description: z.string(),
@@ -44,7 +38,7 @@ export const CreateTransactionSplitBodySchema = z.object({
 });
 
 export const CreateTransactionCustomerBodySchema = z.object({
-  companyName: ZodSchemas.alphanumeric().max(320).optional(),
+  companyName: ZodSchemas.companyName().optional(),
   personName: ZodSchemas.name(),
   documentType: z.nativeEnum(DocumentType),
   documentNumber: ZodSchemas.document(),
@@ -56,7 +50,7 @@ export const CreateTransactionCustomerBodySchema = z.object({
 });
 
 export const CreateTransactionBillingBodySchema = z.object({
-  companyName: ZodSchemas.alphanumeric().max(320).optional(),
+  companyName: ZodSchemas.companyName().optional(),
   personName: ZodSchemas.name(),
   documentType: z.nativeEnum(DocumentType),
   documentNumber: ZodSchemas.document(),
@@ -93,7 +87,6 @@ export type CreateTransactionBodyDto = z.infer<typeof CreateTransactionBodySchem
 export type CreateTransactionShippingBodyDto = z.infer<typeof CreateTransactionShippingBodySchema>;
 export type CreateTransactionItemBodyDto = z.infer<typeof CreateTransactionItemBodySchema>;
 export type CreateTransactionPixMethodSettingsBodyDto = z.infer<typeof CreateTransactionPixMethodSettingsBodySchema>;
-export type CreateTransactionBoletoMethodSettingsBodyDto = z.infer<typeof CreateTransactionBoletoMethodSettingsBodySchema>;
 export type CreateTransactionSplitBodyDto = z.infer<typeof CreateTransactionSplitBodySchema>;
 export type CreateTransactionCustomerBodyDto = z.infer<typeof CreateTransactionCustomerBodySchema>;
 export type CreateTransactionBillingBodyDto = z.infer<typeof CreateTransactionBillingBodySchema>;

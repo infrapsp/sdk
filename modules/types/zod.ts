@@ -17,13 +17,14 @@ export const ZodSchemas = {
       } else {
         return false;
       }
-    }, { message: 'invalid document' }),
-  cpf: () => z.custom<string>((data) => typeof data === 'string' ? isValidCpf(data) : false, { message: 'invalid document' }),
-  cnpj: () => z.custom<string>((data) => typeof data === 'string' ? isValidCnpj(data) : false, { message: 'invalid document' }),
+    }, { message: 'Invalid document' }),
+  cpf: () => z.custom<string>((data) => typeof data === 'string' ? isValidCpf(data) : false, { message: 'Invalid document' }),
+  cnpj: () => z.custom<string>((data) => typeof data === 'string' ? isValidCnpj(data) : false, { message: 'Invalid document' }),
   alphanumeric: () => z.string().regex(/^[0-9a-zA-Z ]+$/),
   numeric: () => z.string().regex(/^[0-9]+$/),
   phone: () => z.string().regex(/^\+[0-9]{3,15}$/),
-  name: () => z.string().regex(/^([ \u00c0-\u01ffa-zA-Z'\-])+$/i, 'special characters are not allowed').min(5).max(50),
+  name: () => z.string().regex(/^([ \u00c0-\u01ffa-zA-Z'\-])+$/i, 'Special characters are not allowed').min(5).max(50),
+  companyName: () => z.string().regex(/^[A-Z]([a-zA-Z0-9]|[- \._&])*$/i, 'Special characters are not allowed').min(5).max(320),
   stringArray: <T extends z.ZodType>(e: T) => z.preprocess((val) => String(val ?? '').split(','), z.array(e)),
   booleanString: () => z.string().transform((data) => JSON.parse(data)).pipe(z.boolean()),
 };
@@ -41,11 +42,11 @@ export const ZodHelpers = {
 export const ZodRefines = {
   matchDocument: (ctx: z.RefinementCtx, number: string, type: DocumentType) => {
     if (type === DocumentType.CPF && number.length !== 11) {
-      ZodHelpers.issue(ctx, 'documentNumber', 'invalid document');
+      ZodHelpers.issue(ctx, 'documentNumber', 'Invalid document');
     }
 
     if (type === DocumentType.CNPJ && number.length !== 14) {
-      ZodHelpers.issue(ctx, 'documentNumber', 'invalid document');
+      ZodHelpers.issue(ctx, 'documentNumber', 'Invalid document');
     }
   },
 
@@ -57,7 +58,7 @@ export const ZodRefines = {
     }
 
     if (range > maximumRangeMs) {
-      ZodHelpers.issue(ctx, fieldName ?? '', 'date range surpasses maximum range of ' + maximumRangeMs + 'ms');
+      ZodHelpers.issue(ctx, fieldName ?? '', 'Date range surpasses maximum range of ' + maximumRangeMs + 'ms');
     }
   },
 

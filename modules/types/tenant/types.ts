@@ -3,7 +3,6 @@ export type ItauProviderConfig = {
   certificateCsr: string;
   clientId: string;
   clientSecret: string;
-  apiKeyId: string;
   pixKey: string;
   transferPersonDocument: string;
   transferAccountBranch: string;

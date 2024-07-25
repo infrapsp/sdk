@@ -19,7 +19,6 @@ export enum TransactionRefundStatus {
 
 export enum PaymentMethod {
   PIX = 'pix',
-  BOLETO = 'boleto',
   UNKNOWN = 'unknown',
 }
 
@@ -40,27 +39,8 @@ export type PixPaidData = {
   endToEndId: string;
 };
 
-export type BoletoMethodSettings = {
-  dueAt: Date;
-};
+export type TransactionMethodSettings = EmptyObject | PixMethodSettings;
 
-export type BoletoMethodData = {
-  barcode: string;
-};
+export type TransactionMethodData = EmptyObject | PixMethodData;
 
-export type BoletoPaidData = {
-  payer: string;
-};
-
-export type TransactionMethodSettings = EmptyObject | PixMethodSettings | BoletoMethodSettings;
-
-export type TransactionMethodData = EmptyObject | PixMethodData | BoletoMethodData;
-
-export type TransactionPaidData = EmptyObject | PixPaidData | BoletoPaidData;
-
-/* for table
-  export type TransactionPaymentLinkSettings = {
-  expirationDate: Date;
-  availablePaymentMethods: PaymentMethod[];
-  lastTransactionId: string;
-}; */
+export type TransactionPaidData = EmptyObject | PixPaidData;

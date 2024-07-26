@@ -1,0 +1,25 @@
+import { z } from 'https://deno.land/x/zod@v3.23.4/mod.ts';
+import { ZodSchemas } from '../../../modules/types/zod.ts';
+import { InvoiceStatus } from '../../../modules/types/invoice/types.ts';
+
+export const InvoiceLineResponseSchema = z.object({
+  id: ZodSchemas.nanoid(),
+  description: z.string(),
+  amount: z.number().int(),
+  createdAt: z.date(),
+});
+
+export const InvoiceResponseSchema = z.object({
+  id: ZodSchemas.nanoid(),
+  merchantId: ZodSchemas.nanoid(),
+  status: z.nativeEnum(InvoiceStatus),
+  totalAmount: z.number().int(),
+  period: z.string().length(6),
+  number: z.string().optional().nullable(),
+  contentUrl: z.string().optional().nullable(),
+  lines: z.array(InvoiceLineResponseSchema),
+  createdAt: z.date(),
+  updatedAt: z.date(),
+});
+
+export type InvoiceResponseDto = z.infer<typeof InvoiceResponseSchema>;

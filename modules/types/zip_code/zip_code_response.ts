@@ -7,7 +7,7 @@ export const ZipCodeResponse = z.object({
   city: z.string(),
   ibgeCode: z.string(),
   neighborhood: z.string().optional().nullable(),
-  name: z.string(),
+  name: z.string().optional().nullable(),
   zipCode: z.string(),
 });
 

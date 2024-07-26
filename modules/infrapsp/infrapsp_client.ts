@@ -11,12 +11,14 @@ import { PayableHandler } from '../../modules/infrapsp/handlers/payable_handler.
 import { PayableSummaryHandler } from '../../modules/infrapsp/handlers/payable_summary_handler.ts';
 import { TransactionRefundHandler } from '../../modules/infrapsp/handlers/transaction_refund_handler.ts';
 import { ZipCodeHandler } from '../../modules/infrapsp/handlers/zip_code_handler.ts';
+import { InvoiceHandler } from '../../modules/infrapsp/handlers/invoice_handler.ts';
 
 export class InfraPSPClient {
   private readonly apiInstance: KyInstance;
 
   public readonly apiKey: ApiKeyHandler;
   public readonly externalAuth: ExternalAuthHandler;
+  public readonly invoices: InvoiceHandler;
   public readonly merchants: MerchantHandler;
   public readonly payables: PayableHandler;
   public readonly payableSummary: PayableSummaryHandler;
@@ -38,6 +40,7 @@ export class InfraPSPClient {
 
     this.apiKey = new ApiKeyHandler(this.apiInstance);
     this.externalAuth = new ExternalAuthHandler(this.apiInstance);
+    this.invoices = new InvoiceHandler(this.apiInstance);
     this.merchants = new MerchantHandler(this.apiInstance);
     this.payables = new PayableHandler(this.apiInstance);
     this.payableSummary = new PayableSummaryHandler(this.apiInstance);

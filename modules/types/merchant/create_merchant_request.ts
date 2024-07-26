@@ -2,7 +2,6 @@ import { z } from 'https://deno.land/x/zod@v3.23.4/mod.ts';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
 import { DocumentType, MerchantAutoTransferFrequency } from '../../../modules/types/merchant/types.ts';
 import { ZodHelpers, ZodRefines } from '../../../modules/types/zod.ts';
-import { CreateAddressBodySchema } from '../../../modules/types/address/create_address_request.ts';
 
 export const CreateMerchantAutoTransferSettingsBodySchema = z.object({
   isEnabled: z.literal(false),
@@ -31,7 +30,13 @@ export const CreateMerchantSettingsBodySchema = z.object({
 
 export const CreateMerchantBillingBodySchema = z.object({
   email: z.string().email().max(128),
-  address: CreateAddressBodySchema,
+  address: z.object({
+    line1: z.string().max(200),
+    line2: z.string().max(100).optional(),
+    number: ZodSchemas.alphanumeric().max(10),
+    neighborhood: z.string().max(100),
+    zipCode: ZodSchemas.numeric().max(15),
+  }),
 });
 
 export const CreateMerchantBodySchema = z.object({

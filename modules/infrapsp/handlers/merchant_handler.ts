@@ -1,7 +1,6 @@
 import { KyInstance, Options } from 'npm:ky@1.2.4';
 import { AsyncResult } from '../../../modules/types/result.ts';
 import { validateResponse } from '../../../modules/infrapsp/validate_response.ts';
-import { CreateMerchantBodyDto } from '../../../modules/types/merchant/create_merchant_request.ts';
 import { MerchantResponseDto } from '../../../modules/types/merchant/merchant_response.ts';
 import { UpdateMerchantBodyDto } from '../../../modules/types/merchant/update_merchant_request.ts';
 import { FindMerchantQueryDto } from '../../../modules/types/merchant/find_merchant_request.ts';
@@ -10,20 +9,6 @@ export class MerchantHandler {
   private readonly basePath = 'v1/merchants';
 
   constructor(private readonly kyInstance: KyInstance) {}
-
-  async create(body: CreateMerchantBodyDto, options?: Options): AsyncResult<MerchantResponseDto> {
-    const url = 'merchants';
-
-    const response = await this.kyInstance.post(url, {
-      ...options,
-      body: JSON.stringify(body),
-    });
-
-    const data = await response.json<MerchantResponseDto>();
-    const status = response.status;
-
-    return validateResponse({ data, status });
-  }
 
   async find(id: string, options?: Options): AsyncResult<MerchantResponseDto> {
     const url = `${this.basePath}/${id}`;

@@ -5,9 +5,7 @@ export enum Gender {
 }
 
 export enum MerchantStatus {
-  CREATED = 'created',
-  APPROVED = 'approved',
-  REFUSED = 'refused',
+  ACTIVE = 'active',
   SUSPENDED = 'suspended',
   BLOCKED = 'blocked',
 }

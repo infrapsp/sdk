@@ -19,6 +19,7 @@ export type TransferPixMethodDestination = {
   bank?: string;
   ispb?: string;
   documentNumber?: string;
+  receipt?: string;
   accountType?: string;
   documentType?: DocumentType;
 };

@@ -25,7 +25,6 @@ export const TransactionMethodDataResponseSchema = TransactionPixMethodDataRespo
 );
 
 export const TransactionPixPaidDataResponseSchema = z.object({
-  payer: z.string(),
   endToEndId: z.string(),
 });
 

@@ -35,7 +35,6 @@ export type PixMethodData = {
 };
 
 export type PixPaidData = {
-  payer: string;
   endToEndId: string;
 };
 

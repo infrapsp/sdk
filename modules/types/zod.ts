@@ -21,6 +21,7 @@ export const ZodSchemas = {
   cpf: () => z.custom<string>((data) => typeof data === 'string' ? isValidCpf(data) : false, { message: 'Invalid document' }),
   cnpj: () => z.custom<string>((data) => typeof data === 'string' ? isValidCnpj(data) : false, { message: 'Invalid document' }),
   alphanumeric: () => z.string().regex(/^[0-9a-zA-Z ]+$/),
+  addressNumber: () => z.string().regex(/^[0-9a-zA-Z \-\/]+$/),
   numeric: () => z.string().regex(/^[0-9]+$/),
   phone: () => z.string().regex(/^\+[0-9]{3,15}$/),
   name: () => z.string().regex(/^([ \u00c0-\u01ffa-zA-Z'\-])+$/i, 'Special characters are not allowed').min(5).max(50),

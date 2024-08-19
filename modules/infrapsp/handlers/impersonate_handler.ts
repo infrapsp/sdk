@@ -37,4 +37,18 @@ export class ImpersonateHandler {
 
     return validateResponse({ data, status });
   }
+
+  async findImpersonate(
+    options: Options = {},
+  ): AsyncResult<{ merchantId: string | null }> {
+    const url = this.basePath;
+    const response = await this.kyInstance.get(`${url}`, {
+      ...options,
+    });
+
+    const data = await response.json<{ merchantId: string | null }>();
+    const status = response.status;
+
+    return validateResponse({ data, status });
+  }
 }

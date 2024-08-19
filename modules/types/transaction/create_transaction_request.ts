@@ -50,7 +50,7 @@ export const CreateTransactionCustomerBodySchema = z.object({
 });
 
 export const CreateTransactionBillingBodySchema = z.object({
-  companyName: ZodSchemas.companyName().optional(),
+  companyName: z.string().max(320).optional(),
   personName: ZodSchemas.name(),
   documentType: z.nativeEnum(DocumentType),
   documentNumber: ZodSchemas.document(),

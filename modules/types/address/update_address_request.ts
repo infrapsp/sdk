@@ -4,7 +4,7 @@ import { ZodSchemas } from '../../../modules/types/zod.ts';
 export const UpdateAddressBodySchema = z.object({
   line1: z.string().max(200),
   line2: z.string().max(100).optional(),
-  number: ZodSchemas.addressNumber().max(10),
+  number: z.string().max(10),
   neighborhood: z.string().max(100),
   zipCode: ZodSchemas.numeric().max(15),
   state: z.string().max(60),

@@ -26,8 +26,14 @@ export const UpdateMerchantAutoTransferSettingsBodySchema = z.object({
   return dto;
 });
 
+export const UpdateMerchantEmailSettingsBodySchema = z.object({
+  transactionFieldId: z.enum(['id', 'externalId']).optional(),
+  transactionFieldName: z.enum(['transaction', 'order']).optional(),
+  isEnabled: z.boolean().optional(),
+});
+
 export const UpdateMerchantSettingsBodySchema = z.object({
-  isEmailNotificationEnabled: z.boolean().optional(),
+  emailSettings: UpdateMerchantEmailSettingsBodySchema.optional(),
   autoTransferSettings: UpdateMerchantAutoTransferSettingsBodySchema.optional(),
 });
 

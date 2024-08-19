@@ -13,8 +13,14 @@ export const MerchantAutoTransferSettingsResponseSchema = z.object({
   date: z.number().min(1).max(25).optional(),
 }));
 
+export const MerchantEmailSettingsResponseSchema = z.object({
+  transactionFieldId: z.enum(['id', 'externalId']),
+  transactionFieldName: z.enum(['transaction', 'order']),
+  isEnabled: z.boolean(),
+});
+
 export const MerchantSettingsResponseSchema = z.object({
-  isEmailNotificationEnabled: z.boolean(),
+  emailSettings: MerchantEmailSettingsResponseSchema,
   autoTransferSettings: MerchantAutoTransferSettingsResponseSchema,
   updatedAt: z.date(),
 });

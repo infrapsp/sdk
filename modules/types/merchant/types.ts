@@ -27,3 +27,9 @@ export type MerchantAutoTransferSettings = { isEnabled: false } | {
   frequency: MerchantAutoTransferFrequency;
   day?: number;
 };
+
+export type MerchantEmailSettings = {
+  transactionFieldId: string;
+  transactionFieldName: string;
+  isEnabled: boolean;
+};

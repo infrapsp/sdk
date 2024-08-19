@@ -5,7 +5,6 @@ import { ZodSchemas } from '../../../modules/types/zod.ts';
 export const CreateApiKeyBodySchema = z.object({
   role: z.nativeEnum(Role).optional(),
   merchantId: ZodSchemas.nanoid().optional(),
-  tenantId: ZodSchemas.nanoid().optional(),
   description: z.string(),
   expiresAt: ZodSchemas.datetime().optional().nullable(),
 });

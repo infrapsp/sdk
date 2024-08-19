@@ -37,7 +37,7 @@ export const UpdateMerchantBillingBodySchema = z.object({
 }).partial();
 
 export const UpdateMerchantBodySchema = z.object({
-  companyName: ZodSchemas.companyName(),
+  companyName: z.string().max(320),
   tradingName: z.string().max(120),
   personName: ZodSchemas.name(),
   personEmail: z.string().email().max(128),

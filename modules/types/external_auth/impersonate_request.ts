@@ -3,7 +3,6 @@ import { ZodSchemas } from '../../../modules/types/zod.ts';
 
 export const ImpersonateBodySchema = z.object({
   merchantId: ZodSchemas.nanoid(),
-  tenantId: ZodSchemas.nanoid().optional(),
 });
 
 export type ImpersonateBodyDto = z.infer<typeof ImpersonateBodySchema>;

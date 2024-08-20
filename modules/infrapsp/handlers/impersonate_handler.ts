@@ -18,10 +18,15 @@ export class ImpersonateHandler {
       ...options,
     });
 
-    const data = await response.json<void>();
-    const status = response.status;
+    if (response.status >= 200 && response.status < 300) {
+      return validateResponse({ data: undefined, status: response.status });
+    } else {
+      const data = await response.json<void>();
 
-    return validateResponse({ data, status });
+      const status = response.status;
+
+      return validateResponse({ data, status });
+    }
   }
 
   async removeImpersonate(
@@ -32,10 +37,15 @@ export class ImpersonateHandler {
       ...options,
     });
 
-    const data = await response.json<void>();
-    const status = response.status;
+    if (response.status >= 200 && response.status < 300) {
+      return validateResponse({ data: undefined, status: response.status });
+    } else {
+      const data = await response.json<void>();
 
-    return validateResponse({ data, status });
+      const status = response.status;
+
+      return validateResponse({ data, status });
+    }
   }
 
   async findImpersonate(

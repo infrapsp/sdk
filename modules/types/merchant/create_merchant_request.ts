@@ -24,7 +24,6 @@ export const CreateMerchantAutoTransferSettingsBodySchema = z.object({
 });
 
 export const CreateMerchantSettingsBodySchema = z.object({
-  isEmailNotificationEnabled: z.boolean().optional(),
   autoTransferSettings: CreateMerchantAutoTransferSettingsBodySchema.optional(),
 });
 

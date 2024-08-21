@@ -7,6 +7,9 @@ export const TransactionRefundResponseSchema = z.object({
   amount: z.number(),
   status: z.nativeEnum(TransactionRefundStatus),
   refundedAt: z.date().optional().nullable(),
+  refundedData: z.object({
+    rtrId: z.string().optional(),
+  }),
   createdAt: z.date(),
   updatedAt: z.date(),
 });

@@ -10,7 +10,6 @@ export const UpdateMerchantAutoTransferSettingsBodySchema = z.object({
   isEnabled: z.literal(false),
 }).or(z.object({
   isEnabled: z.literal(true),
-  pixDictKey: z.string(),
   frequency: z.nativeEnum(MerchantAutoTransferFrequency),
   day: z.number().min(0).max(6).optional(),
   date: z.number().min(1).max(25).optional(),

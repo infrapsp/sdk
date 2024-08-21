@@ -23,7 +23,6 @@ export enum MerchantAutoTransferFrequency {
 
 export type MerchantAutoTransferSettings = { isEnabled: false } | {
   isEnabled: true;
-  pixDictKey: string;
   frequency: MerchantAutoTransferFrequency;
   day?: number;
 };

@@ -74,7 +74,6 @@ export * from './utils/jwt.ts';
 export * from './utils/md5.ts';
 export * from './utils/money.ts';
 export * from './utils/nanoid.ts';
-export * from './utils/object_to_file.ts';
 export * from './utils/sleep.ts';
 export * from './utils/sort.ts';
 export * from './errors/catcher.ts';

@@ -1,6 +1,7 @@
 import { z } from 'https://deno.land/x/zod@v3.23.4/mod.ts';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
 import { FeeRuleEntity, FeeRuleMethod } from '../../../modules/types/fee_rule/types.ts';
+import { ZodHelpers } from '../../../modules/types/zod.ts';
 
 export const CreateFeeRuleBodySchema = z.object({
   merchantId: ZodSchemas.nanoid().optional(),
@@ -14,6 +15,11 @@ export const CreateFeeRuleBodySchema = z.object({
   fundSchedule: z.number(),
   startDate: ZodSchemas.datetime(),
   endDate: ZodSchemas.datetime(),
+}).transform((dto, ctx) => {
+  if (dto.maxAmount < dto.minAmount) {
+    ZodHelpers.issue(ctx, 'maxAmount', 'Must be greater than minAmount.');
+  }
+  return dto;
 });
 
 export type CreateFeeRuleBodyDto = z.infer<typeof CreateFeeRuleBodySchema>;

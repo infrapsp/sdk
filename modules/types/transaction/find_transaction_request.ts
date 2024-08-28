@@ -11,6 +11,7 @@ export const FindTransactionQuerySchema = BaseQuerySchema.and(
     search: z.string().max(128).optional(),
     notStatus: ZodSchemas.stringArray(z.nativeEnum(TransactionStatus)).optional(),
     sortField: z.enum(['createdAt', 'updatedAt', 'paidAt', 'refundedAt']).default('createdAt'),
+    externalId: z.string().max(128).optional(),
     sortOrder: z.nativeEnum(SortOrder).default(SortOrder.DESC),
   }),
 ).transform((dto, ctx) => {

@@ -21,6 +21,7 @@ export const MerchantEmailSettingsResponseSchema = z.object({
 export const MerchantSettingsResponseSchema = z.object({
   emailSettings: MerchantEmailSettingsResponseSchema,
   autoTransferSettings: MerchantAutoTransferSettingsResponseSchema,
+  createdAt: z.date(),
   updatedAt: z.date(),
 });
 

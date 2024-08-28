@@ -13,6 +13,7 @@ import { TransactionRefundHandler } from '../../modules/infrapsp/handlers/transa
 import { ZipCodeHandler } from '../../modules/infrapsp/handlers/zip_code_handler.ts';
 import { InvoiceHandler } from '../../modules/infrapsp/handlers/invoice_handler.ts';
 import { FeeRuleHandler } from '../../modules/infrapsp/handlers/fee_rule_handler.ts';
+import { OperationHandler } from '../../modules/infrapsp/handlers/operation_handler.ts';
 
 export class InfraPSPClient {
   private readonly apiInstance: KyInstance;
@@ -30,6 +31,7 @@ export class InfraPSPClient {
   public readonly balance: BalanceHandler;
   public readonly zipCode: ZipCodeHandler;
   public readonly feeRule: FeeRuleHandler;
+  public readonly operations: OperationHandler;
 
   constructor(config: InfraPSPClientConfig) {
     this.apiInstance = ky.create({
@@ -53,5 +55,6 @@ export class InfraPSPClient {
     this.balance = new BalanceHandler(this.apiInstance);
     this.zipCode = new ZipCodeHandler(this.apiInstance);
     this.feeRule = new FeeRuleHandler(this.apiInstance);
+    this.operations = new OperationHandler(this.apiInstance);
   }
 }

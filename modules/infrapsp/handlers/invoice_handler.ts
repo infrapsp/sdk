@@ -24,6 +24,9 @@ export class InvoiceHandler {
   async findMany(query?: Partial<FindInvoiceQueryDto>, options?: Options): AsyncResult<InvoiceResponseDto[]> {
     const queryPath = new URLSearchParams(query as unknown as Record<string, string>);
 
+    if (query?.createdAtGte) queryPath.set('createdAtGte', query.createdAtGte.toISOString());
+    if (query?.createdAtLte) queryPath.set('createdAtLte', query.createdAtLte.toISOString());
+
     const url = query ? this.basePath + '?' + queryPath : this.basePath;
 
     const response = await this.kyInstance.get(url, options);

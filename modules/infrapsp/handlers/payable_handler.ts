@@ -23,6 +23,9 @@ export class PayableHandler {
   async findMany(query?: Partial<FindPayableQueryDto>, options?: Options): AsyncResult<PayableResponseDto[]> {
     const queryPath = new URLSearchParams(query as unknown as Record<string, string>);
 
+    if (query && 'paymentDateLte' in query && query.paymentDateLte) queryPath.set('paymentDateLte', query.paymentDateLte.toISOString());
+    if (query && 'paymentDateGte' in query && query.paymentDateGte) queryPath.set('paymentDateGte', query.paymentDateGte.toISOString());
+
     const url = query ? this.basePath + '?' + queryPath : this.basePath;
 
     const response = await this.kyInstance.get(url, options);

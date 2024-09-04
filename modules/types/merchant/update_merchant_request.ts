@@ -1,7 +1,7 @@
 import { z } from 'https://deno.land/x/zod@v3.23.4/mod.ts';
 import { BaseParamsSchema } from '../../../modules/types/base/requests.ts';
 import { ZodHelpers, ZodSchemas } from '../../../modules/types/zod.ts';
-import { MerchantAutoTransferFrequency } from '../../../modules/types/merchant/types.ts';
+import { MerchantAutoTransferFrequency, MerchantStatus } from '../../../modules/types/merchant/types.ts';
 import { UpdateAddressBodySchema } from '../../../modules/types/address/update_address_request.ts';
 
 export const UpdateMerchantParamsSchema = BaseParamsSchema;
@@ -57,4 +57,17 @@ export const UpdateMerchantBodySchema = z.object({
   return dto;
 });
 
+export const RestrictUpdateMerchantBodySchema = z.object({
+  tierId: ZodSchemas.nanoid(),
+  status: z.nativeEnum(MerchantStatus),
+  externalId: z.string().max(128),
+}).partial().transform((dto, ctx) => {
+  if (Object.keys(dto).length === 0) {
+    ZodHelpers.issue(ctx, 'body', 'At least one field must be provided');
+  }
+
+  return dto;
+});
+
 export type UpdateMerchantBodyDto = z.infer<typeof UpdateMerchantBodySchema>;
+export type RestrictUpdateMerchantBodyDto = z.infer<typeof RestrictUpdateMerchantBodySchema>;

@@ -38,6 +38,7 @@ export const MerchantBillingResponseSchema = z.object({
 
 export const MerchantResponseSchema = z.object({
   id: ZodSchemas.nanoid(),
+  tierId: ZodSchemas.nanoid(),
   documentNumber: z.string(),
   documentType: z.nativeEnum(DocumentType),
   externalId: z.string(),

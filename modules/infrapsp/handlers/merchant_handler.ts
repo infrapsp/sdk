@@ -2,11 +2,12 @@ import { KyInstance, Options } from 'npm:ky@1.2.4';
 import { AsyncResult } from '../../../modules/types/result.ts';
 import { validateResponse } from '../../../modules/infrapsp/validate_response.ts';
 import { MerchantResponseDto } from '../../../modules/types/merchant/merchant_response.ts';
-import { UpdateMerchantBodyDto } from '../../../modules/types/merchant/update_merchant_request.ts';
+import { RestrictUpdateMerchantBodyDto, UpdateMerchantBodyDto } from '../../../modules/types/merchant/update_merchant_request.ts';
 import { FindMerchantQueryDto } from '../../../modules/types/merchant/find_merchant_request.ts';
 
 export class MerchantHandler {
   private readonly basePath = 'v1/merchants';
+  private readonly restrictBasePath = 'v1/admin/merchants';
 
   constructor(private readonly kyInstance: KyInstance) {}
 
@@ -47,12 +48,15 @@ export class MerchantHandler {
     return validateResponse({ data, status: response.status });
   }
 
+  async update(id: string, body: UpdateMerchantBodyDto, options?: Options & { restrict?: false }): AsyncResult<MerchantResponseDto>;
+  async update(id: string, body: RestrictUpdateMerchantBodyDto, options?: Options & { restrict?: true }): AsyncResult<MerchantResponseDto>;
   async update(
     id: string,
-    body: UpdateMerchantBodyDto,
-    options: Options = {},
+    body: UpdateMerchantBodyDto | RestrictUpdateMerchantBodyDto,
+    options: Options & { restrict?: boolean } = { restrict: false },
   ): AsyncResult<MerchantResponseDto> {
-    const url = this.basePath;
+    const url = options.restrict ? this.restrictBasePath : this.basePath;
+
     const response = await this.kyInstance.patch(`${url}/${id}`, {
       ...options,
       body: JSON.stringify(body),

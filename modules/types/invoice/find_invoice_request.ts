@@ -13,8 +13,6 @@ export const FindInvoiceQuerySchema = BaseQuerySchema.and(
     period: ZodSchemas.alphanumeric().length(6).optional(),
     status: ZodSchemas.stringArray(z.nativeEnum(InvoiceStatus)).optional(),
     notStatus: ZodSchemas.stringArray(z.nativeEnum(InvoiceStatus)).optional(),
-    number: ZodSchemas.alphanumeric().max(128).optional(),
-    contentUrl: z.string().optional(),
     sortField: z.enum(['createdAt', 'paymentDate']).default('createdAt'),
     sortOrder: z.nativeEnum(SortOrder).default(SortOrder.DESC),
   }),

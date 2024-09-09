@@ -9,14 +9,19 @@ export const InvoiceLineResponseSchema = z.object({
   createdAt: z.date(),
 });
 
+export const InvoiceIssuedDataResponseSchema = z.object({
+  number: z.string().optional(),
+  url: z.string().optional(),
+  checkCode: z.string().optional(),
+});
+
 export const InvoiceResponseSchema = z.object({
   id: ZodSchemas.nanoid(),
   merchantId: ZodSchemas.nanoid(),
   status: z.nativeEnum(InvoiceStatus),
   totalAmount: z.number().int(),
   period: z.string().length(6),
-  number: z.string().optional().nullable(),
-  contentUrl: z.string().optional().nullable(),
+  issuedData: InvoiceIssuedDataResponseSchema,
   lines: z.array(InvoiceLineResponseSchema),
   createdAt: z.date(),
   updatedAt: z.date(),

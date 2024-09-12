@@ -1,7 +1,7 @@
 import { z } from 'https://deno.land/x/zod@v3.23.4/mod.ts';
 import { PaymentMethod } from '../../../modules/types/transaction/types.ts';
 import { DocumentType, Gender } from '../../../modules/types/merchant/types.ts';
-import { ZodRefines, ZodSchemas } from '../../../modules/types/zod.ts';
+import { ZodHelpers, ZodRefines, ZodSchemas } from '../../../modules/types/zod.ts';
 import { CreateAddressBodySchema } from '../../../modules/types/address/create_address_request.ts';
 import { EmptySchema } from '../../../modules/types/base/requests.ts';
 
@@ -47,6 +47,10 @@ export const CreateTransactionCustomerBodySchema = z.object({
   phones: z.array(ZodSchemas.phone()),
   address: CreateAddressBodySchema,
   email: z.string().email().max(128),
+}).transform((dto, ctx) => {
+  ZodRefines.matchDocument(ctx, dto.documentNumber, dto.documentType);
+  ZodRefines.hasCompanyData(ctx, dto.companyName, dto.documentType, 'companyName');
+  return dto;
 });
 
 export const CreateTransactionBillingBodySchema = z.object({
@@ -55,31 +59,29 @@ export const CreateTransactionBillingBodySchema = z.object({
   documentType: z.nativeEnum(DocumentType),
   documentNumber: ZodSchemas.document(),
   address: CreateAddressBodySchema,
+}).transform((dto, ctx) => {
+  ZodRefines.matchDocument(ctx, dto.documentNumber, dto.documentType);
+  ZodRefines.hasCompanyData(ctx, dto.companyName, dto.documentType, 'companyName');
+  return dto;
 });
 
 export const CreateTransactionBodySchema = z.object({
+  preTransactionId: ZodSchemas.nanoid().optional(),
+  amount: z.number().positive().int().optional(),
   method: z.nativeEnum(PaymentMethod),
   methodSettings: CreateTransactionMethodSettingsBodySchema,
   items: z.array(CreateTransactionItemBodySchema),
   shipping: CreateTransactionShippingBodySchema.optional().nullable(),
-  amount: z.number().positive().int(),
-  customer: CreateTransactionCustomerBodySchema.optional(),
-  billing: CreateTransactionBillingBodySchema.optional(),
+  customer: CreateTransactionCustomerBodySchema.optional().nullable(),
+  billing: CreateTransactionBillingBodySchema.optional().nullable(),
   notifyUrl: z.string().url().optional(),
   splits: z.array(CreateTransactionSplitBodySchema).optional().default([]),
   externalId: z.string().max(128).optional(),
   metadata: z.record(z.string()).optional(),
 }).transform((dto, ctx) => {
-  if (dto.customer) {
-    ZodRefines.matchDocument(ctx, dto.customer.documentNumber, dto.customer.documentType);
-    ZodRefines.hasCompanyData(ctx, dto.customer.companyName, dto.customer.documentType, 'customer.companyName');
+  if (!dto.preTransactionId) {
+    if (!dto.amount) ZodHelpers.issue(ctx, 'amount', 'Amount is required when preTransactionId is not present');
   }
-
-  if (dto.billing) {
-    ZodRefines.matchDocument(ctx, dto.billing.documentNumber, dto.billing.documentType);
-    ZodRefines.hasCompanyData(ctx, dto.billing.companyName, dto.billing.documentType, 'billing.companyName');
-  }
-
   return dto;
 });
 

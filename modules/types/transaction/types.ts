@@ -1,4 +1,6 @@
 import { EmptyObject } from '../../../modules/types/base/types.ts';
+// import { DocumentType, Gender } from '../../../modules/types/merchant/types.ts';
+// import { Address } from '../../../modules/types/address/types.ts';
 
 export enum TransactionStatus {
   CREATED = 'created',

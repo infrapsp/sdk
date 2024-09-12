@@ -8,6 +8,7 @@ export const FindMerchantQuerySchema = BaseQuerySchema.and(
   z.object({
     status: ZodSchemas.stringArray(z.nativeEnum(MerchantStatus)).optional(),
     notStatus: ZodSchemas.stringArray(z.nativeEnum(MerchantStatus)).optional(),
+    tierIds: ZodSchemas.stringArray(ZodSchemas.nanoid()).optional(),
     merchantIds: z.string().transform((v) => (v ?? '').split(',')).optional(),
     sortField: z.enum(['createdAt', 'updatedAt']).default('createdAt'),
     sortOrder: z.nativeEnum(SortOrder).default(SortOrder.DESC),

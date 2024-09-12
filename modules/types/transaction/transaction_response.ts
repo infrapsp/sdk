@@ -84,6 +84,7 @@ export const TransactionStatusResponseSchema = z.object({
 export const TransactionResponseSchema = z.object({
   id: ZodSchemas.nanoid(),
   merchantId: ZodSchemas.nanoid(),
+  preTransactionId: ZodSchemas.nanoid().nullable().optional(),
   status: z.nativeEnum(TransactionStatus),
   statusMessage: z.string(),
   statusHistory: z.array(TransactionStatusResponseSchema),

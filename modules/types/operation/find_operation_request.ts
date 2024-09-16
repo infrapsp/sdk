@@ -17,8 +17,6 @@ export const FindOperationQuerySchema = BaseQuerySchema.and(
     paymentDateGte: ZodSchemas.datetime().optional(),
   }),
 ).transform((dto, ctx) => {
-  ZodRefines.validDateRange(ctx, dto.createdAtGte, dto.createdAtLte, 1000 * 60 * 60 * 24 * 30 * 12, 'createdAt');
-
   // paymentDate validation
   if ((dto.paymentDateGte && !dto.paymentDateLte) || (dto.paymentDateLte && !dto.paymentDateGte)) {
     ZodHelpers.issue(ctx, 'paymentDate', 'should inform both paymentDateGte and paymentDateLte');

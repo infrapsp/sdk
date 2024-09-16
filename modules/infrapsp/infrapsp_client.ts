@@ -16,12 +16,15 @@ import { FeeRuleHandler } from '../../modules/infrapsp/handlers/fee_rule_handler
 import { OperationHandler } from '../../modules/infrapsp/handlers/operation_handler.ts';
 import { TierHandler } from '../../modules/infrapsp/handlers/tier_handler.ts';
 import { WebhookHandler } from '../../modules/infrapsp/handlers/webhook_handler.ts';
+import { CheckoutHandler } from '../../modules/infrapsp/handlers/checkout_handler.ts';
+import { PreTransactionHandler } from '../../modules/infrapsp/handlers/pre_transaction_handler.ts';
 
 export class InfraPSPClient {
   private readonly apiInstance: KyInstance;
 
   public readonly apiKey: ApiKeyHandler;
   public readonly balance: BalanceHandler;
+  public readonly checkout: CheckoutHandler;
   public readonly externalAuth: ExternalAuthHandler;
   public readonly feeRule: FeeRuleHandler;
   public readonly impersonate: ImpersonateHandler;
@@ -29,6 +32,7 @@ export class InfraPSPClient {
   public readonly merchants: MerchantHandler;
   public readonly payables: PayableHandler;
   public readonly payableSummary: PayableSummaryHandler;
+  public readonly preTransactions: PreTransactionHandler;
   public readonly transactions: TransactionHandler;
   public readonly transactionRefunds: TransactionRefundHandler;
   public readonly transfers: TransferHandler;
@@ -48,6 +52,7 @@ export class InfraPSPClient {
 
     this.apiKey = new ApiKeyHandler(this.apiInstance);
     this.balance = new BalanceHandler(this.apiInstance);
+    this.checkout = new CheckoutHandler(this.apiInstance);
     this.externalAuth = new ExternalAuthHandler(this.apiInstance);
     this.feeRule = new FeeRuleHandler(this.apiInstance);
     this.impersonate = new ImpersonateHandler(this.apiInstance);
@@ -55,6 +60,7 @@ export class InfraPSPClient {
     this.merchants = new MerchantHandler(this.apiInstance);
     this.payables = new PayableHandler(this.apiInstance);
     this.payableSummary = new PayableSummaryHandler(this.apiInstance);
+    this.preTransactions = new PreTransactionHandler(this.apiInstance);
     this.transactions = new TransactionHandler(this.apiInstance);
     this.transactionRefunds = new TransactionRefundHandler(this.apiInstance);
     this.transfers = new TransferHandler(this.apiInstance);

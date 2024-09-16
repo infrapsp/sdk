@@ -1,9 +1,9 @@
 import { z } from 'https://deno.land/x/zod@v3.23.4/mod.ts';
 import { PaymentMethod } from '../../../modules/types/transaction/types.ts';
 import { DocumentType, Gender } from '../../../modules/types/merchant/types.ts';
-import { ZodHelpers, ZodRefines, ZodSchemas } from '../../../modules/types/zod.ts';
+import { ZodRefines, ZodSchemas } from '../../../modules/types/zod.ts';
 import { CreateAddressBodySchema } from '../../../modules/types/address/create_address_request.ts';
-import { EmptySchema } from '../../../modules/types/base/requests.ts';
+import { BaseParamsSchema, EmptySchema } from '../../../modules/types/base/requests.ts';
 
 export const CreateTransactionPixMethodSettingsBodySchema = z.object({
   expiresIn: z.number().positive().int(),
@@ -65,9 +65,7 @@ export const CreateTransactionBillingBodySchema = z.object({
   return dto;
 });
 
-export const CreateTransactionBodySchema = z.object({
-  preTransactionId: ZodSchemas.nanoid().optional(),
-  amount: z.number().positive().int().optional(),
+export const BaseCreateTransactionBodySchema = z.object({
   method: z.nativeEnum(PaymentMethod),
   methodSettings: CreateTransactionMethodSettingsBodySchema,
   items: z.array(CreateTransactionItemBodySchema),
@@ -75,15 +73,18 @@ export const CreateTransactionBodySchema = z.object({
   customer: CreateTransactionCustomerBodySchema.optional().nullable(),
   billing: CreateTransactionBillingBodySchema.optional().nullable(),
   notifyUrl: z.string().url().optional(),
-  splits: z.array(CreateTransactionSplitBodySchema).optional().default([]),
   externalId: z.string().max(128).optional(),
   metadata: z.record(z.string()).optional(),
-}).transform((dto, ctx) => {
-  if (!dto.preTransactionId) {
-    if (!dto.amount) ZodHelpers.issue(ctx, 'amount', 'Amount is required when preTransactionId is not present');
-  }
-  return dto;
 });
+
+export const CreateTransactionCheckoutBodySchema = BaseCreateTransactionBodySchema;
+
+export const CreateTransactionBodySchema = BaseCreateTransactionBodySchema.and(z.object({
+  amount: z.number().positive().int(),
+  splits: z.array(CreateTransactionSplitBodySchema).optional().default([]),
+}));
+
+export const CreateTransactionCheckoutParamsSchema = BaseParamsSchema;
 
 export type CreateTransactionBodyDto = z.infer<typeof CreateTransactionBodySchema>;
 export type CreateTransactionShippingBodyDto = z.infer<typeof CreateTransactionShippingBodySchema>;
@@ -92,3 +93,4 @@ export type CreateTransactionPixMethodSettingsBodyDto = z.infer<typeof CreateTra
 export type CreateTransactionSplitBodyDto = z.infer<typeof CreateTransactionSplitBodySchema>;
 export type CreateTransactionCustomerBodyDto = z.infer<typeof CreateTransactionCustomerBodySchema>;
 export type CreateTransactionBillingBodyDto = z.infer<typeof CreateTransactionBillingBodySchema>;
+export type CreateTransactionCheckoutBodyDto = z.infer<typeof CreateTransactionCheckoutBodySchema>;

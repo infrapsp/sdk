@@ -4,7 +4,6 @@ import {
   TransactionBillingResponseSchema,
   TransactionCustomerResponseSchema,
   TransactionItemResponseSchema,
-  TransactionResponseSchema,
   TransactionShippingResponseSchema,
 } from '../../../modules/types/transaction/transaction_response.ts';
 import { PreTransactionStatus } from '../../../modules/types/pre_transaction/types.ts';
@@ -18,7 +17,6 @@ export const PreTransactionResponseSchema = z.object({
   amount: z.number().positive().int(),
   customer: TransactionCustomerResponseSchema.optional().nullable(),
   billing: TransactionBillingResponseSchema.optional().nullable(),
-  transactions: z.array(TransactionResponseSchema),
   expirationDate: z.date(),
   maxAttempts: z.number().int().positive(),
   notifyUrl: z.string().url().nullable(),

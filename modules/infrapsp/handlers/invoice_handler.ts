@@ -58,6 +58,9 @@ export class InvoiceHandler {
   async generateReport(query?: Partial<GenerateInvoiceReportQueryDto>, options?: Options): AsyncResult<Blob> {
     const queryPath = new URLSearchParams(query as unknown as Record<string, string>);
 
+    if (query?.createdAtGte) queryPath.set('createdAtGte', query.createdAtGte.toISOString());
+    if (query?.createdAtLte) queryPath.set('createdAtLte', query.createdAtLte.toISOString());
+
     const url = query ? `${this.basePath}/report` + '?' + queryPath : `${this.basePath}/report`;
 
     const response = await this.kyInstance.get(url, options);

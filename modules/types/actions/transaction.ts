@@ -6,6 +6,7 @@ export enum TransactionAction {
   CREATE_TRANSACTION_ON_PROVIDER = 'create-transaction-on-provider',
   REFUND_TRANSACTION_ON_PROVIDER = 'refund-transaction-on-provider',
   PROCESS_PIX_PAID_TRANSACTION = 'process-pix-paid-transaction',
+  CANCEL_TRANSACTION_ON_PROVIDER = 'cancel-transaction-on-provider',
 }
 
 // create transaction on provider
@@ -29,7 +30,14 @@ export const RefundTransactionOnProvider = z.object({
   payload: z.object({}),
 });
 
+// cancel transaction on provider
+export const CancelTransactionOnProvider = z.object({
+  action: z.literal(TransactionAction.CANCEL_TRANSACTION_ON_PROVIDER),
+  payload: z.object({}),
+});
+
 // Worker
 export const CreateTransactionOnProviderWorkerBodySchema = BaseWorkerBodySchema.and(CreateTransactionOnProviderBodySchema);
 export const ProcessPixPaidTransactionWorkerBodySchema = BaseWorkerBodySchema.and(ProcessPixPaidTransactionBodySchema);
 export const RefundTransactionOnProviderWorkerBodySchema = BaseWorkerBodySchema.and(RefundTransactionOnProvider);
+export const CancelTransactionOnProviderWorkerBodySchema = BaseWorkerBodySchema.and(CancelTransactionOnProvider);

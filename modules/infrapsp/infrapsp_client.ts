@@ -18,6 +18,7 @@ import { TierHandler } from '../../modules/infrapsp/handlers/tier_handler.ts';
 import { WebhookHandler } from '../../modules/infrapsp/handlers/webhook_handler.ts';
 import { CheckoutHandler } from '../../modules/infrapsp/handlers/checkout_handler.ts';
 import { PreTransactionHandler } from '../../modules/infrapsp/handlers/pre_transaction_handler.ts';
+import { MerchantRecordHandler } from '../../modules/infrapsp/handlers/merchant_record_handler.ts';
 
 export class InfraPSPClient {
   private readonly apiInstance: KyInstance;
@@ -30,6 +31,7 @@ export class InfraPSPClient {
   public readonly impersonate: ImpersonateHandler;
   public readonly invoices: InvoiceHandler;
   public readonly merchants: MerchantHandler;
+  public readonly merchantRecords: MerchantRecordHandler;
   public readonly payables: PayableHandler;
   public readonly payableSummary: PayableSummaryHandler;
   public readonly preTransactions: PreTransactionHandler;
@@ -58,6 +60,7 @@ export class InfraPSPClient {
     this.impersonate = new ImpersonateHandler(this.apiInstance);
     this.invoices = new InvoiceHandler(this.apiInstance);
     this.merchants = new MerchantHandler(this.apiInstance);
+    this.merchantRecords = new MerchantRecordHandler(this.apiInstance);
     this.payables = new PayableHandler(this.apiInstance);
     this.payableSummary = new PayableSummaryHandler(this.apiInstance);
     this.preTransactions = new PreTransactionHandler(this.apiInstance);

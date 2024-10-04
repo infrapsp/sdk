@@ -14,8 +14,17 @@ export class MerchantRecordHandler {
   async create(merchantId: string, body: CreateMerchantRecordBodyDto, options?: Options): AsyncResult<MerchantResponseDto> {
     const url = `${this.restrictBasePath}/${merchantId}/records`;
 
+    const form = new FormData();
+
+    form.append('title', body.title);
+    if (body.comment) form.append('comment', body.comment);
+
+    for (const attachment of body.attachments) {
+      form.append('attachments', attachment);
+    }
+
     const response = await this.kyInstance.post(url, {
-      json: body,
+      body: form,
       ...options,
     });
 

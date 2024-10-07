@@ -15,13 +15,13 @@ export const TransactionCheckoutShippingResponseSchema = z.object({
 
 export const TransactionCheckoutCustomerResponseSchema = z.object({
   companyName: z.string().nullable().optional(),
-  personName: ZodSchemas.name(),
+  personName: z.string().min(1).max(50),
   gender: z.nativeEnum(Gender),
 });
 
 export const TransactionCheckoutBillingResponseSchema = z.object({
   companyName: z.string().nullable().optional(),
-  personName: ZodSchemas.name(),
+  personName: z.string().min(1).max(50),
 });
 
 export const TransactionCheckoutResponseSchema = z.object({

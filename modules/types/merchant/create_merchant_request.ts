@@ -31,7 +31,7 @@ export const CreateMerchantBillingBodySchema = z.object({
   address: z.object({
     line1: z.string().max(200),
     line2: z.string().max(100).optional(),
-    number: ZodSchemas.alphanumeric().max(10),
+    number: z.string().max(10),
     neighborhood: z.string().max(100),
     zipCode: ZodSchemas.numeric().max(15),
   }),
@@ -45,7 +45,7 @@ export const CreateMerchantBodySchema = z.object({
   externalId: z.string().max(128).optional(),
   segmentId: ZodSchemas.nanoid(),
   companyName: z.string().max(320).optional(),
-  personName: ZodSchemas.name(),
+  personName: z.string().min(1).max(50),
   personEmail: z.string().email().max(128),
   tradingName: z.string().max(120),
   billing: CreateMerchantBillingBodySchema,

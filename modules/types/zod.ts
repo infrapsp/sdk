@@ -23,7 +23,6 @@ export const ZodSchemas = {
   alphanumeric: () => z.string().regex(/^[0-9a-zA-Z ]+$/),
   numeric: () => z.string().regex(/^[0-9]+$/),
   phone: () => z.string().regex(/^\+[0-9]{3,15}$/),
-  name: () => z.string().regex(/^([ \u00c0-\u01ffa-zA-Z'\-])+$/i, 'Special characters are not allowed').min(1).max(50),
   stringArray: <T extends z.ZodType>(e: T) => z.preprocess((val) => String(val ?? '').split(','), z.array(e)),
   booleanString: () => z.string().transform((data) => JSON.parse(data)).pipe(z.boolean()),
 };

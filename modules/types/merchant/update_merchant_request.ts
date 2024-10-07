@@ -44,7 +44,7 @@ export const UpdateMerchantBillingBodySchema = z.object({
 export const UpdateMerchantBodySchema = z.object({
   companyName: z.string().max(320),
   tradingName: z.string().max(120),
-  personName: ZodSchemas.name(),
+  personName: z.string().min(1).max(50),
   personEmail: z.string().email().max(128),
   settings: UpdateMerchantSettingsBodySchema,
   billing: UpdateMerchantBillingBodySchema,

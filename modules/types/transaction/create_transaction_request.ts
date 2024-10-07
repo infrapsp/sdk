@@ -27,7 +27,7 @@ export const CreateTransactionShippingBodySchema = z.object({
   description: z.string(),
   maxDeliveryDate: ZodSchemas.datetime().optional(),
   estimatedDeliveryDate: ZodSchemas.datetime().optional(),
-  recipientName: ZodSchemas.name(),
+  recipientName: z.string().min(1).max(50),
   recipientPhones: z.array(ZodSchemas.phone()),
 });
 
@@ -39,7 +39,7 @@ export const CreateTransactionSplitBodySchema = z.object({
 
 export const CreateTransactionCustomerBodySchema = z.object({
   companyName: z.string().max(320).optional(),
-  personName: ZodSchemas.name(),
+  personName: z.string().min(1).max(50),
   documentType: z.nativeEnum(DocumentType),
   documentNumber: ZodSchemas.document(),
   birthdate: ZodSchemas.datetime().optional(),
@@ -55,7 +55,7 @@ export const CreateTransactionCustomerBodySchema = z.object({
 
 export const CreateTransactionBillingBodySchema = z.object({
   companyName: z.string().max(320).optional(),
-  personName: ZodSchemas.name(),
+  personName: z.string().min(1).max(50),
   documentType: z.nativeEnum(DocumentType),
   documentNumber: ZodSchemas.document(),
   address: CreateAddressBodySchema,

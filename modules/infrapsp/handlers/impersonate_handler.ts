@@ -1,27 +1,27 @@
-import { KyInstance, Options } from 'npm:ky@1.2.4';
 import { AsyncResult } from '../../../modules/types/result.ts';
 import { validateResponse } from '../../../modules/infrapsp/validate_response.ts';
 import { ImpersonateBodyDto } from '../../../modules/types/external_auth/impersonate_request.ts';
+import type { HttpClient } from '../../../modules/http/http_client.ts';
 
 export class ImpersonateHandler {
-  private readonly basePath = 'v1/auth/impersonate';
+  private readonly basePath = '/v1/auth/impersonate';
 
-  constructor(private readonly kyInstance: KyInstance) {}
+  constructor(private readonly httpClient: HttpClient) {}
 
   async impersonate(
     body: ImpersonateBodyDto,
-    options: Options = {},
+    requestInit: RequestInit = {},
   ): AsyncResult<void> {
     const url = this.basePath;
-    const response = await this.kyInstance.post(`${url}`, {
-      json: body,
-      ...options,
+    const response = await this.httpClient.post(`${url}`, {
+      body: JSON.stringify(body),
+      ...requestInit,
     });
 
     if (response.status >= 200 && response.status < 300) {
       return validateResponse({ data: undefined, status: response.status });
     } else {
-      const data = await response.json<void>();
+      const data = await response.json();
 
       const status = response.status;
 
@@ -30,17 +30,17 @@ export class ImpersonateHandler {
   }
 
   async removeImpersonate(
-    options: Options = {},
+    requestInit: RequestInit = {},
   ): AsyncResult<void> {
     const url = this.basePath;
-    const response = await this.kyInstance.delete(`${url}`, {
-      ...options,
+    const response = await this.httpClient.delete(`${url}`, {
+      ...requestInit,
     });
 
     if (response.status >= 200 && response.status < 300) {
       return validateResponse({ data: undefined, status: response.status });
     } else {
-      const data = await response.json<void>();
+      const data = await response.json();
 
       const status = response.status;
 
@@ -49,14 +49,14 @@ export class ImpersonateHandler {
   }
 
   async findImpersonate(
-    options: Options = {},
+    requestInit: RequestInit = {},
   ): AsyncResult<{ merchantId: string | null }> {
     const url = this.basePath;
-    const response = await this.kyInstance.get(`${url}`, {
-      ...options,
+    const response = await this.httpClient.get(`${url}`, {
+      ...requestInit,
     });
 
-    const data = await response.json<{ merchantId: string | null }>();
+    const data = await response.json();
     const status = response.status;
 
     return validateResponse({ data, status });

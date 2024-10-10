@@ -1,4 +1,3 @@
-import ky, { KyInstance } from 'npm:ky@1.2.4';
 import { InfraPSPClientConfig } from '../../modules/infrapsp/infrapsp_client_config.ts';
 import { MerchantHandler } from '../../modules/infrapsp/handlers/merchant_handler.ts';
 import { TransactionHandler } from '../../modules/infrapsp/handlers/transaction_handler.ts';
@@ -19,9 +18,10 @@ import { WebhookHandler } from '../../modules/infrapsp/handlers/webhook_handler.
 import { CheckoutHandler } from '../../modules/infrapsp/handlers/checkout_handler.ts';
 import { PreTransactionHandler } from '../../modules/infrapsp/handlers/pre_transaction_handler.ts';
 import { MerchantRecordHandler } from '../../modules/infrapsp/handlers/merchant_record_handler.ts';
+import { HttpClient } from '../../modules/http/http_client.ts';
 
 export class InfraPSPClient {
-  private readonly apiInstance: KyInstance;
+  private readonly httpClient: HttpClient;
 
   public readonly apiKey: ApiKeyHandler;
   public readonly balance: BalanceHandler;
@@ -44,32 +44,30 @@ export class InfraPSPClient {
   public readonly webhooks: WebhookHandler;
 
   constructor(config: InfraPSPClientConfig) {
-    this.apiInstance = ky.create({
-      prefixUrl: config.baseUrl,
-      throwHttpErrors: false,
+    this.httpClient = new HttpClient(config.baseUrl, {
       headers: {
         'Authorization': 'Bearer ' + config.apiKey,
       },
     });
 
-    this.apiKey = new ApiKeyHandler(this.apiInstance);
-    this.balance = new BalanceHandler(this.apiInstance);
-    this.checkout = new CheckoutHandler(this.apiInstance);
-    this.externalAuth = new ExternalAuthHandler(this.apiInstance);
-    this.feeRule = new FeeRuleHandler(this.apiInstance);
-    this.impersonate = new ImpersonateHandler(this.apiInstance);
-    this.invoices = new InvoiceHandler(this.apiInstance);
-    this.merchants = new MerchantHandler(this.apiInstance);
-    this.merchantRecords = new MerchantRecordHandler(this.apiInstance);
-    this.payables = new PayableHandler(this.apiInstance);
-    this.payableSummary = new PayableSummaryHandler(this.apiInstance);
-    this.preTransactions = new PreTransactionHandler(this.apiInstance);
-    this.transactions = new TransactionHandler(this.apiInstance);
-    this.transactionRefunds = new TransactionRefundHandler(this.apiInstance);
-    this.transfers = new TransferHandler(this.apiInstance);
-    this.zipCode = new ZipCodeHandler(this.apiInstance);
-    this.tiers = new TierHandler(this.apiInstance);
-    this.operations = new OperationHandler(this.apiInstance);
-    this.webhooks = new WebhookHandler(this.apiInstance);
+    this.apiKey = new ApiKeyHandler(this.httpClient);
+    this.balance = new BalanceHandler(this.httpClient);
+    this.checkout = new CheckoutHandler(this.httpClient);
+    this.externalAuth = new ExternalAuthHandler(this.httpClient);
+    this.feeRule = new FeeRuleHandler(this.httpClient);
+    this.impersonate = new ImpersonateHandler(this.httpClient);
+    this.invoices = new InvoiceHandler(this.httpClient);
+    this.merchants = new MerchantHandler(this.httpClient);
+    this.merchantRecords = new MerchantRecordHandler(this.httpClient);
+    this.payables = new PayableHandler(this.httpClient);
+    this.payableSummary = new PayableSummaryHandler(this.httpClient);
+    this.preTransactions = new PreTransactionHandler(this.httpClient);
+    this.transactions = new TransactionHandler(this.httpClient);
+    this.transactionRefunds = new TransactionRefundHandler(this.httpClient);
+    this.transfers = new TransferHandler(this.httpClient);
+    this.zipCode = new ZipCodeHandler(this.httpClient);
+    this.tiers = new TierHandler(this.httpClient);
+    this.operations = new OperationHandler(this.httpClient);
+    this.webhooks = new WebhookHandler(this.httpClient);
   }
 }

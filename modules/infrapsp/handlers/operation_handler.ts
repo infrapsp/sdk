@@ -1,14 +1,14 @@
-import { KyInstance, Options } from 'npm:ky@1.2.4';
 import { AsyncResult } from '../../../modules/types/result.ts';
 import { GenerateStatementQueryDto } from '../../../modules/types/operation/generate_statement_request.ts';
 import { CommonError } from '../../../modules/errors/common_error.ts';
+import type { HttpClient } from '../../../modules/http/http_client.ts';
 
 export class OperationHandler {
-  private readonly basePath = 'v1/operations';
+  private readonly basePath = '/v1/operations';
 
-  constructor(private readonly kyInstance: KyInstance) {}
+  constructor(private readonly httpClient: HttpClient) {}
 
-  async generateStatement(query?: Partial<GenerateStatementQueryDto>, options?: Options): AsyncResult<Blob> {
+  async generateStatement(query?: Partial<GenerateStatementQueryDto>, requestInit: RequestInit = {}): AsyncResult<Blob> {
     const queryPath = new URLSearchParams(query as unknown as Record<string, string>);
 
     if (query?.paymentDateGte) queryPath.set('paymentDateGte', query.paymentDateGte.toISOString());
@@ -16,7 +16,7 @@ export class OperationHandler {
 
     const url = query ? `${this.basePath}/statement` + '?' + queryPath : `${this.basePath}/statements`;
 
-    const response = await this.kyInstance.get(url, options);
+    const response = await this.httpClient.get(url, requestInit);
 
     const status = response.status;
 

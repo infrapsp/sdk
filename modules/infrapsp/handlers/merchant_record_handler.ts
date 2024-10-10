@@ -1,17 +1,17 @@
-import { KyInstance, Options } from 'npm:ky@1.2.4';
 import { AsyncResult } from '../../../modules/types/result.ts';
 import { validateResponse } from '../../../modules/infrapsp/validate_response.ts';
 import { MerchantResponseDto } from '../../../modules/types/merchant/merchant_response.ts';
 import { MerchantRecordResponseDto } from '../../../modules/types/merchant_record/merchant_record_response.ts';
 import { FindMerchantRecordQueryDto } from '../../../modules/types/merchant_record/find_merchant_record_request.ts';
 import { CreateMerchantRecordBodyDto } from '../../../modules/types/merchant_record/create_merchant_record_request.ts';
+import type { HttpClient } from '../../../modules/http/http_client.ts';
 
 export class MerchantRecordHandler {
   private readonly restrictBasePath = 'v1/admin/merchants';
 
-  constructor(private readonly kyInstance: KyInstance) {}
+  constructor(private readonly httpClient: HttpClient) {}
 
-  async create(merchantId: string, body: CreateMerchantRecordBodyDto, options?: Options): AsyncResult<MerchantResponseDto> {
+  async create(merchantId: string, body: CreateMerchantRecordBodyDto, requestInit: RequestInit = {}): AsyncResult<MerchantResponseDto> {
     const url = `${this.restrictBasePath}/${merchantId}/records`;
 
     const form = new FormData();
@@ -23,12 +23,12 @@ export class MerchantRecordHandler {
       form.append('attachments', attachment);
     }
 
-    const response = await this.kyInstance.post(url, {
+    const response = await this.httpClient.post(url, {
       body: form,
-      ...options,
+      ...requestInit,
     });
 
-    const data = await response.json<MerchantResponseDto>();
+    const data = await response.json();
 
     return validateResponse({ data, status: response.status });
   }
@@ -37,7 +37,7 @@ export class MerchantRecordHandler {
     merchantId: string,
     id: string,
     query: Partial<FindMerchantRecordQueryDto>,
-    options?: Options,
+    requestInit: RequestInit = {},
   ): AsyncResult<MerchantRecordResponseDto[]> {
     const queryPath = new URLSearchParams(query as unknown as Record<string, string>);
 
@@ -46,20 +46,20 @@ export class MerchantRecordHandler {
 
     const url = query ? `${this.restrictBasePath}/${merchantId}/records/${id}?${queryPath}` : `${this.restrictBasePath}/${merchantId}/records/${id}`;
 
-    const response = await this.kyInstance.get(url, options);
+    const response = await this.httpClient.get(url, requestInit);
 
-    const data = await response.json<MerchantRecordResponseDto[]>();
+    const data = await response.json();
     const status = response.status;
 
     return validateResponse({ data, status });
   }
 
-  async delete(merchantId: string, id: string, options?: Options): AsyncResult<void> {
+  async delete(merchantId: string, id: string, requestInit: RequestInit = {}): AsyncResult<void> {
     const url = `${this.restrictBasePath}/${merchantId}/records/${id}`;
 
-    const response = await this.kyInstance.get(url, options);
+    const response = await this.httpClient.get(url, requestInit);
 
-    const data = await response.json<void>();
+    const data = await response.json();
     const status = response.status;
 
     return validateResponse({ data, status });

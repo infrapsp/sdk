@@ -1,4 +1,3 @@
-import { KyInstance, Options } from 'npm:ky@1.2.4';
 import { AsyncResult } from '../../../modules/types/result.ts';
 import { validateResponse } from '../../../modules/infrapsp/validate_response.ts';
 import { ExternalAuthMerchantResponseDto } from '../../../modules/types/external_auth/external_auth_merchant_response.ts';
@@ -7,77 +6,78 @@ import { RegistrationResponseDto } from '../../../modules/types/registration/reg
 import { FindExternalAuthQueryDto } from '../../../modules/types/external_auth/find_external_auth_request.ts';
 import { ExternalAuthUserResponseDto } from '../../../modules/types/external_auth/external_auth_response.ts';
 import { CreateExternalAuthBodyDto } from '../../../modules/types/external_auth/create_external_auth_request.ts';
+import type { HttpClient } from '../../../modules/http/http_client.ts';
 
 export class ExternalAuthHandler {
-  private readonly basePath = 'v1/auth/external-auth';
+  private readonly basePath = '/v1/auth/external-auth';
 
-  constructor(private readonly kyInstance: KyInstance) {}
+  constructor(private readonly httpClient: HttpClient) {}
 
-  async createRegistration(body: CreateRegistrationBodyDto, options?: Options): AsyncResult<RegistrationResponseDto> {
+  async createRegistration(body: CreateRegistrationBodyDto, requestInit: RequestInit = {}): AsyncResult<RegistrationResponseDto> {
     const url = `${this.basePath}/registrations`;
 
-    const response = await this.kyInstance.post(url, {
-      ...options,
-      json: body,
+    const response = await this.httpClient.post(url, {
+      ...requestInit,
+      body: JSON.stringify(body),
     });
 
-    const data = await response.json<RegistrationResponseDto>();
+    const data = await response.json();
     const status = response.status;
 
     return validateResponse({ data, status });
   }
 
-  async findManyMerchant(options?: Options): AsyncResult<ExternalAuthMerchantResponseDto[]> {
+  async findManyMerchant(requestInit: RequestInit = {}): AsyncResult<ExternalAuthMerchantResponseDto[]> {
     const url = `${this.basePath}/merchants`;
 
-    const response = await this.kyInstance.get(url, options);
+    const response = await this.httpClient.get(url, requestInit);
 
-    const data = await response.json<ExternalAuthMerchantResponseDto[]>();
+    const data = await response.json();
 
     return validateResponse({ data, status: response.status });
   }
 
-  async findMany(query: FindExternalAuthQueryDto, options?: Options): AsyncResult<ExternalAuthUserResponseDto> {
+  async findMany(query: FindExternalAuthQueryDto, requestInit: RequestInit = {}): AsyncResult<ExternalAuthUserResponseDto> {
     const queryPath = new URLSearchParams(query);
 
     const url = `${this.basePath}?${queryPath}`;
 
-    const response = await this.kyInstance.get(url, options);
+    const response = await this.httpClient.get(url, requestInit);
 
-    const data = await response.json<ExternalAuthUserResponseDto>();
+    const data = await response.json();
 
     return validateResponse({ data, status: response.status });
   }
 
-  async create(body: CreateExternalAuthBodyDto, options?: Options): AsyncResult<ExternalAuthUserResponseDto> {
+  async create(body: CreateExternalAuthBodyDto, requestInit: RequestInit = {}): AsyncResult<ExternalAuthUserResponseDto> {
     const url = this.basePath;
 
-    const response = await this.kyInstance.post(url, {
-      ...options,
+    const response = await this.httpClient.post(url, {
+      ...requestInit,
       body: JSON.stringify(body),
     });
 
-    const data = await response.json<ExternalAuthUserResponseDto>();
+    const data = await response.json();
 
     return validateResponse({ data, status: response.status });
   }
 
-  async delete(id: string, options?: Options): AsyncResult<undefined> {
+  async delete(id: string, requestInit: RequestInit = {}): AsyncResult<undefined> {
     const url = `${this.basePath}/${id}`;
 
-    const response = await this.kyInstance.delete(url, options);
+    const response = await this.httpClient.delete(url, requestInit);
 
     const status = response.status;
 
     return validateResponse({ data: undefined, status });
   }
 
-  async replyInvite(id: string, hasAccepted: boolean, options?: Options): AsyncResult<undefined> {
+  async replyInvite(id: string, hasAccepted: boolean, requestInit: RequestInit = {}): AsyncResult<undefined> {
     const url = `${this.basePath}/${id}/invitation`;
 
-    const response = await this.kyInstance.post(url, {
-      ...options,
-      json: JSON.stringify({ hasAccepted }),
+    const response = await this.httpClient.post(url, {
+      ...requestInit,
+      body: JSON.stringify({ hasAccepted }),
     });
 
     const status = response.status;

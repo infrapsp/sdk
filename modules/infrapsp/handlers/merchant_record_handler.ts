@@ -35,7 +35,6 @@ export class MerchantRecordHandler {
 
   async findMany(
     merchantId: string,
-    id: string,
     query: Partial<FindMerchantRecordQueryDto>,
     options?: Options,
   ): AsyncResult<MerchantRecordResponseDto[]> {
@@ -44,7 +43,7 @@ export class MerchantRecordHandler {
     if (query?.createdAtGte) queryPath.set('createdAtGte', query.createdAtGte.toISOString());
     if (query?.createdAtLte) queryPath.set('createdAtLte', query.createdAtLte.toISOString());
 
-    const url = query ? `${this.restrictBasePath}/${merchantId}/records/${id}?${queryPath}` : `${this.restrictBasePath}/${merchantId}/records/${id}`;
+    const url = query ? `${this.restrictBasePath}/${merchantId}/records?${queryPath}` : `${this.restrictBasePath}/${merchantId}/records`;
 
     const response = await this.kyInstance.get(url, options);
 

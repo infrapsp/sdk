@@ -1,4 +1,3 @@
-import { KyInstance, Options } from 'npm:ky@1.2.4';
 import { AsyncResult } from '../../../modules/types/result.ts';
 import { validateResponse } from '../../../modules/infrapsp/validate_response.ts';
 import { InvoiceResponseDto } from '../../../modules/types/invoice/invoice_response.ts';
@@ -6,24 +5,25 @@ import { UpdateInvoiceBodyDto } from '../../../modules/types/invoice/update_invo
 import { FindInvoiceQueryDto } from '../../../modules/types/invoice/find_invoice_request.ts';
 import { GenerateInvoiceReportQueryDto } from '../../../modules/types/invoice/generate_report_request.ts';
 import { CommonError } from '../../../modules/errors/common_error.ts';
+import type { HttpClient } from '../../../modules/http/http_client.ts';
 
 export class InvoiceHandler {
-  private readonly basePath = 'v1/invoices';
+  private readonly basePath = '/v1/invoices';
 
-  constructor(private readonly kyInstance: KyInstance) {}
+  constructor(private readonly httpClient: HttpClient) {}
 
-  async find(id: string, options?: Options): AsyncResult<InvoiceResponseDto> {
+  async find(id: string, requestInit: RequestInit = {}): AsyncResult<InvoiceResponseDto> {
     const url = `${this.basePath}/${id}`;
 
-    const response = await this.kyInstance.get(url, options);
+    const response = await this.httpClient.get(url, requestInit);
 
-    const data = await response.json<InvoiceResponseDto>();
+    const data = await response.json();
     const status = response.status;
 
     return validateResponse({ data, status });
   }
 
-  async findMany(query?: Partial<FindInvoiceQueryDto>, options?: Options): AsyncResult<InvoiceResponseDto[]> {
+  async findMany(query?: Partial<FindInvoiceQueryDto>, requestInit: RequestInit = {}): AsyncResult<InvoiceResponseDto[]> {
     const queryPath = new URLSearchParams(query as unknown as Record<string, string>);
 
     if (query?.createdAtGte) queryPath.set('createdAtGte', query.createdAtGte.toISOString());
@@ -31,9 +31,9 @@ export class InvoiceHandler {
 
     const url = query ? this.basePath + '?' + queryPath : this.basePath;
 
-    const response = await this.kyInstance.get(url, options);
+    const response = await this.httpClient.get(url, requestInit);
 
-    const data = await response.json<InvoiceResponseDto[]>();
+    const data = await response.json();
 
     return validateResponse({ data, status: response.status });
   }
@@ -41,21 +41,25 @@ export class InvoiceHandler {
   async update(
     id: string,
     body: UpdateInvoiceBodyDto,
-    options: Options = {},
+    requestInit: RequestInit = {},
   ): AsyncResult<InvoiceResponseDto> {
     const url = this.basePath;
-    const response = await this.kyInstance.patch(`${url}/${id}`, {
-      ...options,
+    const response = await this.httpClient.patch(`${url}/${id}`, {
+      ...requestInit,
       body: JSON.stringify(body),
+      headers: {
+        ...requestInit.headers,
+        'Content-Type': 'application/json',
+      },
     });
 
-    const data = await response.json<InvoiceResponseDto>();
+    const data = await response.json();
     const status = response.status;
 
     return validateResponse({ data, status });
   }
 
-  async generateReport(query?: Partial<GenerateInvoiceReportQueryDto>, options?: Options): AsyncResult<Blob> {
+  async generateReport(query?: Partial<GenerateInvoiceReportQueryDto>, requestInit: RequestInit = {}): AsyncResult<Blob> {
     const queryPath = new URLSearchParams(query as unknown as Record<string, string>);
 
     if (query?.createdAtGte) queryPath.set('createdAtGte', query.createdAtGte.toISOString());
@@ -63,7 +67,7 @@ export class InvoiceHandler {
 
     const url = query ? `${this.basePath}/report` + '?' + queryPath : `${this.basePath}/report`;
 
-    const response = await this.kyInstance.get(url, options);
+    const response = await this.httpClient.get(url, requestInit);
 
     const status = response.status;
 

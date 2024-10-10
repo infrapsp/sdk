@@ -1,4 +1,4 @@
-import { crypto } from 'https://deno.land/std@0.223.0/crypto/mod.ts';
+import { crypto } from 'jsr:@std/crypto@1.0.3';
 
 export function md5(input: Record<string, unknown>): Promise<string> {
   const object = deepSort(input);

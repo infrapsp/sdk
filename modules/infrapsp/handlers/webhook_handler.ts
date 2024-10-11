@@ -1,16 +1,17 @@
 import { AsyncResult } from '../../../modules/types/result.ts';
 import { validateResponse } from '../../../modules/infrapsp/validate_response.ts';
-import { CreateWebhookBodyDto } from '../../../modules/types/webhook/create_webhook_request.ts';
+import { CreateWebhookBodySchema } from '../../../modules/types/webhook/create_webhook_request.ts';
 import { WebhookResponseDto } from '../../../modules/types/webhook/webhook_response.ts';
-import { UpdateWebhookBodyDto } from '../../../modules/types/webhook/update_webhook_request.ts';
+import { UpdateWebhookBodySchema } from '../../../modules/types/webhook/update_webhook_request.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
+import type z from 'https://deno.land/x/zod@v3.23.4/mod.ts';
 
 export class WebhookHandler {
   private readonly basePath = '/v1/webhooks';
 
   constructor(private readonly httpClient: HttpClient) {}
 
-  async create(body: CreateWebhookBodyDto, requestInit: RequestInit = {}): AsyncResult<WebhookResponseDto> {
+  async create(body: z.input<typeof CreateWebhookBodySchema>, requestInit: RequestInit = {}): AsyncResult<WebhookResponseDto> {
     const url = this.basePath;
 
     const response = await this.httpClient.post(url, {
@@ -38,7 +39,7 @@ export class WebhookHandler {
     return validateResponse({ data, status: response.status });
   }
 
-  async update(id: string, body: UpdateWebhookBodyDto, requestInit: RequestInit = {}): AsyncResult<WebhookResponseDto> {
+  async update(id: string, body: z.input<typeof UpdateWebhookBodySchema>, requestInit: RequestInit = {}): AsyncResult<WebhookResponseDto> {
     const url = this.basePath;
 
     const response = await this.httpClient.patch(`${url}/${id}`, {

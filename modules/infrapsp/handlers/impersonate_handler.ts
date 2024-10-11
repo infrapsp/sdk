@@ -1,15 +1,15 @@
 import { AsyncResult } from '../../../modules/types/result.ts';
 import { validateResponse } from '../../../modules/infrapsp/validate_response.ts';
-import { ImpersonateBodyDto } from '../../../modules/types/external_auth/impersonate_request.ts';
+import { ImpersonateBodySchema } from '../../../modules/types/external_auth/impersonate_request.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
-
+import type { z } from 'https://deno.land/x/zod@v3.23.4/mod.ts';
 export class ImpersonateHandler {
   private readonly basePath = '/v1/auth/impersonate';
 
   constructor(private readonly httpClient: HttpClient) {}
 
   async impersonate(
-    body: ImpersonateBodyDto,
+    body: z.input<typeof ImpersonateBodySchema>,
     requestInit: RequestInit = {},
   ): AsyncResult<void> {
     const url = this.basePath;

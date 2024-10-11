@@ -8,7 +8,7 @@ export const CreateMerchantRecordParamsSchema = z.object({
 export const CreateMerchantRecordBodySchema = z.object({
   title: z.string(),
   comment: z.string().optional(),
-  attachments: z.preprocess((obj) => Array.isArray(obj) ? obj : [obj], z.array(z.instanceof(File))).optional().default([]),
+  attachments: z.array(z.instanceof(File)).or(z.instanceof(File)).transform((obj) => Array.isArray(obj) ? obj : [obj]).default([]),
 });
 
 export type CreateMerchantRecordBodyDto = z.infer<typeof CreateMerchantRecordBodySchema>;

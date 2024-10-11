@@ -1,11 +1,12 @@
 import { AsyncResult } from '../../../modules/types/result.ts';
 import { validateResponse } from '../../../modules/infrapsp/validate_response.ts';
 import { InvoiceResponseDto } from '../../../modules/types/invoice/invoice_response.ts';
-import { UpdateInvoiceBodyDto } from '../../../modules/types/invoice/update_invoice_request.ts';
-import { FindInvoiceQueryDto } from '../../../modules/types/invoice/find_invoice_request.ts';
-import { GenerateInvoiceReportQueryDto } from '../../../modules/types/invoice/generate_report_request.ts';
+import { UpdateInvoiceBodySchema } from '../../../modules/types/invoice/update_invoice_request.ts';
+import { FindInvoiceQuerySchema } from '../../../modules/types/invoice/find_invoice_request.ts';
+import { GenerateInvoiceReportQuerySchema } from '../../../modules/types/invoice/generate_report_request.ts';
 import { CommonError } from '../../../modules/errors/common_error.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
+import type z from 'https://deno.land/x/zod@v3.23.4/mod.ts';
 
 export class InvoiceHandler {
   private readonly basePath = '/v1/invoices';
@@ -23,11 +24,11 @@ export class InvoiceHandler {
     return validateResponse({ data, status });
   }
 
-  async findMany(query?: Partial<FindInvoiceQueryDto>, requestInit: RequestInit = {}): AsyncResult<InvoiceResponseDto[]> {
+  async findMany(query?: z.input<typeof FindInvoiceQuerySchema>, requestInit: RequestInit = {}): AsyncResult<InvoiceResponseDto[]> {
     const queryPath = new URLSearchParams(query as unknown as Record<string, string>);
 
-    if (query?.createdAtGte) queryPath.set('createdAtGte', query.createdAtGte.toISOString());
-    if (query?.createdAtLte) queryPath.set('createdAtLte', query.createdAtLte.toISOString());
+    if (query?.createdAtGte) queryPath.set('createdAtGte', new Date(query.createdAtGte).toISOString());
+    if (query?.createdAtLte) queryPath.set('createdAtLte', new Date(query.createdAtLte).toISOString());
 
     const url = query ? this.basePath + '?' + queryPath : this.basePath;
 
@@ -40,7 +41,7 @@ export class InvoiceHandler {
 
   async update(
     id: string,
-    body: UpdateInvoiceBodyDto,
+    body: z.input<typeof UpdateInvoiceBodySchema>,
     requestInit: RequestInit = {},
   ): AsyncResult<InvoiceResponseDto> {
     const url = this.basePath;
@@ -59,11 +60,11 @@ export class InvoiceHandler {
     return validateResponse({ data, status });
   }
 
-  async generateReport(query?: Partial<GenerateInvoiceReportQueryDto>, requestInit: RequestInit = {}): AsyncResult<Blob> {
+  async generateReport(query?: z.input<typeof GenerateInvoiceReportQuerySchema>, requestInit: RequestInit = {}): AsyncResult<Blob> {
     const queryPath = new URLSearchParams(query as unknown as Record<string, string>);
 
-    if (query?.createdAtGte) queryPath.set('createdAtGte', query.createdAtGte.toISOString());
-    if (query?.createdAtLte) queryPath.set('createdAtLte', query.createdAtLte.toISOString());
+    if (query?.createdAtGte) queryPath.set('createdAtGte', new Date(query.createdAtGte).toISOString());
+    if (query?.createdAtLte) queryPath.set('createdAtLte', new Date(query.createdAtLte).toISOString());
 
     const url = query ? `${this.basePath}/report` + '?' + queryPath : `${this.basePath}/report`;
 

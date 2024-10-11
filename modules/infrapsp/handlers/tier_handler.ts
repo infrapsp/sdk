@@ -1,17 +1,18 @@
 import { AsyncResult } from '../../../modules/types/result.ts';
 import { validateResponse } from '../../../modules/infrapsp/validate_response.ts';
 import { TierResponseDto } from '../../../modules/types/tier/tier_response.ts';
-import { CreateTierBodyDto } from '../../../modules/types/tier/create_tier_request.ts';
-import { UpdateTierBodyDto } from '../../../modules/types/tier/update_tier_request.ts';
+import { CreateTierBodySchema } from '../../../modules/types/tier/create_tier_request.ts';
+import { UpdateTierBodySchema } from '../../../modules/types/tier/update_tier_request.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
+import type z from 'https://deno.land/x/zod@v3.23.4/mod.ts';
 
 export class TierHandler {
   private readonly basePath = '/v1/tiers';
-  private readonly restrictBasePath = 'v1/admin/tiers';
+  private readonly restrictBasePath = '/v1/admin/tiers';
 
   constructor(private readonly httpClient: HttpClient) {}
 
-  async create(body: CreateTierBodyDto, requestInit: RequestInit = {}): AsyncResult<TierResponseDto> {
+  async create(body: z.input<typeof CreateTierBodySchema>, requestInit: RequestInit = {}): AsyncResult<TierResponseDto> {
     const url = this.restrictBasePath;
 
     const response = await this.httpClient.post(url, {
@@ -29,7 +30,7 @@ export class TierHandler {
     return validateResponse({ data, status });
   }
 
-  async update(id: string, body: UpdateTierBodyDto, requestInit: RequestInit = {}): AsyncResult<TierResponseDto> {
+  async update(id: string, body: z.input<typeof UpdateTierBodySchema>, requestInit: RequestInit = {}): AsyncResult<TierResponseDto> {
     const url = this.restrictBasePath;
 
     const response = await this.httpClient.patch(`${url}/${id}`, {

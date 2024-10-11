@@ -1,16 +1,17 @@
 import { AsyncResult } from '../../../modules/types/result.ts';
 import { validateResponse } from '../../../modules/infrapsp/validate_response.ts';
-import { CreateTransferBodyDto } from '../../../modules/types/transfer/create_transfer_request.ts';
+import { CreateTransferBodySchema } from '../../../modules/types/transfer/create_transfer_request.ts';
 import { TransferResponseDto } from '../../../modules/types/transfer/transfer_response.ts';
-import { FindTransferQueryDto } from '../../../modules/types/transfer/find_transfer_request.ts';
+import { FindTransferQuerySchema } from '../../../modules/types/transfer/find_transfer_request.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
+import type z from 'https://deno.land/x/zod@v3.23.4/mod.ts';
 
 export class TransferHandler {
   private readonly basePath = '/v1/transfers';
 
   constructor(private readonly httpClient: HttpClient) {}
 
-  async create(body: CreateTransferBodyDto, requestInit: RequestInit = {}): AsyncResult<TransferResponseDto> {
+  async create(body: z.input<typeof CreateTransferBodySchema>, requestInit: RequestInit = {}): AsyncResult<TransferResponseDto> {
     const url = this.basePath;
 
     const response = await this.httpClient.post(url, {
@@ -39,11 +40,11 @@ export class TransferHandler {
     return validateResponse({ data, status });
   }
 
-  async findMany(query?: Partial<FindTransferQueryDto>, requestInit: RequestInit = {}): AsyncResult<TransferResponseDto[]> {
+  async findMany(query?: z.input<typeof FindTransferQuerySchema>, requestInit: RequestInit = {}): AsyncResult<TransferResponseDto[]> {
     const queryPath = new URLSearchParams(query as unknown as Record<string, string>);
 
-    if (query?.createdAtGte) queryPath.set('createdAtGte', query.createdAtGte.toISOString());
-    if (query?.createdAtLte) queryPath.set('createdAtLte', query.createdAtLte.toISOString());
+    if (query?.createdAtGte) queryPath.set('createdAtGte', new Date(query.createdAtGte).toISOString());
+    if (query?.createdAtLte) queryPath.set('createdAtLte', new Date(query.createdAtLte).toISOString());
 
     const url = query ? this.basePath + '?' + queryPath : this.basePath;
 

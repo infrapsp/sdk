@@ -1,19 +1,20 @@
 import { AsyncResult } from '../../../modules/types/result.ts';
 import { validateResponse } from '../../../modules/infrapsp/validate_response.ts';
 import { ExternalAuthMerchantResponseDto } from '../../../modules/types/external_auth/external_auth_merchant_response.ts';
-import { CreateRegistrationBodyDto } from '../../../modules/types/registration/create_registration_request.ts';
+import { CreateRegistrationBodySchema } from '../../../modules/types/registration/create_registration_request.ts';
 import { RegistrationResponseDto } from '../../../modules/types/registration/registration_response.ts';
-import { FindExternalAuthQueryDto } from '../../../modules/types/external_auth/find_external_auth_request.ts';
+import { FindExternalAuthQuerySchema } from '../../../modules/types/external_auth/find_external_auth_request.ts';
 import { ExternalAuthUserResponseDto } from '../../../modules/types/external_auth/external_auth_response.ts';
-import { CreateExternalAuthBodyDto } from '../../../modules/types/external_auth/create_external_auth_request.ts';
+import { CreateExternalAuthBodySchema } from '../../../modules/types/external_auth/create_external_auth_request.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
+import type z from 'https://deno.land/x/zod@v3.23.4/mod.ts';
 
 export class ExternalAuthHandler {
   private readonly basePath = '/v1/auth/external-auth';
 
   constructor(private readonly httpClient: HttpClient) {}
 
-  async createRegistration(body: CreateRegistrationBodyDto, requestInit: RequestInit = {}): AsyncResult<RegistrationResponseDto> {
+  async createRegistration(body: z.input<typeof CreateRegistrationBodySchema>, requestInit: RequestInit = {}): AsyncResult<RegistrationResponseDto> {
     const url = `${this.basePath}/registrations`;
 
     const response = await this.httpClient.post(url, {
@@ -41,7 +42,7 @@ export class ExternalAuthHandler {
     return validateResponse({ data, status: response.status });
   }
 
-  async findMany(query: FindExternalAuthQueryDto, requestInit: RequestInit = {}): AsyncResult<ExternalAuthUserResponseDto> {
+  async findMany(query: z.input<typeof FindExternalAuthQuerySchema>, requestInit: RequestInit = {}): AsyncResult<ExternalAuthUserResponseDto> {
     const queryPath = new URLSearchParams(query);
 
     const url = `${this.basePath}?${queryPath}`;
@@ -53,7 +54,7 @@ export class ExternalAuthHandler {
     return validateResponse({ data, status: response.status });
   }
 
-  async create(body: CreateExternalAuthBodyDto, requestInit: RequestInit = {}): AsyncResult<ExternalAuthUserResponseDto> {
+  async create(body: z.input<typeof CreateExternalAuthBodySchema>, requestInit: RequestInit = {}): AsyncResult<ExternalAuthUserResponseDto> {
     const url = this.basePath;
 
     const response = await this.httpClient.post(url, {

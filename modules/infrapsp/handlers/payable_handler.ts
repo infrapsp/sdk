@@ -1,8 +1,9 @@
 import { AsyncResult } from '../../../modules/types/result.ts';
 import { validateResponse } from '../../../modules/infrapsp/validate_response.ts';
 import { PayableResponseDto } from '../../../modules/types/payable/payable_response.ts';
-import { FindPayableQueryDto } from '../../../modules/types/payable/find_payable_request.ts';
+import { FindPayableQuerySchema } from '../../../modules/types/payable/find_payable_request.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
+import type z from 'https://deno.land/x/zod@v3.23.4/mod.ts';
 
 export class PayableHandler {
   private readonly basePath = '/v1/payables';
@@ -20,11 +21,11 @@ export class PayableHandler {
     return validateResponse({ data, status });
   }
 
-  async findMany(query?: Partial<FindPayableQueryDto>, requestInit: RequestInit = {}): AsyncResult<PayableResponseDto[]> {
+  async findMany(query?: z.input<typeof FindPayableQuerySchema>, requestInit: RequestInit = {}): AsyncResult<PayableResponseDto[]> {
     const queryPath = new URLSearchParams(query as unknown as Record<string, string>);
 
-    if (query && 'paymentDateLte' in query && query.paymentDateLte) queryPath.set('paymentDateLte', query.paymentDateLte.toISOString());
-    if (query && 'paymentDateGte' in query && query.paymentDateGte) queryPath.set('paymentDateGte', query.paymentDateGte.toISOString());
+    if (query && 'paymentDateLte' in query && query.paymentDateLte) queryPath.set('paymentDateLte', new Date(query.paymentDateLte).toISOString());
+    if (query && 'paymentDateGte' in query && query.paymentDateGte) queryPath.set('paymentDateGte', new Date(query.paymentDateGte).toISOString());
 
     const url = query ? this.basePath + '?' + queryPath : this.basePath;
 

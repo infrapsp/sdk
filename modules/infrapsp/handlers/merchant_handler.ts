@@ -1,13 +1,14 @@
 import { AsyncResult } from '../../../modules/types/result.ts';
 import { validateResponse } from '../../../modules/infrapsp/validate_response.ts';
 import { MerchantResponseDto } from '../../../modules/types/merchant/merchant_response.ts';
-import { RestrictUpdateMerchantBodyDto, UpdateMerchantBodyDto } from '../../../modules/types/merchant/update_merchant_request.ts';
-import { FindMerchantQueryDto } from '../../../modules/types/merchant/find_merchant_request.ts';
+import { RestrictUpdateMerchantBodySchema, UpdateMerchantBodySchema } from '../../../modules/types/merchant/update_merchant_request.ts';
+import { FindMerchantQuerySchema } from '../../../modules/types/merchant/find_merchant_request.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
+import type z from 'https://deno.land/x/zod@v3.23.4/mod.ts';
 
 export class MerchantHandler {
   private readonly basePath = '/v1/merchants';
-  private readonly restrictBasePath = 'v1/admin/merchants';
+  private readonly restrictBasePath = '/v1/admin/merchants';
 
   constructor(private readonly httpClient: HttpClient) {}
 
@@ -33,11 +34,11 @@ export class MerchantHandler {
     return validateResponse({ data, status });
   }
 
-  async findMany(query?: Partial<FindMerchantQueryDto>, requestInit: RequestInit = {}): AsyncResult<MerchantResponseDto[]> {
+  async findMany(query?: z.input<typeof FindMerchantQuerySchema>, requestInit: RequestInit = {}): AsyncResult<MerchantResponseDto[]> {
     const queryPath = new URLSearchParams(query as unknown as Record<string, string>);
 
-    if (query?.createdAtGte) queryPath.set('createdAtGte', query.createdAtGte.toISOString());
-    if (query?.createdAtLte) queryPath.set('createdAtLte', query.createdAtLte.toISOString());
+    if (query?.createdAtGte) queryPath.set('createdAtGte', new Date(query.createdAtGte).toISOString());
+    if (query?.createdAtLte) queryPath.set('createdAtLte', new Date(query.createdAtLte).toISOString());
 
     const url = query ? this.basePath + '?' + queryPath : this.basePath;
 
@@ -48,11 +49,19 @@ export class MerchantHandler {
     return validateResponse({ data, status: response.status });
   }
 
-  async update(id: string, body: UpdateMerchantBodyDto, requestInit?: RequestInit & { restrict?: false }): AsyncResult<MerchantResponseDto>;
-  async update(id: string, body: RestrictUpdateMerchantBodyDto, requestInit?: RequestInit & { restrict?: true }): AsyncResult<MerchantResponseDto>;
   async update(
     id: string,
-    body: UpdateMerchantBodyDto | RestrictUpdateMerchantBodyDto,
+    body: z.input<typeof UpdateMerchantBodySchema>,
+    requestInit?: RequestInit & { restrict?: false },
+  ): AsyncResult<MerchantResponseDto>;
+  async update(
+    id: string,
+    body: z.input<typeof RestrictUpdateMerchantBodySchema>,
+    requestInit?: RequestInit & { restrict?: true },
+  ): AsyncResult<MerchantResponseDto>;
+  async update(
+    id: string,
+    body: z.input<typeof UpdateMerchantBodySchema> | z.input<typeof RestrictUpdateMerchantBodySchema>,
     requestInit: RequestInit & { restrict?: boolean } = { restrict: false },
   ): AsyncResult<MerchantResponseDto> {
     const url = requestInit.restrict ? this.restrictBasePath : this.basePath;

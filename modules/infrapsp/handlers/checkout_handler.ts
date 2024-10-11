@@ -1,9 +1,10 @@
 import { AsyncResult } from '../../../modules/types/result.ts';
 import { validateResponse } from '../../../modules/infrapsp/validate_response.ts';
-import { CreateTransactionCheckoutBodyDto } from '../../../modules/types/transaction/create_transaction_request.ts';
+import { CreateTransactionCheckoutBodySchema } from '../../../modules/types/transaction/create_transaction_request.ts';
 import { TransactionCheckoutResponseDto } from '../../../modules/types/transaction/transaction_checkout_response.ts';
 import { PreTransactionCheckoutResponseDto } from '../../../modules/types/pre_transaction/pre_transaction_checkout_response.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
+import type { z } from 'https://deno.land/x/zod@v3.23.4/mod.ts';
 
 export class CheckoutHandler {
   private readonly basePath = '/v1/checkout';
@@ -12,7 +13,7 @@ export class CheckoutHandler {
 
   async createTransaction(
     preTransactionId: string,
-    body: CreateTransactionCheckoutBodyDto,
+    body: z.input<typeof CreateTransactionCheckoutBodySchema>,
     requestInit: RequestInit = {},
   ): AsyncResult<TransactionCheckoutResponseDto> {
     const url = `${this.basePath}/pre-transactions/${preTransactionId}/transactions`;

@@ -1,8 +1,9 @@
 import { AsyncResult } from '../../../modules/types/result.ts';
 import { validateResponse } from '../../../modules/infrapsp/validate_response.ts';
-import { CreateTransactionRefundBodyDto } from '../../../modules/types/transaction_refund/create_transaction_refund_request.ts';
+import { CreateTransactionRefundBodySchema } from '../../../modules/types/transaction_refund/create_transaction_refund_request.ts';
 import { TransactionRefundResponseDto } from '../../../modules/types/transaction_refund/transaction_refund_response.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
+import type z from 'https://deno.land/x/zod@v3.23.4/mod.ts';
 
 export class TransactionRefundHandler {
   private readonly basePath = '/v1/transactions';
@@ -11,7 +12,7 @@ export class TransactionRefundHandler {
 
   async create(
     transactionId: string,
-    body: CreateTransactionRefundBodyDto,
+    body: z.input<typeof CreateTransactionRefundBodySchema>,
     requestInit: RequestInit = {},
   ): AsyncResult<TransactionRefundResponseDto> {
     const url = `${this.basePath}/${transactionId}/refunds`;

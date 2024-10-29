@@ -26,7 +26,15 @@ export async function aesDecrypt(hexKey: string, hexCipher: string): AsyncResult
       { name: 'AES-GCM', iv },
       key,
       encrypted,
-    ), (e) => new CommonError({ message: 'Failed to decrypt the message', internalMessage: e.message, status: 500, stack: e.stack }));
+    ), (e) =>
+    new CommonError({
+      message: 'Failed to decrypt the message',
+      internal: {
+        message: e.message,
+      },
+      status: 500,
+      stack: e.stack,
+    }));
 
   if (isError(decrypted)) return decrypted;
   return new TextDecoder().decode(decrypted);

@@ -16,7 +16,9 @@ export function catcher<T>(fn: () => T, mapper?: (e: any) => CommonError): Resul
         message: 'internal server error. try again later.',
         stack: e.stack,
         status: 500,
-        internalMessage: `exception ${e.name}: ${e.message}`,
+        internal: {
+          message: `exception ${e.name}: ${e.message}`,
+        },
       });
     }
     return err;
@@ -41,7 +43,9 @@ export async function catcherAsync<T>(
         message: 'internal server error. try again later.',
         stack: e.stack,
         status: 500,
-        internalMessage: `exception ${e.name}: ${e.message}`,
+        internal: {
+          message: `exception ${e.name}: ${e.message}`,
+        },
       });
     }
     return err;

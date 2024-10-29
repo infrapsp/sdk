@@ -10,7 +10,9 @@ export async function jwtVerifySignature(token: string, url: string, audience: s
     });
   } catch (e) {
     const err = UnauthorizedError();
-    err.internalMessage = `Error validating JWT Token (${token}) - ${e.message}`;
+    err.internal = {
+      message: `Error validating JWT Token (${token}) - ${e.message}`,
+    };
     return err;
   }
 }
@@ -26,7 +28,9 @@ export function jwtDecode(token: string): Result<JWTPayload & { tenantId: string
     return claims;
   } catch (e) {
     const err = UnauthorizedError();
-    err.internalMessage = `Error validating JWT Token (${token}) - ${e.message}`;
+    err.internal = {
+      message: `Error validating JWT Token (${token}) - ${e.message}`,
+    };
     return err;
   }
 }

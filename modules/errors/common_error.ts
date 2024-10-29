@@ -4,13 +4,13 @@ export class CommonError {
   code?: string;
   message?: string;
   detail?: Record<string, unknown>;
-  internalMessage?: string;
+  internal: { message?: string; code?: string };
   stack?: string;
 
   constructor(object: ErrorObject<CommonError>) {
     this.code = object.code;
     this.detail = object.detail;
-    this.internalMessage = object.internalMessage;
+    this.internal = object.internal || {};
     this.message = object.message;
     this.stack = object.stack ?? new Error().stack;
     this.status = object.status;
@@ -22,7 +22,7 @@ export class CommonError {
   }
 }
 
-export type ErrorObject<T> = Omit<T, '_isError'>;
+export type ErrorObject<T> = Omit<T, '_isError' | 'internal'> & { internal?: { message?: string; code?: string } | undefined };
 
 // Common Errors
 export const InternalServerError = () =>

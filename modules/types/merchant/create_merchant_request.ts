@@ -38,7 +38,7 @@ export const CreateMerchantBillingBodySchema = z.object({
 });
 
 export const CreateMerchantBodySchema = z.object({
-  tenantId: ZodSchemas.nanoid().optional(),
+  tenantId: ZodSchemas.nanoid(),
   documentNumber: ZodSchemas.document(),
   externalUserId: z.string().optional(),
   documentType: z.nativeEnum(DocumentType),

@@ -22,8 +22,15 @@ export const CreateMerchantAutoTransferSettingsBodySchema = z.object({
   return dto;
 });
 
+export const CreateMerchantEmailSettingsBodySchema = z.object({
+  transactionFieldId: z.enum(['id', 'externalId']).optional(),
+  transactionFieldName: z.enum(['transaction', 'order']).optional(),
+  isEnabled: z.boolean().optional(),
+});
+
 export const CreateMerchantSettingsBodySchema = z.object({
   autoTransferSettings: CreateMerchantAutoTransferSettingsBodySchema.optional(),
+  emailSettings: CreateMerchantEmailSettingsBodySchema.optional(),
 });
 
 export const CreateMerchantBillingBodySchema = z.object({
@@ -38,6 +45,7 @@ export const CreateMerchantBillingBodySchema = z.object({
 });
 
 export const CreateMerchantBodySchema = z.object({
+  tierId: ZodSchemas.nanoid().optional(),
   tenantId: ZodSchemas.nanoid(),
   documentNumber: ZodSchemas.document(),
   externalUserId: z.string().optional(),

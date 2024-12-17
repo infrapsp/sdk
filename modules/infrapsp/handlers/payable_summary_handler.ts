@@ -3,7 +3,7 @@ import { validateResponse } from '../../../modules/infrapsp/validate_response.ts
 import { PayableSummaryResponseDto } from '../../../modules/types/payable_summary/payable_summary_response.ts';
 import { FindPayableSummaryQuerySchema } from '../../../modules/types/payable_summary/find_payable_summary_request.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
-import type z from 'https://deno.land/x/zod@v3.23.4/mod.ts';
+import type z from 'https://deno.land/x/zod@v3.24.1/mod.ts';
 import type { PayableSummaryAggregationResponseDto } from '../../../modules/types/payable_summary/payable_summary_aggregation_response.ts';
 
 export class PayableSummaryHandler {

@@ -4,7 +4,7 @@ import { MerchantResponseDto } from '../../../modules/types/merchant/merchant_re
 import { RestrictUpdateMerchantBodySchema, UpdateMerchantBodySchema } from '../../../modules/types/merchant/update_merchant_request.ts';
 import { FindMerchantQuerySchema } from '../../../modules/types/merchant/find_merchant_request.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
-import type z from 'https://deno.land/x/zod@v3.23.4/mod.ts';
+import type z from 'https://deno.land/x/zod@v3.24.1/mod.ts';
 
 export class MerchantHandler {
   private readonly basePath = '/v1/merchants';

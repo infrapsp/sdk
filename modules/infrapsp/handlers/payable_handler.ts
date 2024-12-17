@@ -3,7 +3,7 @@ import { validateResponse } from '../../../modules/infrapsp/validate_response.ts
 import { PayableResponseDto } from '../../../modules/types/payable/payable_response.ts';
 import { FindPayableQuerySchema } from '../../../modules/types/payable/find_payable_request.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
-import type z from 'https://deno.land/x/zod@v3.23.4/mod.ts';
+import type z from 'https://deno.land/x/zod@v3.24.1/mod.ts';
 
 export class PayableHandler {
   private readonly basePath = '/v1/payables';

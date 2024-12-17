@@ -1,4 +1,4 @@
-import { z } from 'https://deno.land/x/zod@v3.23.4/mod.ts';
+import { z } from 'https://deno.land/x/zod@v3.24.1/mod.ts';
 import { BaseParamsSchema } from '../../../modules/types/base/requests.ts';
 import { ZodHelpers } from '../../../modules/types/zod.ts';
 import { InvoiceStatus } from '../../../modules/types/invoice/types.ts';

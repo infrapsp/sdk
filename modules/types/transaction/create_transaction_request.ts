@@ -1,4 +1,4 @@
-import { z } from 'https://deno.land/x/zod@v3.23.4/mod.ts';
+import { z } from 'https://deno.land/x/zod@v3.24.1/mod.ts';
 import { PaymentMethod } from '../../../modules/types/transaction/types.ts';
 import { DocumentType, Gender } from '../../../modules/types/merchant/types.ts';
 import { ZodRefines, ZodSchemas } from '../../../modules/types/zod.ts';

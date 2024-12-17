@@ -4,7 +4,7 @@ import { CreateWebhookBodySchema } from '../../../modules/types/webhook/create_w
 import { WebhookResponseDto } from '../../../modules/types/webhook/webhook_response.ts';
 import { UpdateWebhookBodySchema } from '../../../modules/types/webhook/update_webhook_request.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
-import type z from 'https://deno.land/x/zod@v3.23.4/mod.ts';
+import type z from 'https://deno.land/x/zod@v3.24.1/mod.ts';
 
 export class WebhookHandler {
   private readonly basePath = '/v1/webhooks';

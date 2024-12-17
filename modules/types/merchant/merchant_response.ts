@@ -1,4 +1,4 @@
-import { z } from 'https://deno.land/x/zod@v3.23.4/mod.ts';
+import { z } from 'https://deno.land/x/zod@v3.24.1/mod.ts';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
 import { DocumentType, MerchantAutoTransferFrequency, MerchantStatus } from '../../../modules/types/merchant/types.ts';
 import { AddressResponseSchema } from '../../../modules/types/address/address_response.ts';
@@ -21,11 +21,14 @@ export const MerchantEmailSettingsResponseSchema = z.object({
 export const MerchantSettingsResponseSchema = z.object({
   emailSettings: MerchantEmailSettingsResponseSchema,
   autoTransferSettings: MerchantAutoTransferSettingsResponseSchema,
+  primaryColor: z.string().max(7).regex(/^#[0-9A-F]{6}$/).optional().nullable(),
+  secondaryColor: z.string().max(7).regex(/^#[0-9A-F]{6}$/).optional().nullable(),
+  logoUrl: z.string().nullable().optional(),
   createdAt: z.date(),
   updatedAt: z.date(),
 });
 
-export const MerchantStatusResponseSchema = z.object({
+export const MerchantStatusHistoryResponseSchema = z.object({
   status: z.nativeEnum(MerchantStatus),
   message: z.string(),
   createdAt: z.date(),
@@ -48,7 +51,7 @@ export const MerchantResponseSchema = z.object({
   segmentId: ZodSchemas.nanoid(),
   status: z.nativeEnum(MerchantStatus),
   statusMessage: z.string(),
-  statusHistory: z.array(MerchantStatusResponseSchema),
+  statusHistory: z.array(MerchantStatusHistoryResponseSchema),
   tradingName: z.string(),
   url: z.string(),
   createdAt: z.date(),

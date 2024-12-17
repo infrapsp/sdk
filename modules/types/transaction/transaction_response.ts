@@ -1,4 +1,4 @@
-import { z } from 'https://deno.land/x/zod@v3.23.4/mod.ts';
+import { z } from 'https://deno.land/x/zod@v3.24.1/mod.ts';
 import { PaymentMethod, TransactionStatus } from '../../../modules/types/transaction/types.ts';
 import { DocumentType, Gender } from '../../../modules/types/merchant/types.ts';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
@@ -75,7 +75,7 @@ export const TransactionBillingResponseSchema = z.object({
   address: AddressResponseSchema,
 });
 
-export const TransactionStatusResponseSchema = z.object({
+export const TransactionStatusHistoryResponseSchema = z.object({
   status: z.nativeEnum(TransactionStatus),
   message: z.string(),
   createdAt: z.date(),
@@ -87,7 +87,7 @@ export const TransactionResponseSchema = z.object({
   preTransactionId: ZodSchemas.nanoid().nullable().optional(),
   status: z.nativeEnum(TransactionStatus),
   statusMessage: z.string(),
-  statusHistory: z.array(TransactionStatusResponseSchema),
+  statusHistory: z.array(TransactionStatusHistoryResponseSchema),
   method: z.nativeEnum(PaymentMethod),
   methodSettings: TransactionMethodSettingsResponseSchema,
   items: z.array(TransactionItemResponseSchema),

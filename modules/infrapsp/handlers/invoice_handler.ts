@@ -6,7 +6,7 @@ import { FindInvoiceQuerySchema } from '../../../modules/types/invoice/find_invo
 import { GenerateInvoiceReportQuerySchema } from '../../../modules/types/invoice/generate_report_request.ts';
 import { CommonError } from '../../../modules/errors/common_error.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
-import type z from 'https://deno.land/x/zod@v3.23.4/mod.ts';
+import type z from 'https://deno.land/x/zod@v3.24.1/mod.ts';
 
 export class InvoiceHandler {
   private readonly basePath = '/v1/invoices';

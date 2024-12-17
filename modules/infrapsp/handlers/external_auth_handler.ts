@@ -7,10 +7,7 @@ import { FindExternalAuthQuerySchema } from '../../../modules/types/external_aut
 import { ExternalAuthUserResponseDto } from '../../../modules/types/external_auth/external_auth_response.ts';
 import { CreateExternalAuthBodySchema } from '../../../modules/types/external_auth/create_external_auth_request.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
-import type z from 'https://deno.land/x/zod@v3.23.4/mod.ts';
-import type { UpdateExternalAuthProfileRequestSchema } from '../../../modules/types/external_auth/update_external_auth_email_request.ts';
-import type { SendVerificationCodeRequestSchema } from '../../../modules/types/external_auth/send_verification_code_request.ts';
-
+import type z from 'https://deno.land/x/zod@v3.24.1/mod.ts';
 export class ExternalAuthHandler {
   private readonly basePath = '/v1/auth/external-auth';
 
@@ -98,35 +95,5 @@ export class ExternalAuthHandler {
     const status = response.status;
 
     return validateResponse({ data: undefined, status });
-  }
-
-  async updateProfile(body: z.input<typeof UpdateExternalAuthProfileRequestSchema>, requestInit: RequestInit = {}): AsyncResult<undefined> {
-    const url = `${this.basePath}/profile`;
-
-    const response = await this.httpClient.patch(url, {
-      ...requestInit,
-      body: JSON.stringify(body),
-      headers: {
-        ...requestInit.headers,
-        'Content-Type': 'application/json',
-      },
-    });
-
-    return validateResponse({ data: undefined, status: response.status });
-  }
-
-  async sendVerificationCode(body: z.input<typeof SendVerificationCodeRequestSchema>, requestInit: RequestInit = {}): AsyncResult<undefined> {
-    const url = `${this.basePath}/verification-code`;
-
-    const response = await this.httpClient.post(url, {
-      ...requestInit,
-      body: JSON.stringify(body),
-      headers: {
-        ...requestInit.headers,
-        'Content-Type': 'application/json',
-      },
-    });
-
-    return validateResponse({ data: undefined, status: response.status });
   }
 }

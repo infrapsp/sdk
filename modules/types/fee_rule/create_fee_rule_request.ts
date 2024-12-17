@@ -1,4 +1,4 @@
-import { z } from 'https://deno.land/x/zod@v3.23.4/mod.ts';
+import { z } from 'https://deno.land/x/zod@v3.24.1/mod.ts';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
 import { FeeRuleEntity, FeeRuleMethod } from '../../../modules/types/fee_rule/types.ts';
 import { ZodHelpers } from '../../../modules/types/zod.ts';

@@ -1,4 +1,4 @@
-import { z } from 'https://deno.land/x/zod@v3.23.4/mod.ts';
+import { z } from 'https://deno.land/x/zod@v3.24.1/mod.ts';
 import {
   CreateTransactionBillingBodySchema,
   CreateTransactionCustomerBodySchema,
@@ -9,6 +9,7 @@ import { ZodHelpers, ZodSchemas } from '../../../modules/types/zod.ts';
 
 export const CreatePreTransactionBodySchema = z.object({
   amount: z.number().positive().int(),
+  description: z.string().max(256),
   items: z.array(CreateTransactionItemBodySchema),
   shipping: CreateTransactionShippingBodySchema.optional().nullable(),
   customer: CreateTransactionCustomerBodySchema.optional(),

@@ -1,4 +1,4 @@
-import { z } from 'https://deno.land/x/zod@v3.23.4/mod.ts';
+import { z } from 'https://deno.land/x/zod@v3.24.1/mod.ts';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
 import {
   TransactionBillingResponseSchema,
@@ -12,6 +12,7 @@ export const PreTransactionResponseSchema = z.object({
   id: ZodSchemas.nanoid(),
   merchantId: ZodSchemas.nanoid(),
   status: z.nativeEnum(PreTransactionStatus),
+  description: z.string(),
   items: z.array(TransactionItemResponseSchema),
   shipping: TransactionShippingResponseSchema.optional().nullable(),
   amount: z.number().positive().int(),

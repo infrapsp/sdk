@@ -1,4 +1,4 @@
-import { z } from 'https://deno.land/x/zod@v3.23.4/mod.ts';
+import { z } from 'https://deno.land/x/zod@v3.24.1/mod.ts';
 import { BaseParamsSchema } from '../../../modules/types/base/requests.ts';
 import { ZodHelpers, ZodSchemas } from '../../../modules/types/zod.ts';
 import { MerchantAutoTransferFrequency, MerchantStatus } from '../../../modules/types/merchant/types.ts';
@@ -34,6 +34,9 @@ export const UpdateMerchantEmailSettingsBodySchema = z.object({
 export const UpdateMerchantSettingsBodySchema = z.object({
   emailSettings: UpdateMerchantEmailSettingsBodySchema.optional(),
   autoTransferSettings: UpdateMerchantAutoTransferSettingsBodySchema.optional(),
+  primaryColor: z.string().max(7).regex(/^#[0-9A-F]{6}$/).optional(),
+  secondaryColor: z.string().max(7).regex(/^#[0-9A-F]{6}$/).optional(),
+  logoUrl: z.null().optional(),
 });
 
 export const UpdateMerchantBillingBodySchema = z.object({

@@ -4,7 +4,7 @@ import { TierResponseDto } from '../../../modules/types/tier/tier_response.ts';
 import { CreateTierBodySchema } from '../../../modules/types/tier/create_tier_request.ts';
 import { UpdateTierBodySchema } from '../../../modules/types/tier/update_tier_request.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
-import type z from 'https://deno.land/x/zod@v3.23.4/mod.ts';
+import type z from 'https://deno.land/x/zod@v3.24.1/mod.ts';
 
 export class TierHandler {
   private readonly basePath = '/v1/tiers';

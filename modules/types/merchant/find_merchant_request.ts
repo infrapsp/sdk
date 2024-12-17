@@ -1,5 +1,5 @@
 import { BaseParamsSchema, BaseQuerySchema } from '../../../modules/types/base/requests.ts';
-import { z } from 'https://deno.land/x/zod@v3.23.4/mod.ts';
+import { z } from 'https://deno.land/x/zod@v3.24.1/mod.ts';
 import { MerchantStatus } from '../../../modules/types/merchant/types.ts';
 import { SortOrder } from '../../../modules/types/base/types.ts';
 import { ZodSchemas } from '../../../modules/types/zod.ts';

@@ -1,10 +1,10 @@
-import { z } from 'https://deno.land/x/zod@v3.23.4/mod.ts';
+import { z } from 'https://deno.land/x/zod@v3.24.1/mod.ts';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
 
 export const MerchantRecordResponseSchema = z.object({
   id: ZodSchemas.nanoid(),
   title: z.string(),
-  comment: z.string().optional(),
+  comment: z.string().nullable().optional(),
   attachments: z.array(z.object({
     path: z.string(),
   })),

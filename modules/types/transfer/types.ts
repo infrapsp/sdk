@@ -3,7 +3,6 @@ import { DocumentType } from '../../../modules/types/merchant/types.ts';
 
 export enum TransferMethod {
   PIX = 'pix',
-  INTER = 'inter',
 }
 
 export enum TransferStatus {
@@ -24,6 +23,4 @@ export type TransferPixMethodDestination = {
   documentType?: DocumentType;
 };
 
-export type TransferInterMethodDestination = { merchantId: string };
-
-export type TransferMethodDestination = EmptyObject | TransferPixMethodDestination | TransferInterMethodDestination;
+export type TransferMethodDestination = EmptyObject | TransferPixMethodDestination;

@@ -1,13 +1,13 @@
 /** Application common error for centralized error handling. Extend this error class in your application to add your typed error codes */
-export class CommonError {
+export class CommonError<TDetail = Record<string, unknown>> {
   status?: number;
   code?: string;
   message?: string;
-  detail?: Record<string, unknown>;
+  detail?: TDetail;
   internal: { message?: string; code?: string };
   stack?: string;
 
-  constructor(object: ErrorObject<CommonError>) {
+  constructor(object: ErrorObject<CommonError<TDetail>>) {
     this.code = object.code;
     this.detail = object.detail;
     this.internal = object.internal || {};

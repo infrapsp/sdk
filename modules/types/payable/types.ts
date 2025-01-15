@@ -1,6 +1,5 @@
 export enum PayableMethod {
   PIX = 'pix',
-  INTER = 'inter',
 }
 
 export enum PayableStatus {

@@ -10,6 +10,7 @@ export interface WebhookInPayload<T> {
 export interface WebhookOutPayload<T> {
   id: string;
   event: string;
+  entityId?: string;
   data: T;
   meta: {
     url: string;

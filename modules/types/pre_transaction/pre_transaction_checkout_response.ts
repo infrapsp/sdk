@@ -15,7 +15,13 @@ export const PreTransactionCheckoutResponseSchema = z.object({
   merchant: z.object({
     tradingName: z.string(),
     url: z.string(),
+    settings: z.object({
+      primaryColor: z.string(),
+      secondaryColor: z.string(),
+      logoUrl: z.string().nullable().optional(),
+    }),
   }),
+  description: z.string(),
   status: z.nativeEnum(PreTransactionStatus),
   items: z.array(TransactionItemResponseSchema),
   shipping: TransactionCheckoutShippingResponseSchema.optional().nullable(),

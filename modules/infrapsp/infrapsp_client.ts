@@ -44,11 +44,11 @@ export class InfraPSPClient {
   public readonly webhooks: WebhookHandler;
 
   constructor(config: InfraPSPClientConfig) {
-    this.httpClient = new HttpClient(config.baseUrl, {
-      headers: {
-        'Authorization': 'Bearer ' + config.apiKey,
-      },
-    });
+    const headers: HeadersInit = {};
+
+    if (config.apiKey) headers.Authorization = 'Bearer ' + config.apiKey;
+
+    this.httpClient = new HttpClient(config.baseUrl, { headers });
 
     this.apiKey = new ApiKeyHandler(this.httpClient);
     this.balance = new BalanceHandler(this.httpClient);

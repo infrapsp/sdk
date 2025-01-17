@@ -33,7 +33,7 @@ export class CheckoutHandler {
     return validateResponse({ data, status });
   }
 
-  async findPreTransaction(preTransactionId: string, requestInit: RequestInit = {}): AsyncResult<PreTransactionCheckoutResponseDto[]> {
+  async findPreTransaction(preTransactionId: string, requestInit: RequestInit = {}): AsyncResult<PreTransactionCheckoutResponseDto> {
     const url = `${this.basePath}/pre-transactions/${preTransactionId}`;
 
     const response = await this.httpClient.get(url, requestInit);

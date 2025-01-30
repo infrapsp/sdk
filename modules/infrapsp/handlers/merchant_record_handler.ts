@@ -5,7 +5,7 @@ import { MerchantRecordResponseDto } from '../../../modules/types/merchant_recor
 import { FindMerchantRecordQuerySchema } from '../../../modules/types/merchant_record/find_merchant_record_request.ts';
 import { CreateMerchantRecordBodySchema } from '../../../modules/types/merchant_record/create_merchant_record_request.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
-import type z from 'https://deno.land/x/zod@v3.24.1/mod.ts';
+import type { z } from 'npm:@hono/zod-openapi@0.18.3';
 
 export class MerchantRecordHandler {
   private readonly restrictBasePath = '/v1/admin/merchants';

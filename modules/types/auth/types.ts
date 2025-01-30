@@ -1,6 +1,7 @@
 export enum MerchantRole {
   MERCHANT = 'merchant',
   MERCHANT_GUEST = 'merchant_guest',
+  MERCHANT_OPERATOR = 'merchant_operator',
 }
 
 export enum Role {
@@ -14,6 +15,7 @@ export enum Role {
 
   // Merchant Roles
   MERCHANT_GUEST = 'merchant_guest',
+  MERCHANT_OPERATOR = 'merchant_operator',
 }
 
 export enum TokenType {

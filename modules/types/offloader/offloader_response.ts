@@ -1,5 +1,5 @@
 import { Role, TokenType } from '$modules/types/auth/types.ts';
-import { z } from 'zod';
+import { z } from 'hono/zod-openapi';
 import { ZodSchemas } from '$modules/types/zod.ts';
 
 export const OffloaderResponseSchema = z.object({

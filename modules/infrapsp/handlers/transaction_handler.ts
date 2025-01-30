@@ -4,7 +4,7 @@ import { CreateTransactionBodySchema } from '../../../modules/types/transaction/
 import { TransactionResponseDto } from '../../../modules/types/transaction/transaction_response.ts';
 import { FindTransactionQuerySchema } from '../../../modules/types/transaction/find_transaction_request.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
-import type z from 'https://deno.land/x/zod@v3.24.1/mod.ts';
+import type { z } from 'npm:@hono/zod-openapi@0.18.3';
 
 export class TransactionHandler {
   private readonly basePath = '/v1/transactions';

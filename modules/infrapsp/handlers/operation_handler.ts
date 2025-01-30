@@ -2,7 +2,7 @@ import { AsyncResult } from '../../../modules/types/result.ts';
 import { GenerateStatementQuerySchema } from '../../../modules/types/operation/generate_statement_request.ts';
 import { CommonError } from '../../../modules/errors/common_error.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
-import type z from 'https://deno.land/x/zod@v3.24.1/mod.ts';
+import type { z } from 'npm:@hono/zod-openapi@0.18.3';
 
 export class OperationHandler {
   private readonly basePath = '/v1/operations';

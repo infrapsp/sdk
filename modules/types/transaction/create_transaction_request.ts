@@ -1,4 +1,4 @@
-import { z } from 'https://deno.land/x/zod@v3.24.1/mod.ts';
+import { z } from 'npm:@hono/zod-openapi@0.18.3';
 import { PaymentMethod } from '../../../modules/types/transaction/types.ts';
 import { DocumentType, Gender } from '../../../modules/types/merchant/types.ts';
 import { ZodRefines, ZodSchemas } from '../../../modules/types/zod.ts';
@@ -74,6 +74,7 @@ export const BaseCreateTransactionBodySchema = z.object({
   billing: CreateTransactionBillingBodySchema.optional().nullable(),
   notifyUrl: z.string().url().optional(),
   externalId: z.string().max(128).optional(),
+  externalSaleChannel: ZodSchemas.alphanumeric().max(128).optional().nullable(),
   metadata: z.record(z.string()).optional(),
 });
 

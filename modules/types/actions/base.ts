@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from 'hono/zod-openapi';
 import { ZodSchemas } from '$modules/types/zod.ts';
 
 // Worker

@@ -1,4 +1,4 @@
-import { z } from 'https://deno.land/x/zod@v3.24.1/mod.ts';
+import { z } from 'npm:@hono/zod-openapi@0.18.3';
 import { PaymentMethod, TransactionStatus } from '../../../modules/types/transaction/types.ts';
 import { DocumentType, Gender } from '../../../modules/types/merchant/types.ts';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
@@ -17,7 +17,6 @@ export const TransactionPixMethodDataResponseSchema = z.object({
   qrCode: z.string(),
   expirationDate: z.date(),
   url: z.string(),
-  qrCodeImgBase64: z.string().optional().nullable(),
 });
 
 export const TransactionMethodDataResponseSchema = TransactionPixMethodDataResponseSchema.or(
@@ -102,6 +101,7 @@ export const TransactionResponseSchema = z.object({
   notifyUrl: z.string().url().nullable(),
   splits: z.array(TransactionSplitResponseSchema),
   externalId: z.string().nullable(),
+  externalSaleChannel: z.string().nullable(),
   metadata: z.record(z.string()),
   paidAt: z.date().nullable(),
   refundedAt: z.date().nullable(),

@@ -1,4 +1,4 @@
-import { z } from 'https://deno.land/x/zod@v3.24.1/mod.ts';
+import { z } from 'npm:@hono/zod-openapi@0.18.3';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
 import {
   TransactionBillingResponseSchema,
@@ -7,6 +7,13 @@ import {
   TransactionShippingResponseSchema,
 } from '../../../modules/types/transaction/transaction_response.ts';
 import { PreTransactionStatus } from '../../../modules/types/pre_transaction/types.ts';
+import { TransactionStatus } from '../../../modules/types/transaction/types.ts';
+
+export const PreTransactionTransactionResponseSchema = z.object({
+  id: ZodSchemas.nanoid(),
+  status: z.nativeEnum(TransactionStatus),
+  method: z.string(),
+});
 
 export const PreTransactionResponseSchema = z.object({
   id: ZodSchemas.nanoid(),
@@ -18,6 +25,7 @@ export const PreTransactionResponseSchema = z.object({
   amount: z.number().positive().int(),
   customer: TransactionCustomerResponseSchema.optional().nullable(),
   billing: TransactionBillingResponseSchema.optional().nullable(),
+  transactions: z.array(PreTransactionTransactionResponseSchema).default([]),
   expirationDate: z.date(),
   maxAttempts: z.number().int().positive(),
   notifyUrl: z.string().url().nullable(),

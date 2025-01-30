@@ -1,4 +1,4 @@
-import { z } from 'https://deno.land/x/zod@v3.24.1/mod.ts';
+import { z } from 'npm:@hono/zod-openapi@0.18.3';
 import { TransferMethod, TransferStatus } from '../../../modules/types/transfer/types.ts';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
 import { DocumentType } from '../../../modules/types/merchant/types.ts';
@@ -13,11 +13,7 @@ export const TransferPixMethodDestinationResponseSchema = z.object({
   documentType: z.nativeEnum(DocumentType).optional().nullable(),
 });
 
-export const TransferInterMethodDestinationResponseSchema = z.object({
-  merchantId: ZodSchemas.nanoid(),
-});
-
-export const TransferMethodDestinationResponseSchema = TransferPixMethodDestinationResponseSchema.or(TransferInterMethodDestinationResponseSchema).or(
+export const TransferMethodDestinationResponseSchema = TransferPixMethodDestinationResponseSchema.or(
   z.object({}),
 );
 

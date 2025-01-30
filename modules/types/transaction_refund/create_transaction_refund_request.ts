@@ -1,4 +1,4 @@
-import { z } from 'https://deno.land/x/zod@v3.24.1/mod.ts';
+import { z } from 'npm:@hono/zod-openapi@0.18.3';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
 
 export const CreateTransactionRefundBodySchema = z.object({

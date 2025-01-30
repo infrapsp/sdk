@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from 'hono/zod-openapi';
 import { BaseWorkerBodySchema } from '$modules/types/actions/base.ts';
 import { ZodSchemas } from '$modules/types/zod.ts';
 

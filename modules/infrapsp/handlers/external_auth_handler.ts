@@ -32,6 +32,16 @@ export class ExternalAuthHandler {
     return validateResponse({ data, status });
   }
 
+  async findManyRegistration(requestInit: RequestInit = {}): AsyncResult<RegistrationResponseDto[]> {
+    const url = `${this.basePath}/registrations`;
+
+    const response = await this.httpClient.get(url, requestInit);
+
+    const data = await response.json();
+
+    return validateResponse({ data, status: response.status });
+  }
+
   async findManyMerchant(requestInit: RequestInit = {}): AsyncResult<ExternalAuthMerchantResponseDto[]> {
     const url = `${this.basePath}/merchants`;
 

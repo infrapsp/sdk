@@ -7,7 +7,7 @@ export const RegistrationResponseSchema = z.object({
   id: ZodSchemas.nanoid(),
   documentNumber: z.string(),
   documentType: z.nativeEnum(DocumentType),
-  status: z.nativeEnum(RegistrationStatus).optional(),
+  status: z.nativeEnum(RegistrationStatus),
   providerData: z.object({
     onboardingUrl: z.string(),
   }),

@@ -10,6 +10,7 @@ export const RegistrationResponseSchema = z.object({
   status: z.nativeEnum(RegistrationStatus),
   providerData: z.object({
     onboardingUrl: z.string(),
+    tradingName: z.string().optional(),
   }),
   createdAt: z.date(),
   updatedAt: z.date(),

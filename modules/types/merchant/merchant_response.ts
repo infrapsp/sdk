@@ -44,7 +44,7 @@ export const MerchantResponseSchema = z.object({
   tierId: ZodSchemas.nanoid(),
   documentNumber: z.string(),
   documentType: z.nativeEnum(DocumentType),
-  externalId: z.string(),
+  externalId: z.string().nullable().optional(),
   companyName: z.string().nullable().optional(),
   personName: z.string(),
   personEmail: z.string().email(),
@@ -58,7 +58,7 @@ export const MerchantResponseSchema = z.object({
   updatedAt: z.date(),
   billing: MerchantBillingResponseSchema,
   settings: MerchantSettingsResponseSchema,
-  metadata: z.record(z.string().or(z.number())),
+  metadata: z.record(z.string().or(z.number().or(z.boolean()))),
 });
 
 export type MerchantSettingsResponseDto = z.infer<typeof MerchantSettingsResponseSchema>;

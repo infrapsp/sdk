@@ -13,6 +13,10 @@ export function deepParseJson<T = any>(jsonString: number | string | Record<stri
   // if not stringified json rather a simple string value then JSON.parse will throw error
   // otherwise continue recursion
   if (typeof jsonString === 'string') {
+    if (jsonString === 'null') {
+      return jsonString as any;
+    }
+
     if (isNumString(jsonString)) {
       // if a numeric string is received, return itself
       // otherwise JSON.parse will convert it to a number

@@ -51,7 +51,7 @@ export const UpdateMerchantBodySchema = z.object({
   personEmail: z.string().email().max(128),
   settings: UpdateMerchantSettingsBodySchema,
   billing: UpdateMerchantBillingBodySchema,
-  metadata: z.record(z.string().or(z.number())),
+  metadata: z.record(z.string().or(z.number().or(z.boolean()))),
 }).partial().transform((dto, ctx) => {
   if (Object.keys(dto).length === 0) {
     ZodHelpers.issue(ctx, 'body', 'At least one field must be provided');

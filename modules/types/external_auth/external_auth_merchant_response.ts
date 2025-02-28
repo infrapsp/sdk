@@ -5,6 +5,7 @@ import { ExternalAuthStatus } from '../../../modules/types/external_auth/types.t
 export const ExternalAuthMerchantResponseSchema = z.object({
   merchantId: ZodSchemas.nanoid(),
   tradingName: z.string(),
+  documentNumber: z.string(),
   status: z.nativeEnum(ExternalAuthStatus),
 });
 

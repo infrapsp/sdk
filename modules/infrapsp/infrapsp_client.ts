@@ -21,6 +21,7 @@ import { MerchantRecordHandler } from '../../modules/infrapsp/handlers/merchant_
 import { HttpClient } from '../../modules/http/http_client.ts';
 import { NotificationBellHandler } from '../../modules/infrapsp/handlers/notification_bell_handler.ts';
 import { NotificationTemplateHandler } from '../../modules/infrapsp/handlers/notification_template_handler.ts';
+import { NotificationHandler } from '../../modules/infrapsp/handlers/notification_handler.ts';
 
 export class InfraPSPClient {
   private readonly httpClient: HttpClient;
@@ -34,6 +35,7 @@ export class InfraPSPClient {
   public readonly invoices: InvoiceHandler;
   public readonly merchants: MerchantHandler;
   public readonly merchantRecords: MerchantRecordHandler;
+  public readonly notification: NotificationHandler;
   public readonly notificationBell: NotificationBellHandler;
   public readonly notificationTemplate: NotificationTemplateHandler;
   public readonly payables: PayableHandler;
@@ -63,6 +65,7 @@ export class InfraPSPClient {
     this.invoices = new InvoiceHandler(this.httpClient);
     this.merchants = new MerchantHandler(this.httpClient);
     this.merchantRecords = new MerchantRecordHandler(this.httpClient);
+    this.notification = new NotificationHandler(this.httpClient);
     this.notificationBell = new NotificationBellHandler(this.httpClient);
     this.notificationTemplate = new NotificationTemplateHandler(this.httpClient);
     this.payables = new PayableHandler(this.httpClient);

@@ -1,6 +1,6 @@
 import { z } from 'npm:@hono/zod-openapi@0.18.3';
-import { BaseParamsSchema } from '../../../modules/types/base/requests.ts';
 import { NotificationTemplateFieldType } from '../../../modules/types/notification_template/types.ts';
+import { ZodSchemas } from '../../../modules/types/zod.ts';
 
 export const UpdateNotificationTemplateBodySchema = z.object({
   requiredFields: z.record(z.nativeEnum(NotificationTemplateFieldType)).optional().default({}),
@@ -9,6 +9,8 @@ export const UpdateNotificationTemplateBodySchema = z.object({
   emailSubjectTemplate: z.string().nullable().optional(),
 });
 
-export const UpdateNotificationTemplateParamsSchema = BaseParamsSchema;
+export const UpdateNotificationTemplateParamsSchema = z.object({
+  id: ZodSchemas.alphanumericWithDash(),
+});
 
 export type UpdateNotificationTemplateBodyDto = z.infer<typeof UpdateNotificationTemplateBodySchema>;

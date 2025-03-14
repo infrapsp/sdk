@@ -1,7 +1,6 @@
 import { z } from 'npm:@hono/zod-openapi@0.18.3';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
 import {
-  TransactionBillingResponseSchema,
   TransactionCustomerResponseSchema,
   TransactionItemResponseSchema,
   TransactionShippingResponseSchema,
@@ -24,7 +23,6 @@ export const PreTransactionResponseSchema = z.object({
   shipping: TransactionShippingResponseSchema.optional().nullable(),
   amount: z.number().positive().int(),
   customer: TransactionCustomerResponseSchema.optional().nullable(),
-  billing: TransactionBillingResponseSchema.optional().nullable(),
   transactions: z.array(PreTransactionTransactionResponseSchema).default([]),
   expirationDate: z.date(),
   maxAttempts: z.number().int().positive(),

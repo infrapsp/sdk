@@ -1,6 +1,5 @@
 import { z } from 'npm:@hono/zod-openapi@0.18.3';
 import {
-  CreateTransactionBillingBodySchema,
   CreateTransactionCustomerBodySchema,
   CreateTransactionItemBodySchema,
   CreateTransactionShippingBodySchema,
@@ -13,7 +12,6 @@ export const CreatePreTransactionBodySchema = z.object({
   items: z.array(CreateTransactionItemBodySchema),
   shipping: CreateTransactionShippingBodySchema.optional().nullable(),
   customer: CreateTransactionCustomerBodySchema.optional(),
-  billing: CreateTransactionBillingBodySchema.optional(),
   expirationDate: ZodSchemas.datetime().default(() => new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)), // 30 days from now
   maxAttempts: z.number().int().positive().max(3).default(3),
   notifyUrl: z.string().url().optional(),

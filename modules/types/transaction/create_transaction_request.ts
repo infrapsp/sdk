@@ -71,7 +71,6 @@ export const BaseCreateTransactionBodySchema = z.object({
   items: z.array(CreateTransactionItemBodySchema),
   shipping: CreateTransactionShippingBodySchema.optional().nullable(),
   customer: CreateTransactionCustomerBodySchema.optional().nullable(),
-  billing: CreateTransactionBillingBodySchema.optional().nullable(),
   notifyUrl: z.string().url().optional(),
   externalId: z.string().max(128).optional(),
   externalSaleChannel: ZodSchemas.alphanumericWithDash().max(128).optional().nullable(),

@@ -11,6 +11,7 @@ export enum Role {
   TENANT = 'tenant',
   MERCHANT = 'merchant',
   CUSTOMER = 'customer',
+  RISK = 'risk',
   NONE = 'none',
 
   // Merchant Roles

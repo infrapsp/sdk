@@ -20,3 +20,4 @@ export const CreateMerchantRecordBodySchema = CreateMerchantRecordCommentBodySch
 
 export type CreateMerchantRecordBodyDto = z.infer<typeof CreateMerchantRecordBodySchema>;
 export type CreateMerchantRecordRequestBodyDto = z.infer<typeof CreateMerchantRecordRequestBodySchema>;
+export type CreateMerchantRecordCommentBodyDto = z.infer<typeof CreateMerchantRecordCommentBodySchema>;

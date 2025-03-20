@@ -6,12 +6,17 @@ export const CreateMerchantRecordParamsSchema = z.object({
   merchantId: ZodSchemas.nanoid(),
 });
 
-export const CreateMerchantRecordBodySchema = z.object({
+const CreateMerchantRecordRequestBodySchema = z.object({
+  request: z.nativeEnum(MerchantRecordRequestType),
+});
+
+const CreateMerchantRecordCommentBodySchema = z.object({
   title: z.string(),
   comment: z.string().optional(),
   attachments: z.array(z.instanceof(File)).or(z.instanceof(File)).transform((obj) => Array.isArray(obj) ? obj : [obj]).default([]),
-}).or(z.object({
-  request: z.nativeEnum(MerchantRecordRequestType),
-}));
+});
+
+export const CreateMerchantRecordBodySchema = CreateMerchantRecordCommentBodySchema.or(CreateMerchantRecordRequestBodySchema);
 
 export type CreateMerchantRecordBodyDto = z.infer<typeof CreateMerchantRecordBodySchema>;
+export type CreateMerchantRecordRequestBodyDto = z.infer<typeof CreateMerchantRecordRequestBodySchema>;

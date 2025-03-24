@@ -1,11 +1,12 @@
 import { z } from 'npm:@hono/zod-openapi@0.18.3';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
 import { MerchantRecordRequestType, MerchantRecordStatus } from '../../../modules/types/merchant_record/types.ts';
-import { DocumentType } from '../../../modules/types/merchant/types.ts';
+import { DocumentType, MerchantStatus } from '../../../modules/types/merchant/types.ts';
 
 export const MerchantRecordMerchantResponseSchema = z.object({
   id: ZodSchemas.nanoid(),
   tierId: ZodSchemas.nanoid(),
+  status: z.nativeEnum(MerchantStatus),
   documentNumber: z.string(),
   documentType: z.nativeEnum(DocumentType),
   externalId: z.string().nullable().optional(),
@@ -35,3 +36,4 @@ export const MerchantRecordRequestResponseSchema = MerchantRecordResponseSchema.
 }));
 
 export type MerchantRecordResponseDto = z.infer<typeof MerchantRecordResponseSchema>;
+export type MerchantRecordRequestResponseDto = z.infer<typeof MerchantRecordRequestResponseSchema>;

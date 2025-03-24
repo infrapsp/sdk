@@ -1,7 +1,7 @@
 import { AsyncResult } from '../../../modules/types/result.ts';
 import { validateResponse } from '../../../modules/infrapsp/validate_response.ts';
 import { MerchantResponseDto } from '../../../modules/types/merchant/merchant_response.ts';
-import { MerchantRecordResponseDto } from '../../../modules/types/merchant_record/merchant_record_response.ts';
+import { MerchantRecordRequestResponseDto, MerchantRecordResponseDto } from '../../../modules/types/merchant_record/merchant_record_response.ts';
 import { FindMerchantRecordQuerySchema, FindMerchantRecordRequestQuerySchema } from '../../../modules/types/merchant_record/find_merchant_record_request.ts';
 import { CreateMerchantRecordBodySchema } from '../../../modules/types/merchant_record/create_merchant_record_request.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
@@ -95,7 +95,7 @@ export class MerchantRecordHandler {
   async findManyRequests(
     query?: z.input<typeof FindMerchantRecordRequestQuerySchema>,
     requestInit: RequestInit = {},
-  ): AsyncResult<MerchantRecordResponseDto[]> {
+  ): AsyncResult<MerchantRecordRequestResponseDto[]> {
     const queryPath = new URLSearchParams(query as unknown as Record<string, string>);
 
     if (query?.createdAtGte) queryPath.set('createdAtGte', new Date(query.createdAtGte).toISOString());

@@ -1,6 +1,6 @@
 export type ItauProviderConfig = {
   certificateKey: string;
-  certificateCsr: string;
+  certificateCrt: string;
   clientId: string;
   clientSecret: string;
   pixKey: string;

@@ -8,6 +8,7 @@ export const ExternalAuthUserResponseSchema = z.object({
   externalUserId: z.string(),
   overrideRole: z.nativeEnum(MerchantRole),
   email: z.string().email(),
+  name: z.string().optional().nullable(),
   status: z.nativeEnum(ExternalAuthStatus),
 });
 

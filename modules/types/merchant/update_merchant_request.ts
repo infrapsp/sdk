@@ -64,6 +64,7 @@ export const RestrictUpdateMerchantBodySchema = z.object({
   tierId: ZodSchemas.nanoid(),
   status: z.nativeEnum(MerchantStatus),
   externalId: z.string().max(128),
+  metadata: z.record(z.string().or(z.number().or(z.boolean()))),
 }).partial().transform((dto, ctx) => {
   if (Object.keys(dto).length === 0) {
     ZodHelpers.issue(ctx, 'body', 'At least one field must be provided');

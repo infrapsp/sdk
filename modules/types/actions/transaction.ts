@@ -1,6 +1,7 @@
 import { z } from 'hono/zod-openapi';
 import { BaseWorkerBodySchema } from '$modules/types/actions/base.ts';
 import { ZodSchemas } from '$modules/types/zod.ts';
+import { PaymentMethod } from '$modules/types/transaction/types.ts';
 
 export enum TransactionAction {
   CREATE_TRANSACTION_ON_PROVIDER = 'create-transaction-on-provider',
@@ -12,7 +13,9 @@ export enum TransactionAction {
 // create transaction on provider
 export const CreateTransactionOnProviderBodySchema = z.object({
   action: z.literal(TransactionAction.CREATE_TRANSACTION_ON_PROVIDER),
-  payload: z.object({}),
+  payload: z.object({
+    method: z.nativeEnum(PaymentMethod),
+  }),
 });
 
 // process paid transaction
@@ -27,13 +30,17 @@ export const ProcessPixPaidTransactionBodySchema = z.object({
 // create refund on provider
 export const RefundTransactionOnProvider = z.object({
   action: z.literal(TransactionAction.REFUND_TRANSACTION_ON_PROVIDER),
-  payload: z.object({}),
+  payload: z.object({
+    method: z.nativeEnum(PaymentMethod),
+  }),
 });
 
 // cancel transaction on provider
 export const CancelTransactionOnProvider = z.object({
   action: z.literal(TransactionAction.CANCEL_TRANSACTION_ON_PROVIDER),
-  payload: z.object({}),
+  payload: z.object({
+    method: z.nativeEnum(PaymentMethod),
+  }),
 });
 
 // Worker

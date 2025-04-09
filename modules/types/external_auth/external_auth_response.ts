@@ -10,6 +10,7 @@ export const ExternalAuthUserResponseSchema = z.object({
   email: z.string().email(),
   name: z.string().optional().nullable(),
   status: z.nativeEnum(ExternalAuthStatus),
+  createdAt: z.date(),
 });
 
 export type ExternalAuthUserResponseDto = z.infer<typeof ExternalAuthUserResponseSchema>;

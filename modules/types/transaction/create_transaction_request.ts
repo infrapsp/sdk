@@ -73,7 +73,7 @@ export const BaseCreateTransactionBodySchema = z.object({
   customer: CreateTransactionCustomerBodySchema.optional().nullable(),
   notifyUrl: z.string().url().optional(),
   externalId: z.string().max(128).optional(),
-  externalSaleChannel: ZodSchemas.alphanumericWithDash().max(128).optional().nullable(),
+  externalSaleChannel: z.string().regex(/^[^\s]+$/).max(128).optional().nullable(),
   metadata: z.record(z.string()).optional(),
 });
 

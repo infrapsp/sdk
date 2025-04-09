@@ -17,4 +17,4 @@ export const UpdateMerchantRecordBodySchema = z.object({
   return dto;
 });
 
-export type UpdateMerchantBodyDto = z.infer<typeof UpdateMerchantRecordBodySchema>;
+export type UpdateMerchantRecordBodyDto = z.infer<typeof UpdateMerchantRecordBodySchema>;

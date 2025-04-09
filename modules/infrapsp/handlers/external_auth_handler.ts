@@ -52,7 +52,7 @@ export class ExternalAuthHandler {
     return validateResponse({ data, status: response.status });
   }
 
-  async findMany(query: z.input<typeof FindExternalAuthQuerySchema>, requestInit: RequestInit = {}): AsyncResult<ExternalAuthUserResponseDto> {
+  async findMany(query: z.input<typeof FindExternalAuthQuerySchema>, requestInit: RequestInit = {}): AsyncResult<ExternalAuthUserResponseDto[]> {
     const queryPath = new URLSearchParams(query);
 
     const url = `${this.basePath}?${queryPath}`;

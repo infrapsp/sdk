@@ -49,6 +49,7 @@ export const UpdateMerchantBodySchema = z.object({
   tradingName: z.string().max(120),
   personName: z.string().min(1).max(50),
   personEmail: z.string().email().max(128),
+  externalId: z.string().max(128),
   settings: UpdateMerchantSettingsBodySchema,
   billing: UpdateMerchantBillingBodySchema,
   metadata: z.record(z.string().or(z.number().or(z.boolean()))),

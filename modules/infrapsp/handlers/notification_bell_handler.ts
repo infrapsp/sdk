@@ -3,7 +3,7 @@ import { validateResponse } from '../../../modules/infrapsp/validate_response.ts
 import type { HttpClient } from '../../../modules/http/http_client.ts';
 import type { z } from 'npm:@hono/zod-openapi@0.18.3';
 import { NotificationBellResponseDto } from '../../../modules/types/notification_bell/notification_bell_response.ts';
-import { UpdateNotificationBellBodySchema } from '../../../modules/types/notification_bell/update_notification_bell.ts';
+import { UpdateNotificationBellBodySchema } from '../../../modules/types/notification_bell/update_notification_bell_request.ts';
 
 export class NotificationBellHandler {
   private readonly basePath = '/v1/notification-bells';

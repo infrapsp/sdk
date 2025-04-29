@@ -5,6 +5,7 @@ import { RestrictUpdateMerchantBodySchema, UpdateMerchantBodySchema } from '../.
 import { FindMerchantQuerySchema } from '../../../modules/types/merchant/find_merchant_request.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
 import type { z } from 'npm:@hono/zod-openapi@0.18.3';
+import { UploadMerchantLogoBodySchema } from '../../../modules/types/merchant/upload_merchant_logo_request.ts';
 
 export class MerchantHandler {
   private readonly basePath = '/v1/merchants';
@@ -72,6 +73,31 @@ export class MerchantHandler {
       headers: {
         ...requestInit.headers,
         'Content-Type': 'application/json',
+      },
+    });
+
+    const data = await response.json();
+    const status = response.status;
+
+    return validateResponse({ data, status });
+  }
+
+  async uploadLogo(
+    id: string,
+    body: z.input<typeof UploadMerchantLogoBodySchema>,
+    requestInit: RequestInit = {},
+  ): AsyncResult<MerchantResponseDto> {
+    const url = `${this.basePath}/${id}/logo`;
+
+    const formData = new FormData();
+    formData.append('logo', body.logo);
+
+    const response = await this.httpClient.post(url, {
+      ...requestInit,
+      body: formData,
+      headers: {
+        ...requestInit.headers,
+        'Content-Type': 'multipart/form-data',
       },
     });
 

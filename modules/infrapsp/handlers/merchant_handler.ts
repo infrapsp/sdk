@@ -86,7 +86,7 @@ export class MerchantHandler {
     id: string,
     body: z.input<typeof UploadMerchantLogoBodySchema>,
     requestInit: RequestInit = {},
-  ): AsyncResult<MerchantResponseDto> {
+  ): AsyncResult<undefined> {
     const url = `${this.basePath}/${id}/logo`;
 
     const formData = new FormData();
@@ -100,16 +100,15 @@ export class MerchantHandler {
       },
     });
 
-    const data = await response.json();
     const status = response.status;
 
-    return validateResponse({ data, status });
+    return validateResponse({ data: undefined, status });
   }
 
   async deleteLogo(
     id: string,
     requestInit: RequestInit = {},
-  ): AsyncResult<MerchantResponseDto> {
+  ): AsyncResult<undefined> {
     const url = `${this.basePath}/${id}/logo`;
 
     const response = await this.httpClient.delete(url, {
@@ -119,9 +118,8 @@ export class MerchantHandler {
       },
     });
 
-    const data = await response.json();
     const status = response.status;
 
-    return validateResponse({ data, status });
+    return validateResponse({ data: undefined, status });
   }
 }

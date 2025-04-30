@@ -36,7 +36,6 @@ export const UpdateMerchantSettingsBodySchema = z.object({
   autoTransferSettings: UpdateMerchantAutoTransferSettingsBodySchema.optional(),
   primaryColor: z.string().max(7).regex(/^#[0-9A-F]{6}$/).optional(),
   secondaryColor: z.string().max(7).regex(/^#[0-9A-F]{6}$/).optional(),
-  logoUrl: z.null().optional(),
 });
 
 export const UpdateMerchantBillingBodySchema = z.object({

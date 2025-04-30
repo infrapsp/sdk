@@ -9,8 +9,8 @@ export const UploadMerchantLogoBodySchema = z.object({
     ZodHelpers.issue(ctx, 'logo', 'File size must be less than 5MB.');
   }
 
-  if (!['image/png', 'image/jpg', 'image/jpeg'].includes(dto.logo.type)) {
-    ZodHelpers.issue(ctx, 'logo', 'Invalid file type. Only PNG, JPG and JPEG are allowed.');
+  if (!['image/png', 'image/jpg', 'image/jpeg', 'image/webp'].includes(dto.logo.type)) {
+    ZodHelpers.issue(ctx, 'logo', 'Invalid file type. Only PNG, JPG, JPEG and WEBP are allowed.');
   }
 
   return dto;

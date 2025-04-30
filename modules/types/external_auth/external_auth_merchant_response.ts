@@ -6,6 +6,7 @@ export const ExternalAuthMerchantResponseSchema = z.object({
   externalAuthId: ZodSchemas.nanoid(),
   merchantId: ZodSchemas.nanoid(),
   tradingName: z.string(),
+  logoUrl: z.string().optional().nullable(),
   documentNumber: z.string(),
   status: z.nativeEnum(ExternalAuthStatus),
 });

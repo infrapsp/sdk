@@ -97,7 +97,25 @@ export class MerchantHandler {
       body: formData,
       headers: {
         ...requestInit.headers,
-        'Content-Type': 'multipart/form-data',
+      },
+    });
+
+    const data = await response.json();
+    const status = response.status;
+
+    return validateResponse({ data, status });
+  }
+
+  async deleteLogo(
+    id: string,
+    requestInit: RequestInit = {},
+  ): AsyncResult<MerchantResponseDto> {
+    const url = `${this.basePath}/${id}/logo`;
+
+    const response = await this.httpClient.delete(url, {
+      ...requestInit,
+      headers: {
+        ...requestInit.headers,
       },
     });
 

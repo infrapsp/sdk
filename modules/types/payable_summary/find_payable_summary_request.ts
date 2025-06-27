@@ -1,4 +1,4 @@
-import { z } from 'npm:@hono/zod-openapi@0.18.3';
+import { z } from 'npm:@hono/zod-openapi@0.19.8';
 import { ZodHelpers, ZodRefines, ZodSchemas } from '../../../modules/types/zod.ts';
 import { PayableStatus } from '../../../modules/types/payable/types.ts';
 

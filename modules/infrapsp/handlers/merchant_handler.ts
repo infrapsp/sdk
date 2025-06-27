@@ -4,7 +4,7 @@ import { MerchantResponseDto } from '../../../modules/types/merchant/merchant_re
 import { RestrictUpdateMerchantBodySchema, UpdateMerchantBodySchema } from '../../../modules/types/merchant/update_merchant_request.ts';
 import { FindMerchantQuerySchema } from '../../../modules/types/merchant/find_merchant_request.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
-import type { z } from 'npm:@hono/zod-openapi@0.18.3';
+import type { z } from 'npm:@hono/zod-openapi@0.19.8';
 import { UploadMerchantLogoBodySchema } from '../../../modules/types/merchant/upload_merchant_logo_request.ts';
 
 export class MerchantHandler {

@@ -1,4 +1,4 @@
-import { z } from 'npm:@hono/zod-openapi@0.18.3';
+import { z } from 'npm:@hono/zod-openapi@0.19.8';
 
 export const CreateWebhookBodySchema = z.object({
   description: z.string().max(128).optional(),

@@ -1,4 +1,4 @@
-import { z } from 'npm:@hono/zod-openapi@0.18.3';
+import { z } from 'npm:@hono/zod-openapi@0.19.8';
 import { BaseParamsSchema } from '../../../modules/types/base/requests.ts';
 import { ZodHelpers, ZodSchemas } from '../../../modules/types/zod.ts';
 import { MerchantAutoTransferFrequency, MerchantStatus } from '../../../modules/types/merchant/types.ts';
@@ -34,6 +34,7 @@ export const UpdateMerchantEmailSettingsBodySchema = z.object({
 export const UpdateMerchantSettingsBodySchema = z.object({
   emailSettings: UpdateMerchantEmailSettingsBodySchema.optional(),
   autoTransferSettings: UpdateMerchantAutoTransferSettingsBodySchema.optional(),
+  softDescriptor: z.string().regex(/^[A-Z0-9]*$/).max(18).optional(),
   primaryColor: z.string().max(7).regex(/^#[0-9A-F]{6}$/).optional(),
   secondaryColor: z.string().max(7).regex(/^#[0-9A-F]{6}$/).optional(),
 });

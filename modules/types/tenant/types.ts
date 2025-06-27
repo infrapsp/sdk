@@ -1,3 +1,17 @@
+export enum TransactionMappingKey {
+  PIX = 'pix',
+  CREDIT_CARD = 'credit_card',
+  ANTIFRAUD = 'antifraud',
+}
+
+export enum TransferMappingKey {
+  PIX = 'pix',
+}
+
+export type TransactionMapping = Partial<Record<TransactionMappingKey, string>>;
+
+export type TransferMapping = Partial<Record<TransferMappingKey, string>>;
+
 export type ItauProviderConfig = {
   certificateKey: string;
   certificateCrt: string;
@@ -15,4 +29,19 @@ export type ItauProviderConfig = {
 export type LogtoProviderConfig = {
   baseUrl: string;
   audience: string;
+};
+
+export type RedeProviderConfig = {
+  pv: string;
+  token: string;
+};
+
+export type ClearsaleProviderConfig = {
+  name: string;
+  password: string;
+};
+
+export type MarbleProviderConfig = {
+  isEnabled: boolean;
+  apiKey: string;
 };

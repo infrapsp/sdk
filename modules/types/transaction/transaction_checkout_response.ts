@@ -1,4 +1,4 @@
-import { z } from 'npm:@hono/zod-openapi@0.18.3';
+import { z } from 'npm:@hono/zod-openapi@0.19.8';
 import { PaymentMethod, TransactionStatus } from '../../../modules/types/transaction/types.ts';
 import { Gender } from '../../../modules/types/merchant/types.ts';
 import { ZodSchemas } from '../../../modules/types/zod.ts';

@@ -1,4 +1,4 @@
-import { z } from 'npm:@hono/zod-openapi@0.18.3';
+import { z } from 'npm:@hono/zod-openapi@0.19.8';
 import { PaymentMethod, TransactionStatus } from '../../../modules/types/transaction/types.ts';
 import { DocumentType, Gender } from '../../../modules/types/merchant/types.ts';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
@@ -11,7 +11,19 @@ export const TransactionPixMethodSettingsResponseSchema = z.object({
   payerRequest: z.string().max(140).nullable().optional(),
 });
 
-export const TransactionMethodSettingsResponseSchema = TransactionPixMethodSettingsResponseSchema.or(z.object({}));
+export const TransactionCreditCardMethodSettingsResponseSchema = z.object({
+  installments: z.number().positive().int(),
+  expirationYear: ZodSchemas.numeric(),
+  expirationMonth: ZodSchemas.numeric(),
+  cardholderName: ZodSchemas.alphanumericWithSpace(),
+  brand: z.string(),
+  bin: z.string(),
+  last4: z.string(),
+});
+
+export const TransactionMethodSettingsResponseSchema = TransactionPixMethodSettingsResponseSchema.or(
+  TransactionCreditCardMethodSettingsResponseSchema,
+).or(z.object({}));
 
 export const TransactionPixMethodDataResponseSchema = z.object({
   qrCode: z.string(),
@@ -19,7 +31,13 @@ export const TransactionPixMethodDataResponseSchema = z.object({
   url: z.string(),
 });
 
-export const TransactionMethodDataResponseSchema = TransactionPixMethodDataResponseSchema.or(
+export const TransactionCreditCardMethodDataResponseSchema = z.object({
+  nsu: z.string(),
+  authorizationCode: z.string(),
+  brandId: z.string(),
+});
+
+export const TransactionMethodDataResponseSchema = TransactionPixMethodDataResponseSchema.or(TransactionCreditCardMethodDataResponseSchema).or(
   z.object({}),
 );
 
@@ -27,9 +45,20 @@ export const TransactionPixPaidDataResponseSchema = z.object({
   endToEndId: z.string(),
 });
 
-export const TransactionPaidDataResponseSchema = TransactionPixPaidDataResponseSchema.or(
+export const TransactionCreditCardPaidDataResponseSchema = z.object({
+  authorizationCode: z.string(),
+  nsu: z.string(),
+});
+
+export const TransactionPaidDataResponseSchema = TransactionPixPaidDataResponseSchema.or(TransactionCreditCardPaidDataResponseSchema).or(
   z.object({}),
 );
+
+export const TransactionAntifraudDataResponseSchema = z.object({
+  score: z.number().optional(),
+  status: z.string().optional(),
+});
+
 export const TransactionItemResponseSchema = z.object({
   description: z.string(),
   amount: z.number().positive().int(),
@@ -56,7 +85,7 @@ export const TransactionSplitResponseSchema = z.object({
 
 export const TransactionCustomerResponseSchema = z.object({
   companyName: z.string().nullable().optional(),
-  personName: z.string().min(1).max(50),
+  personName: z.string(),
   documentType: z.nativeEnum(DocumentType),
   documentNumber: ZodSchemas.document(),
   birthdate: ZodSchemas.datetime().optional().nullable(),
@@ -68,7 +97,7 @@ export const TransactionCustomerResponseSchema = z.object({
 
 export const TransactionBillingResponseSchema = z.object({
   companyName: z.string().nullable().optional(),
-  personName: z.string().min(1).max(50),
+  personName: z.string(),
   documentType: z.nativeEnum(DocumentType),
   documentNumber: ZodSchemas.document(),
   address: AddressResponseSchema,
@@ -102,6 +131,7 @@ export const TransactionResponseSchema = z.object({
   splits: z.array(TransactionSplitResponseSchema),
   externalId: z.string().nullable(),
   externalSaleChannel: z.string().nullable(),
+  antifraudData: TransactionAntifraudDataResponseSchema.optional().nullable(),
   metadata: z.record(z.string()),
   paidAt: z.date().nullable(),
   refundedAt: z.date().nullable(),

@@ -1,4 +1,4 @@
-import { z } from 'npm:@hono/zod-openapi@0.18.3';
+import { z } from 'npm:@hono/zod-openapi@0.19.8';
 import { ZodHelpers } from '../../../modules/types/zod.ts';
 
 export const CreateTierBodySchema = z.object({

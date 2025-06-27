@@ -1,4 +1,4 @@
-import { createRemoteJWKSet, decodeJwt, JWTPayload, jwtVerify } from 'https://deno.land/x/jose@v5.9.6/index.ts';
+import { createRemoteJWKSet, decodeJwt, JWTPayload, jwtVerify } from 'jsr:@panva/jose@6.0.11';
 import { UnauthorizedError } from '../../modules/errors/common_error.ts';
 import { AsyncResult, Result } from '../../modules/types/result.ts';
 

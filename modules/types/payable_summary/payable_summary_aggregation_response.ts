@@ -1,4 +1,4 @@
-import { z } from 'npm:@hono/zod-openapi@0.18.3';
+import { z } from 'npm:@hono/zod-openapi@0.19.8';
 
 export const PayableSummaryAggregationResponseSchema = z.object({
   amountTransferredCurrentDay: z.number(),

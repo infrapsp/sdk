@@ -1,4 +1,4 @@
-import { z } from 'npm:@hono/zod-openapi@0.18.3';
+import { z } from 'npm:@hono/zod-openapi@0.19.8';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
 import { DocumentType, MerchantAutoTransferFrequency } from '../../../modules/types/merchant/types.ts';
 import { ZodHelpers, ZodRefines } from '../../../modules/types/zod.ts';
@@ -31,6 +31,7 @@ export const CreateMerchantEmailSettingsBodySchema = z.object({
 export const CreateMerchantSettingsBodySchema = z.object({
   autoTransferSettings: CreateMerchantAutoTransferSettingsBodySchema.optional(),
   emailSettings: CreateMerchantEmailSettingsBodySchema.optional(),
+  softDescriptor: z.string().regex(/^[A-Z0-9]*$/).max(18).optional(),
 });
 
 export const CreateMerchantBillingBodySchema = z.object({

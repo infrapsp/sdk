@@ -22,6 +22,7 @@ import { HttpClient } from '../../modules/http/http_client.ts';
 import { NotificationBellHandler } from '../../modules/infrapsp/handlers/notification_bell_handler.ts';
 import { NotificationTemplateHandler } from '../../modules/infrapsp/handlers/notification_template_handler.ts';
 import { NotificationHandler } from '../../modules/infrapsp/handlers/notification_handler.ts';
+import { TransactionSplitHandler } from '../../modules/infrapsp/handlers/transaction_split_handler.ts';
 
 export class InfraPSPClient {
   private readonly httpClient: HttpClient;
@@ -43,6 +44,7 @@ export class InfraPSPClient {
   public readonly preTransactions: PreTransactionHandler;
   public readonly transactions: TransactionHandler;
   public readonly transactionRefunds: TransactionRefundHandler;
+  public readonly transactionSplits: TransactionSplitHandler;
   public readonly transfers: TransferHandler;
   public readonly zipCode: ZipCodeHandler;
   public readonly operations: OperationHandler;
@@ -73,6 +75,7 @@ export class InfraPSPClient {
     this.preTransactions = new PreTransactionHandler(this.httpClient);
     this.transactions = new TransactionHandler(this.httpClient);
     this.transactionRefunds = new TransactionRefundHandler(this.httpClient);
+    this.transactionSplits = new TransactionSplitHandler(this.httpClient);
     this.transfers = new TransferHandler(this.httpClient);
     this.zipCode = new ZipCodeHandler(this.httpClient);
     this.tiers = new TierHandler(this.httpClient);

@@ -1,5 +1,5 @@
 import { ZodRefines, ZodSchemas } from '../../../modules/types/zod.ts';
-import { z } from 'npm:@hono/zod-openapi@0.18.3';
+import { z } from 'npm:@hono/zod-openapi@0.19.8';
 
 export const BaseParamsSchema = z.object({
   id: ZodSchemas.nanoid(),
@@ -15,4 +15,4 @@ export const BaseQuerySchema = z.object({
   return dto;
 });
 
-export const EmptySchema = z.record(z.string().or(z.number()).or(z.symbol()), z.never());
+export const EmptySchema = z.object({});

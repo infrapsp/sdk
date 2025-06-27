@@ -5,6 +5,7 @@ export enum FeeRuleEntity {
 
 export enum FeeRuleMethod {
   PIX = 'pix',
+  CREDIT_CARD = 'credit_card',
 }
 
 export enum FeeRulePayer {

@@ -1,5 +1,5 @@
 import { TransferMethod } from '../../../modules/types/transfer/types.ts';
-import { z } from 'npm:@hono/zod-openapi@0.18.3';
+import { z } from 'npm:@hono/zod-openapi@0.19.8';
 
 export const CreateTransferBodySchema = z.object({
   amount: z.number().int().positive(),

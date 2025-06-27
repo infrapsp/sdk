@@ -1,4 +1,4 @@
-import { z } from 'npm:@hono/zod-openapi@0.18.3';
+import { z } from 'npm:@hono/zod-openapi@0.19.8';
 
 export const ZipCodeResponse = z.object({
   line1: z.string().optional().nullable(),

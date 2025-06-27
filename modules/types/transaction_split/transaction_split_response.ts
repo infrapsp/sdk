@@ -2,13 +2,8 @@ import { z } from 'npm:@hono/zod-openapi@0.19.8';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
 import { PayableMethod, PayableStatus, PayableType } from '../../../modules/types/payable/types.ts';
 
-export const PayableResponseSchema = z.object({
+export const TransactionSplitDetailPayableResponseSchema = z.object({
   id: ZodSchemas.nanoid(),
-  merchantId: ZodSchemas.nanoid(),
-  transactionId: ZodSchemas.nanoid().optional().nullable(),
-  transferId: ZodSchemas.nanoid().optional().nullable(),
-  transactionSplitId: ZodSchemas.nanoid().optional().nullable(),
-  transactionRefundId: ZodSchemas.nanoid().optional().nullable(),
   status: z.nativeEnum(PayableStatus),
   amount: z.number().int(),
   fee: z.number().int(),
@@ -19,4 +14,12 @@ export const PayableResponseSchema = z.object({
   updatedAt: z.date(),
 });
 
-export type PayableResponseDto = z.infer<typeof PayableResponseSchema>;
+export const TransactionSplitDetailResponseSchema = z.object({
+  id: ZodSchemas.nanoid(),
+  merchantId: ZodSchemas.nanoid(),
+  isFeePayer: z.boolean(),
+  tradingName: z.string(),
+  payables: z.array(TransactionSplitDetailPayableResponseSchema),
+});
+
+export type TransactionSplitDetailResponseDto = z.infer<typeof TransactionSplitDetailResponseSchema>;

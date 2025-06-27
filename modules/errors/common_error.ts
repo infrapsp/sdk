@@ -73,3 +73,10 @@ export const ValidationError = () =>
     code: 'VALIDATION_ERROR',
     status: 400,
   });
+
+export const NotImplementedError = () =>
+  new CommonError({
+    message: 'not implemented error',
+    code: 'NOT_IMPLEMENTED_ERROR',
+    status: 501,
+  });

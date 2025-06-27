@@ -1,6 +1,4 @@
 import { EmptyObject } from '../../../modules/types/base/types.ts';
-// import { DocumentType, Gender } from '../../../modules/types/merchant/types.ts';
-// import { Address } from '../../../modules/types/address/types.ts';
 
 export enum TransactionStatus {
   CREATED = 'created',
@@ -10,6 +8,10 @@ export enum TransactionStatus {
   CANCELED = 'canceled',
   FAILED = 'failed',
   EXPIRED = 'expired',
+  AUTHORIZED = 'authorized',
+  PRE_AUTHORIZED = 'pre_authorized',
+  CHARGEDBACK = 'chargedback',
+  UNDER_REVIEW = 'under_review',
 }
 
 export enum TransactionRefundStatus {
@@ -21,6 +23,7 @@ export enum TransactionRefundStatus {
 
 export enum PaymentMethod {
   PIX = 'pix',
+  CREDIT_CARD = 'credit_card',
   UNKNOWN = 'unknown',
 }
 
@@ -40,8 +43,46 @@ export type PixPaidData = {
   endToEndId: string;
 };
 
-export type TransactionMethodSettings = EmptyObject | PixMethodSettings;
+export type CreditCardMethodSettings = {
+  installments: number;
+  cardToken: string;
+  expirationYear: string;
+  expirationMonth: string;
+  cvvToken: string;
+  cardholderName: string;
+  brand: string;
+  bin: string;
+  last4: string;
+};
 
-export type TransactionMethodData = EmptyObject | PixMethodData;
+export type CreditCardMethodData = {
+  nsu: string;
+  authorizationCode: string;
+  brandId: string;
+};
 
-export type TransactionPaidData = EmptyObject | PixPaidData;
+export type CreditCardPaidData = {
+  authorizationCode: string;
+  nsu: string;
+};
+
+export type AntifraudData = EmptyObject | {
+  score?: number;
+  status?: string;
+  marble?: {
+    score: number;
+    status: string;
+    decisionId: string;
+    openSanctions: {
+      topics: string[];
+      entityId: string;
+      score: number;
+    }[];
+  };
+};
+
+export type TransactionMethodSettings = EmptyObject | PixMethodSettings | CreditCardMethodSettings;
+
+export type TransactionMethodData = EmptyObject | PixMethodData | CreditCardMethodData;
+
+export type TransactionPaidData = EmptyObject | PixPaidData | CreditCardPaidData;

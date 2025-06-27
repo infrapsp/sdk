@@ -1,4 +1,4 @@
-import { crypto } from 'jsr:@std/crypto@1.0.3';
+import { crypto } from 'jsr:@std/crypto@1.0.5';
 
 export function md5(input: Record<string, unknown>): Promise<string> {
   const object = deepSort(input);

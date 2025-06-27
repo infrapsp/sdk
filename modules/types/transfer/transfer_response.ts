@@ -1,4 +1,4 @@
-import { z } from 'npm:@hono/zod-openapi@0.18.3';
+import { z } from 'npm:@hono/zod-openapi@0.19.8';
 import { TransferMethod, TransferStatus } from '../../../modules/types/transfer/types.ts';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
 import { DocumentType } from '../../../modules/types/merchant/types.ts';

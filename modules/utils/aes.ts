@@ -1,5 +1,5 @@
-import { crypto } from 'jsr:@std/crypto@1.0.3';
-import { decodeHex } from 'jsr:@std/encoding@1.0.5';
+import { crypto } from 'jsr:@std/crypto@1.0.5';
+import { decodeHex } from 'jsr:@std/encoding@1.0.10';
 import { catcherAsync } from '../../modules/errors/catcher.ts';
 import { CommonError } from '../../modules/errors/common_error.ts';
 import { AsyncResult } from '../../modules/types/result.ts';

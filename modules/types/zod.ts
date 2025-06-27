@@ -1,4 +1,4 @@
-import { z } from 'npm:@hono/zod-openapi@0.18.3';
+import { z } from 'npm:@hono/zod-openapi@0.19.8';
 import { isValidCpf } from '../../modules/utils/cpf.ts';
 import { isValidCnpj } from '../../modules/utils/cnpj.ts';
 import { DocumentType } from '../../modules/types/merchant/types.ts';
@@ -21,6 +21,7 @@ export const ZodSchemas = {
   cpf: () => z.custom<string>((data) => typeof data === 'string' ? isValidCpf(data) : false, { message: 'Invalid document' }),
   cnpj: () => z.custom<string>((data) => typeof data === 'string' ? isValidCnpj(data) : false, { message: 'Invalid document' }),
   alphanumeric: () => z.string().regex(/^[0-9a-zA-Z]+$/),
+  alphanumericWithSpace: () => z.string().regex(/^[0-9a-zA-Z ]+$/),
   alphanumericWithDash: () => z.string().regex(/^[0-9a-zA-Z-]+$/),
   numeric: () => z.string().regex(/^[0-9]+$/),
   phone: () => z.string().regex(/^\+[0-9]{3,15}$/),

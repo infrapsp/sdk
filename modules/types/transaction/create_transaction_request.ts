@@ -1,4 +1,4 @@
-import { z } from 'npm:@hono/zod-openapi@0.18.3';
+import { z } from 'npm:@hono/zod-openapi@0.19.8';
 import { PaymentMethod } from '../../../modules/types/transaction/types.ts';
 import { DocumentType, Gender } from '../../../modules/types/merchant/types.ts';
 import { ZodRefines, ZodSchemas } from '../../../modules/types/zod.ts';
@@ -11,7 +11,15 @@ export const CreateTransactionPixMethodSettingsBodySchema = z.object({
   payerRequest: z.string().max(140).nullable().optional(),
 });
 
-export const CreateTransactionMethodSettingsBodySchema = CreateTransactionPixMethodSettingsBodySchema.or(EmptySchema);
+export const CreateTransactionCreditCardMethodSettingsBodySchema = z.object({
+  installments: z.number().positive().int().min(1).max(12),
+  cardToken: z.string().max(128),
+  cvvToken: z.string().max(128),
+});
+
+export const CreateTransactionMethodSettingsBodySchema = CreateTransactionPixMethodSettingsBodySchema.or(
+  CreateTransactionCreditCardMethodSettingsBodySchema,
+).or(EmptySchema);
 
 export const CreateTransactionItemBodySchema = z.object({
   description: z.string(),
@@ -70,17 +78,19 @@ export const BaseCreateTransactionBodySchema = z.object({
   methodSettings: CreateTransactionMethodSettingsBodySchema,
   items: z.array(CreateTransactionItemBodySchema),
   shipping: CreateTransactionShippingBodySchema.optional().nullable(),
-  customer: CreateTransactionCustomerBodySchema.optional().nullable(),
   notifyUrl: z.string().url().optional(),
   externalId: z.string().max(128).optional(),
   externalSaleChannel: z.string().regex(/^[^\s]+$/).max(128).optional().nullable(),
   metadata: z.record(z.string()).optional(),
 });
 
-export const CreateTransactionCheckoutBodySchema = BaseCreateTransactionBodySchema;
+export const CreateTransactionCheckoutBodySchema = BaseCreateTransactionBodySchema.and(z.object({
+  customer: CreateTransactionCustomerBodySchema.optional().nullable(),
+}));
 
 export const CreateTransactionBodySchema = BaseCreateTransactionBodySchema.and(z.object({
   amount: z.number().positive().int(),
+  customer: CreateTransactionCustomerBodySchema,
   splits: z.array(CreateTransactionSplitBodySchema).optional().default([]),
 }));
 
@@ -94,3 +104,5 @@ export type CreateTransactionSplitBodyDto = z.infer<typeof CreateTransactionSpli
 export type CreateTransactionCustomerBodyDto = z.infer<typeof CreateTransactionCustomerBodySchema>;
 export type CreateTransactionBillingBodyDto = z.infer<typeof CreateTransactionBillingBodySchema>;
 export type CreateTransactionCheckoutBodyDto = z.infer<typeof CreateTransactionCheckoutBodySchema>;
+export type CreateTransactionMethodSettingsBodyDto = z.infer<typeof CreateTransactionMethodSettingsBodySchema>;
+export type CreateTransactionCreditCardMethodSettingsBodyDto = z.infer<typeof CreateTransactionCreditCardMethodSettingsBodySchema>;

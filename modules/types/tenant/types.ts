@@ -8,9 +8,15 @@ export enum TransferMappingKey {
   PIX = 'pix',
 }
 
+export enum MerchantMappingKey {
+  REGISTRATION = 'registration',
+}
+
 export type TransactionMapping = Partial<Record<TransactionMappingKey, string>>;
 
 export type TransferMapping = Partial<Record<TransferMappingKey, string>>;
+
+export type MerchantMapping = Partial<Record<MerchantMappingKey, string>>;
 
 export type ItauProviderConfig = {
   certificateKey: string;
@@ -44,4 +50,12 @@ export type ClearsaleProviderConfig = {
 export type MarbleProviderConfig = {
   isEnabled: boolean;
   apiKey: string;
+};
+
+export type CafProviderConfig = {
+  apiKey: string;
+  pjTemplateId: string;
+  pfTemplateId: string;
+  pjTransactionTemplateId: string;
+  pfTransactionTemplateId: string;
 };

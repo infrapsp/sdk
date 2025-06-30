@@ -19,6 +19,7 @@ export const TransactionSplitDetailResponseSchema = z.object({
   merchantId: ZodSchemas.nanoid(),
   isFeePayer: z.boolean(),
   tradingName: z.string(),
+  documentNumber: z.string(),
   payables: z.array(TransactionSplitDetailPayableResponseSchema),
 });
 

@@ -94,7 +94,7 @@ export enum AntifraudAnalysisStatus {
 export const ProcessAntifraudAnalysisBodySchema = z.object({
   action: z.literal(TransactionAction.PROCESS_ANTIFRAUD_ANALYSIS),
   payload: z.object({
-    providerScore: z.number(),
+    providerScore: z.number().optional(),
     providerStatus: z.nativeEnum(ClearsaleOrderStatus),
     status: z.nativeEnum(AntifraudAnalysisStatus),
     provider: z.string(),

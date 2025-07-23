@@ -23,6 +23,7 @@ import { NotificationBellHandler } from '../../modules/infrapsp/handlers/notific
 import { NotificationTemplateHandler } from '../../modules/infrapsp/handlers/notification_template_handler.ts';
 import { NotificationHandler } from '../../modules/infrapsp/handlers/notification_handler.ts';
 import { TransactionSplitHandler } from '../../modules/infrapsp/handlers/transaction_split_handler.ts';
+import { DashboardHandler } from '../../modules/infrapsp/handlers/dashboard_handler.ts';
 
 export class InfraPSPClient {
   private readonly httpClient: HttpClient;
@@ -30,6 +31,7 @@ export class InfraPSPClient {
   public readonly apiKey: ApiKeyHandler;
   public readonly balance: BalanceHandler;
   public readonly checkout: CheckoutHandler;
+  public readonly dashboard: DashboardHandler;
   public readonly externalAuth: ExternalAuthHandler;
   public readonly feeRule: FeeRuleHandler;
   public readonly impersonate: ImpersonateHandler;
@@ -61,6 +63,7 @@ export class InfraPSPClient {
     this.apiKey = new ApiKeyHandler(this.httpClient);
     this.balance = new BalanceHandler(this.httpClient);
     this.checkout = new CheckoutHandler(this.httpClient);
+    this.dashboard = new DashboardHandler(this.httpClient);
     this.externalAuth = new ExternalAuthHandler(this.httpClient);
     this.feeRule = new FeeRuleHandler(this.httpClient);
     this.impersonate = new ImpersonateHandler(this.httpClient);

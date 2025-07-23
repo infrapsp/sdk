@@ -12,7 +12,7 @@ export const CreateMerchantBodySchema = z.object({
   action: z.literal(MerchantAction.CREATE_MERCHANT),
   payload: z.object({
     merchant: z.object({
-      url: z.string().url(),
+      url: z.string(),
       personName: z.string(),
       personEmail: z.string().email(),
       companyName: z.string().optional(),

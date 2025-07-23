@@ -17,6 +17,8 @@ export enum InfraPSPErrorCode {
   // transfer related errors
   TRF_PIX_KEY_NOT_FOUND = 'TRF_PIX_KEY_NOT_FOUND',
 
+  REG_HIGH_RISK = 'REGISTRATION_HIGH_RISK',
+
   // default
   UNKNOWN = '',
   INTERNAL_ERROR = 'INTERNAL_ERROR',

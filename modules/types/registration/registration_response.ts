@@ -8,6 +8,7 @@ export const RegistrationResponseSchema = z.object({
   documentNumber: z.string(),
   documentType: z.nativeEnum(DocumentType),
   status: z.nativeEnum(RegistrationStatus),
+  statusMessage: z.string(),
   providerData: z.object({
     onboardingUrl: z.string(),
     tradingName: z.string().optional(),

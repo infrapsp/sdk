@@ -6,7 +6,6 @@ import { ZodRefines } from '../../../modules/types/zod.ts';
 export const CreateRegistrationBodySchema = z.object({
   documentNumber: ZodSchemas.document(),
   documentType: z.nativeEnum(DocumentType),
-  segmentId: ZodSchemas.nanoid(),
 }).transform((dto, ctx) => {
   ZodRefines.matchDocument(ctx, dto.documentNumber, dto.documentType);
   return dto;

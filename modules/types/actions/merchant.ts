@@ -4,12 +4,10 @@ import { RegistrationStatus } from '$modules/types/registration/types.ts';
 
 export enum MerchantAction {
   PROCESS_REGISTRATION = 'process-registration',
-  CREATE_MERCHANT = 'create-merchant',
 }
 
-// process updated registration
-export const CreateMerchantBodySchema = z.object({
-  action: z.literal(MerchantAction.CREATE_MERCHANT),
+export const ProcessRegistrationBodySchema = z.object({
+  action: z.literal(MerchantAction.PROCESS_REGISTRATION),
   payload: z.object({
     merchant: z.object({
       url: z.string(),
@@ -17,6 +15,7 @@ export const CreateMerchantBodySchema = z.object({
       personEmail: z.string().email(),
       companyName: z.string().optional(),
       tradingName: z.string(),
+      cnae: z.string().optional(),
     }),
     billing: z.object({
       email: z.string(),
@@ -27,24 +26,13 @@ export const CreateMerchantBodySchema = z.object({
         neighborhood: z.string(),
         number: z.string(),
       }),
-    }),
-  }),
-});
-
-export const ProcessRegistrationBodySchema = z.object({
-  action: z.literal(MerchantAction.PROCESS_REGISTRATION),
-  payload: z.object({
-    personName: z.string(),
-    personEmail: z.string(),
-    tradingName: z.string(),
+    }).optional(),
     attempt: z.number().int().min(1),
     status: z.nativeEnum(RegistrationStatus),
   }),
 });
 
 // Worker
-export const CreateMerchantWorkerBodySchema = BaseWorkerBodySchema.and(CreateMerchantBodySchema);
 export const ProcessRegistrationWorkerBodySchema = BaseWorkerBodySchema.and(ProcessRegistrationBodySchema);
 
-export type CreateMerchantWorkerBodyDto = z.infer<typeof CreateMerchantWorkerBodySchema>;
 export type ProcessRegistrationWorkerBodyDto = z.infer<typeof ProcessRegistrationWorkerBodySchema>;

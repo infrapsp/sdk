@@ -115,7 +115,6 @@ export * from './utils/cpf.ts';
 export * from './utils/deep_parse_json.ts';
 export * from './utils/fast_case.ts';
 export * from './utils/jwt.ts';
-export * from './utils/md5.ts';
 export * from './utils/money.ts';
 export * from './utils/nanoid.ts';
 export * from './utils/sort.ts';

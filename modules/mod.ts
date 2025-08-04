@@ -107,7 +107,6 @@ export * from './types/tier/find_tier_request.ts';
 export * from './types/tier/tier_response.ts';
 export * from './types/tier/update_tier_request.ts';
 export * from './utils/sleep.ts';
-export * from './utils/aes.ts';
 export * from './utils/aggregate_objects.ts';
 export * from './utils/cache.ts';
 export * from './utils/chunk_array.ts';

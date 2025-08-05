@@ -15,11 +15,12 @@ export enum FeeRulePayer {
   TENANT = 'tenant',
 }
 
+export type FeeRuleCreditCardMdr = {
+  installment: number;
+  percent: number;
+};
 export type FeeRuleCreditCard = EmptyObject | {
   anticipation: number;
   chargebackGuarantee: number;
-  mdr: Array<{
-    installment: number;
-    percent: number;
-  }>;
+  mdr: Array<FeeRuleCreditCardMdr>;
 };

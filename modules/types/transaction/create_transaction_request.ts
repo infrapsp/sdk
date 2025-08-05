@@ -61,18 +61,6 @@ export const CreateTransactionCustomerBodySchema = z.object({
   return dto;
 });
 
-export const CreateTransactionBillingBodySchema = z.object({
-  companyName: z.string().max(320).optional(),
-  personName: z.string().min(1).max(50),
-  documentType: z.nativeEnum(DocumentType),
-  documentNumber: ZodSchemas.document(),
-  address: CreateAddressBodySchema,
-}).transform((dto, ctx) => {
-  ZodRefines.matchDocument(ctx, dto.documentNumber, dto.documentType);
-  ZodRefines.hasCompanyData(ctx, dto.companyName, dto.documentType, 'companyName');
-  return dto;
-});
-
 export const BaseCreateTransactionBodySchema = z.object({
   method: z.nativeEnum(PaymentMethod),
   methodSettings: CreateTransactionMethodSettingsBodySchema,
@@ -102,7 +90,6 @@ export type CreateTransactionItemBodyDto = z.infer<typeof CreateTransactionItemB
 export type CreateTransactionPixMethodSettingsBodyDto = z.infer<typeof CreateTransactionPixMethodSettingsBodySchema>;
 export type CreateTransactionSplitBodyDto = z.infer<typeof CreateTransactionSplitBodySchema>;
 export type CreateTransactionCustomerBodyDto = z.infer<typeof CreateTransactionCustomerBodySchema>;
-export type CreateTransactionBillingBodyDto = z.infer<typeof CreateTransactionBillingBodySchema>;
 export type CreateTransactionCheckoutBodyDto = z.infer<typeof CreateTransactionCheckoutBodySchema>;
 export type CreateTransactionMethodSettingsBodyDto = z.infer<typeof CreateTransactionMethodSettingsBodySchema>;
 export type CreateTransactionCreditCardMethodSettingsBodyDto = z.infer<typeof CreateTransactionCreditCardMethodSettingsBodySchema>;

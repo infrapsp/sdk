@@ -95,14 +95,6 @@ export const TransactionCustomerResponseSchema = z.object({
   email: z.string().email(),
 });
 
-export const TransactionBillingResponseSchema = z.object({
-  companyName: z.string().nullable().optional(),
-  personName: z.string(),
-  documentType: z.nativeEnum(DocumentType),
-  documentNumber: ZodSchemas.document(),
-  address: AddressResponseSchema,
-});
-
 export const TransactionStatusHistoryResponseSchema = z.object({
   status: z.nativeEnum(TransactionStatus),
   message: z.string(),
@@ -147,4 +139,3 @@ export type TransactionPixMethodDataResponseDto = z.infer<typeof TransactionPixM
 export type TransactionPixPaidDataResponseDto = z.infer<typeof TransactionPixPaidDataResponseSchema>;
 export type TransactionSplitResponseDto = z.infer<typeof TransactionSplitResponseSchema>;
 export type TransactionCustomerResponseDto = z.infer<typeof TransactionCustomerResponseSchema>;
-export type TransactionBillingResponseDto = z.infer<typeof TransactionBillingResponseSchema>;

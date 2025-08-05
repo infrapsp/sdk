@@ -3,7 +3,6 @@ import { ZodSchemas } from '../../../modules/types/zod.ts';
 import { TransactionItemResponseSchema } from '../../../modules/types/transaction/transaction_response.ts';
 import { PreTransactionStatus } from '../../../modules/types/pre_transaction/types.ts';
 import {
-  TransactionCheckoutBillingResponseSchema,
   TransactionCheckoutCustomerResponseSchema,
   TransactionCheckoutResponseSchema,
   TransactionCheckoutShippingResponseSchema,
@@ -27,7 +26,6 @@ export const PreTransactionCheckoutResponseSchema = z.object({
   shipping: TransactionCheckoutShippingResponseSchema.optional().nullable(),
   amount: z.number().positive().int(),
   customer: TransactionCheckoutCustomerResponseSchema.optional().nullable(),
-  billing: TransactionCheckoutBillingResponseSchema.optional().nullable(),
   transactions: z.array(TransactionCheckoutResponseSchema),
   expirationDate: z.date(),
   maxAttempts: z.number().int().positive(),

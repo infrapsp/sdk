@@ -20,14 +20,6 @@ export type PreTransactionCustomer = {
   email: string;
 };
 
-export type PreTransactionBilling = {
-  companyName?: string;
-  personName: string;
-  documentType: DocumentType;
-  documentNumber: string;
-  address: Address;
-};
-
 export type PreTransactionShipping = {
   amount: number;
   address: Address;

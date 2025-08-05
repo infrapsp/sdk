@@ -19,11 +19,6 @@ export const TransactionCheckoutCustomerResponseSchema = z.object({
   gender: z.nativeEnum(Gender),
 });
 
-export const TransactionCheckoutBillingResponseSchema = z.object({
-  companyName: z.string().nullable().optional(),
-  personName: z.string().min(1).max(50),
-});
-
 export const TransactionCheckoutResponseSchema = z.object({
   id: ZodSchemas.nanoid(),
   merchantId: ZodSchemas.nanoid(),
@@ -45,4 +40,3 @@ export const TransactionCheckoutResponseSchema = z.object({
 export type TransactionCheckoutResponseDto = z.infer<typeof TransactionCheckoutResponseSchema>;
 export type TransactionCheckoutShippingResponseDto = z.infer<typeof TransactionCheckoutShippingResponseSchema>;
 export type TransactionCheckoutCustomerResponseDto = z.infer<typeof TransactionCheckoutCustomerResponseSchema>;
-export type TransactionCheckoutBillingResponseDto = z.infer<typeof TransactionCheckoutBillingResponseSchema>;

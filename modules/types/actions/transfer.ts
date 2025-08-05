@@ -13,3 +13,4 @@ export const CreateTransferOnProviderBodySchema = z.object({
 
 // Worker
 export const CreateTransferOnProviderWorkerBodySchema = BaseWorkerBodySchema.and(CreateTransferOnProviderBodySchema);
+export type CreateTransferOnProviderWorkerBodyDto = z.infer<typeof CreateTransferOnProviderWorkerBodySchema>;

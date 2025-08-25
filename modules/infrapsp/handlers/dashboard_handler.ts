@@ -14,14 +14,15 @@ export class DashboardHandler {
     query?: z.input<typeof FindTransactionStatsQuerySchema>,
     requestInit: RequestInit = {},
   ): AsyncResult<TransactionStatsResponseDto[]> {
+    const base = `${this.basePath}/transaction-stats`;
     const queryPath = new URLSearchParams(query as unknown as Record<string, string>);
 
     if (query?.createdAtGte) queryPath.set('createdAtGte', new Date(query.createdAtGte).toISOString());
     if (query?.createdAtLte) queryPath.set('createdAtLte', new Date(query.createdAtLte).toISOString());
 
-    const url = query ? this.basePath + '?' + queryPath : this.basePath;
+    const url = query ? base + '?' + queryPath : base;
 
-    const response = await this.httpClient.get(`${url}/transaction-stats`, requestInit);
+    const response = await this.httpClient.get(url, requestInit);
 
     const data = await response.json();
 

@@ -16,6 +16,7 @@ export const ProcessRegistrationBodySchema = z.object({
       companyName: z.string().optional(),
       tradingName: z.string(),
       cnae: z.string().optional(),
+      monthlyBilling: z.number().optional(),
     }),
     billing: z.object({
       email: z.string(),

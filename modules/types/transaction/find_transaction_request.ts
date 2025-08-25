@@ -16,6 +16,7 @@ export const FindTransactionQuerySchema = BaseQuerySchema.and(
     preTransactionId: ZodSchemas.nanoid().optional(),
     sortOrder: z.nativeEnum(SortOrder).default(SortOrder.DESC),
     amountRefundedGte: z.coerce.number().min(0).optional(),
+    amountRefundedLte: z.coerce.number().min(0).optional(),
   }),
 );
 

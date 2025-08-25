@@ -5,6 +5,7 @@ import { ZodSchemas } from '$modules/types/zod.ts';
 export const BaseWorkerBodySchema = z.object({
   id: ZodSchemas.nanoid(),
   entityId: ZodSchemas.nanoid(),
+  provider: z.string(),
 });
 
 export const BaseWorkerResponseSchema = z.object({

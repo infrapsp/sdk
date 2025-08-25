@@ -21,7 +21,7 @@ export class DashboardHandler {
 
     const url = query ? this.basePath + '?' + queryPath : this.basePath;
 
-    const response = await this.httpClient.get(url, requestInit);
+    const response = await this.httpClient.get(`${url}/transaction-stats`, requestInit);
 
     const data = await response.json();
 

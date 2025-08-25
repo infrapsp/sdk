@@ -12,11 +12,11 @@ export enum MerchantMappingKey {
   REGISTRATION = 'registration',
 }
 
-export type TransactionMapping = Partial<Record<TransactionMappingKey, string>>;
+export type TransactionMapping = Partial<Record<TransactionMappingKey, string[]>>;
 
-export type TransferMapping = Partial<Record<TransferMappingKey, string>>;
+export type TransferMapping = Partial<Record<TransferMappingKey, string[]>>;
 
-export type MerchantMapping = Partial<Record<MerchantMappingKey, string>>;
+export type MerchantMapping = Partial<Record<MerchantMappingKey, string[]>>;
 
 export type ItauProviderConfig = {
   certificateKey: string;

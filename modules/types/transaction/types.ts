@@ -66,7 +66,7 @@ export type CreditCardPaidData = {
   nsu: string;
 };
 
-export type AntifraudData = EmptyObject | {
+export type TransactionAntifraudData = EmptyObject | {
   score?: number;
   status?: string;
   marble?: {

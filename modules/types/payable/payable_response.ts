@@ -9,6 +9,7 @@ export const PayableResponseSchema = z.object({
   transferId: ZodSchemas.nanoid().optional().nullable(),
   transactionSplitId: ZodSchemas.nanoid().optional().nullable(),
   transactionRefundId: ZodSchemas.nanoid().optional().nullable(),
+  isTransactionOwner: z.boolean().optional().nullable(),
   status: z.nativeEnum(PayableStatus),
   amount: z.number().int(),
   fee: z.number().int(),

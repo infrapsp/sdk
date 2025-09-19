@@ -1,5 +1,6 @@
 export enum PayableMethod {
   PIX = 'pix',
+  CREDIT_CARD = 'credit_card',
 }
 
 export enum PayableStatus {
@@ -11,6 +12,4 @@ export enum PayableStatus {
 export enum PayableType {
   CREDIT = 'credit',
   DEBIT = 'debit',
-  REFUND = 'refund',
-  REFUND_REVERSAL = 'refund_reversal',
 }

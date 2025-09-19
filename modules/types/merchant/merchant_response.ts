@@ -1,4 +1,4 @@
-import { z } from 'npm:@hono/zod-openapi@0.19.8';
+import { z } from 'npm:@hono/zod-openapi@1.1.0';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
 import { DocumentType, MerchantAutoTransferFrequency, MerchantStatus } from '../../../modules/types/merchant/types.ts';
 import { AddressResponseSchema } from '../../../modules/types/address/address_response.ts';
@@ -36,7 +36,7 @@ export const MerchantStatusHistoryResponseSchema = z.object({
 });
 
 export const MerchantBillingResponseSchema = z.object({
-  email: z.string().email().max(128),
+  email: z.email().max(128),
   address: AddressResponseSchema,
 });
 
@@ -48,7 +48,7 @@ export const MerchantResponseSchema = z.object({
   externalId: z.string().nullable().optional(),
   companyName: z.string().nullable().optional(),
   personName: z.string(),
-  personEmail: z.string().email(),
+  personEmail: z.email(),
   segmentId: ZodSchemas.nanoid(),
   status: z.nativeEnum(MerchantStatus),
   statusMessage: z.string(),
@@ -59,7 +59,7 @@ export const MerchantResponseSchema = z.object({
   updatedAt: z.date(),
   billing: MerchantBillingResponseSchema,
   settings: MerchantSettingsResponseSchema,
-  metadata: z.record(z.string().or(z.number().or(z.boolean()))),
+  metadata: z.record(z.string(), z.string().or(z.number().or(z.boolean()))),
 });
 
 export type MerchantSettingsResponseDto = z.infer<typeof MerchantSettingsResponseSchema>;

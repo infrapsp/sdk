@@ -7,7 +7,7 @@ import { FindExternalAuthQuerySchema } from '../../../modules/types/external_aut
 import { ExternalAuthUserResponseDto } from '../../../modules/types/external_auth/external_auth_response.ts';
 import { CreateExternalAuthBodySchema } from '../../../modules/types/external_auth/create_external_auth_request.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
-import type { z } from 'npm:@hono/zod-openapi@0.19.8';
+import type { z } from 'npm:@hono/zod-openapi@1.1.0';
 
 export class ExternalAuthHandler {
   private readonly basePath = '/v1/auth/external-auth';

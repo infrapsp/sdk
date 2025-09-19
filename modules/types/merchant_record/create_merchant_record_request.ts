@@ -1,4 +1,4 @@
-import { z } from 'npm:@hono/zod-openapi@0.19.8';
+import { z } from 'npm:@hono/zod-openapi@1.1.0';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
 import { MerchantRecordRequestType } from '../../../modules/types/merchant_record/types.ts';
 
@@ -7,13 +7,13 @@ export const CreateMerchantRecordParamsSchema = z.object({
 });
 
 const CreateMerchantRecordRequestBodySchema = z.object({
-  request: z.nativeEnum(MerchantRecordRequestType),
+  request: z.enum(MerchantRecordRequestType),
 });
 
 const CreateMerchantRecordCommentBodySchema = z.object({
   title: z.string(),
   comment: z.string().optional(),
-  attachments: z.array(z.instanceof(File)).or(z.instanceof(File)).transform((obj) => Array.isArray(obj) ? obj : [obj]).default([]),
+  attachments: z.array(z.instanceof(File)).or(z.instanceof(File)).transform((obj) => Array.isArray(obj) ? obj : [obj]).default(() => []),
 });
 
 export const CreateMerchantRecordBodySchema = CreateMerchantRecordCommentBodySchema.or(CreateMerchantRecordRequestBodySchema);

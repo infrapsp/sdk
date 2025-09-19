@@ -1,5 +1,5 @@
 import { BaseParamsSchema, BaseQuerySchema } from '../../../modules/types/base/requests.ts';
-import { z } from 'npm:@hono/zod-openapi@0.19.8';
+import { z } from 'npm:@hono/zod-openapi@1.1.0';
 import { ZodHelpers, ZodRefines, ZodSchemas } from '../../../modules/types/zod.ts';
 import { PayableMethod, PayableStatus, PayableType } from '../../../modules/types/payable/types.ts';
 import { SortOrder } from '../../../modules/types/base/types.ts';
@@ -16,12 +16,12 @@ export const FindPayableQuerySchema = z.object({
       transactionRefundId: ZodSchemas.nanoid().optional(),
       transactionSplitId: ZodSchemas.nanoid().optional(),
       transferId: ZodSchemas.nanoid().optional(),
-      type: z.nativeEnum(PayableType).optional(),
-      method: z.nativeEnum(PayableMethod).optional(),
-      status: ZodSchemas.stringArray(z.nativeEnum(PayableStatus)).optional(),
-      notStatus: ZodSchemas.stringArray(z.nativeEnum(PayableStatus)).optional(),
+      type: z.enum(PayableType).optional(),
+      method: z.enum(PayableMethod).optional(),
+      status: ZodSchemas.stringArray(z.enum(PayableStatus)).optional(),
+      notStatus: ZodSchemas.stringArray(z.enum(PayableStatus)).optional(),
       sortField: z.enum(['createdAt', 'paymentDate']).default('createdAt'),
-      sortOrder: z.nativeEnum(SortOrder).default(SortOrder.DESC),
+      sortOrder: z.enum(SortOrder).default(SortOrder.DESC),
       paymentDateLte: ZodSchemas.datetime().optional(),
       paymentDateGte: ZodSchemas.datetime().optional(),
     }),

@@ -1,9 +1,9 @@
-import { z } from 'npm:@hono/zod-openapi@0.19.8';
+import { z } from 'npm:@hono/zod-openapi@1.1.0';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
 import { TransactionRefundStatus } from '../../../modules/types/transaction/types.ts';
 
 export const TransactionRefundStatusHistoryResponseSchema = z.object({
-  status: z.nativeEnum(TransactionRefundStatus),
+  status: z.enum(TransactionRefundStatus),
   message: z.string(),
   createdAt: z.date(),
 });
@@ -18,7 +18,7 @@ export const TransactionRefundResponseSchema = z.object({
   id: ZodSchemas.nanoid(),
   providerId: z.string().optional().nullable(),
   amount: z.number(),
-  status: z.nativeEnum(TransactionRefundStatus),
+  status: z.enum(TransactionRefundStatus),
   statusMessage: z.string(),
   statusHistory: z.array(TransactionRefundStatusHistoryResponseSchema),
   refundedAt: z.date().optional().nullable(),

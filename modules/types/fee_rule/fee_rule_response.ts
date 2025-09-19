@@ -1,4 +1,4 @@
-import { z } from 'npm:@hono/zod-openapi@0.19.8';
+import { z } from 'npm:@hono/zod-openapi@1.1.0';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
 import { FeeRuleEntity, FeeRuleMethod } from '../../../modules/types/fee_rule/types.ts';
 import { EmptySchema } from '../../../modules/types/base/requests.ts';
@@ -17,8 +17,8 @@ export const FeeRuleResponseSchema = z.object({
   merchantId: ZodSchemas.nanoid().nullable().optional(),
   name: z.string(),
   fundSchedule: z.number().nonnegative(),
-  method: z.nativeEnum(FeeRuleMethod),
-  triggerEntity: z.nativeEnum(FeeRuleEntity),
+  method: z.enum(FeeRuleMethod),
+  triggerEntity: z.enum(FeeRuleEntity),
   amountValue: z.number().int(),
   percentValue: z.number().int(),
   minAmount: z.number().int(),

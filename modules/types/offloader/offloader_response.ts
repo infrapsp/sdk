@@ -3,11 +3,11 @@ import { z } from 'hono/zod-openapi';
 import { ZodSchemas } from '$modules/types/zod.ts';
 
 export const OffloaderResponseSchema = z.object({
-  role: z.nativeEnum(Role),
+  role: z.enum(Role),
   merchantId: ZodSchemas.nanoid(),
   tenantId: ZodSchemas.nanoid(),
   externalUserId: z.string(),
-  tokenType: z.nativeEnum(TokenType),
+  tokenType: z.enum(TokenType),
   apiKeyId: ZodSchemas.nanoid(),
   scope: z.string(),
 });

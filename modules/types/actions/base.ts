@@ -10,7 +10,7 @@ export const BaseWorkerBodySchema = z.object({
 
 export const BaseWorkerResponseSchema = z.object({
   shouldRetry: z.boolean(),
-  data: z.record(z.unknown()),
+  data: z.record(z.string(), z.unknown()),
 });
 
 export type WorkerResponseDto = z.infer<typeof BaseWorkerResponseSchema>;

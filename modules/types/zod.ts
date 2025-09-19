@@ -1,10 +1,10 @@
-import { z } from 'npm:@hono/zod-openapi@0.19.8';
+import { z } from 'npm:@hono/zod-openapi@1.1.0';
 import { isValidCpf } from '../../modules/utils/cpf.ts';
 import { isValidCnpj } from '../../modules/utils/cnpj.ts';
 import { DocumentType } from '../../modules/types/merchant/types.ts';
 
 export const ZodSchemas = {
-  datetime: () => z.string().datetime().pipe(z.coerce.date()).or(z.date()),
+  datetime: () => z.iso.datetime().pipe(z.coerce.date()).or(z.date()),
   nanoid: () => z.string().length(21).regex(/^[0-9a-zA-Z_]+$/),
   document: () =>
     z.custom<string>((data) => {

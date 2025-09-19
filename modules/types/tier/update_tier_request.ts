@@ -1,4 +1,4 @@
-import { z } from 'npm:@hono/zod-openapi@0.19.8';
+import { z } from 'npm:@hono/zod-openapi@1.1.0';
 import { ZodHelpers } from '../../../modules/types/zod.ts';
 import { BaseParamsSchema } from '../../../modules/types/base/requests.ts';
 

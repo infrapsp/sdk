@@ -1,4 +1,4 @@
-import { z } from 'npm:@hono/zod-openapi@0.19.8';
+import { z } from 'npm:@hono/zod-openapi@1.1.0';
 import { PaymentMethod, TransactionStatus } from '../../../modules/types/transaction/types.ts';
 import { Gender } from '../../../modules/types/merchant/types.ts';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
@@ -16,7 +16,7 @@ export const TransactionCheckoutShippingResponseSchema = z.object({
 export const TransactionCheckoutCustomerResponseSchema = z.object({
   companyName: z.string().nullable().optional(),
   personName: z.string().min(1).max(50),
-  gender: z.nativeEnum(Gender),
+  gender: z.enum(Gender),
 });
 
 export const TransactionCheckoutResponseSchema = z.object({
@@ -24,8 +24,8 @@ export const TransactionCheckoutResponseSchema = z.object({
   merchantId: ZodSchemas.nanoid(),
   preTransactionId: ZodSchemas.nanoid().nullable().optional(),
   providerId: z.string().nullable().optional(),
-  status: z.nativeEnum(TransactionStatus),
-  method: z.nativeEnum(PaymentMethod),
+  status: z.enum(TransactionStatus),
+  method: z.enum(PaymentMethod),
   methodSettings: TransactionMethodSettingsResponseSchema,
   items: z.array(TransactionItemResponseSchema),
   shipping: TransactionCheckoutShippingResponseSchema.optional().nullable(),

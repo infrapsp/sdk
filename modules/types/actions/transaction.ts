@@ -21,7 +21,7 @@ export enum TransactionAction {
 export const CreateTransactionOnProviderBodySchema = z.object({
   action: z.literal(TransactionAction.CREATE_TRANSACTION_ON_PROVIDER),
   payload: z.object({
-    method: z.nativeEnum(PaymentMethod),
+    method: z.enum(PaymentMethod),
   }),
 });
 
@@ -38,7 +38,7 @@ export const ProcessPixPaidTransactionBodySchema = z.object({
 export const RefundTransactionOnProviderBodySchema = z.object({
   action: z.literal(TransactionAction.REFUND_TRANSACTION_ON_PROVIDER),
   payload: z.object({
-    method: z.nativeEnum(PaymentMethod),
+    method: z.enum(PaymentMethod),
   }),
 });
 
@@ -46,7 +46,7 @@ export const RefundTransactionOnProviderBodySchema = z.object({
 export const ProcessTransactionRefundBodySchema = z.object({
   action: z.literal(TransactionAction.PROCESS_TRANSACTION_REFUND),
   payload: z.object({
-    status: z.nativeEnum(TransactionRefundStatus),
+    status: z.enum(TransactionRefundStatus),
     refundedAt: ZodSchemas.datetime(),
     nsu: z.string(),
   }),
@@ -56,7 +56,7 @@ export const ProcessTransactionRefundBodySchema = z.object({
 export const CancelTransactionOnProviderBodySchema = z.object({
   action: z.literal(TransactionAction.CANCEL_TRANSACTION_ON_PROVIDER),
   payload: z.object({
-    method: z.nativeEnum(PaymentMethod),
+    method: z.enum(PaymentMethod),
   }),
 });
 
@@ -80,7 +80,7 @@ export const RestrictCardBodySchema = z.object({
 export const CaptureTransactionOnProviderBodySchema = z.object({
   action: z.literal(TransactionAction.CAPTURE_TRANSACTION_ON_PROVIDER),
   payload: z.object({
-    method: z.nativeEnum(PaymentMethod),
+    method: z.enum(PaymentMethod),
   }),
 });
 
@@ -95,8 +95,8 @@ export const ProcessAntifraudAnalysisBodySchema = z.object({
   action: z.literal(TransactionAction.PROCESS_ANTIFRAUD_ANALYSIS),
   payload: z.object({
     providerScore: z.number().optional(),
-    providerStatus: z.nativeEnum(ClearsaleOrderStatus),
-    status: z.nativeEnum(AntifraudAnalysisStatus),
+    providerStatus: z.enum(ClearsaleOrderStatus),
+    status: z.enum(AntifraudAnalysisStatus),
     provider: z.string(),
   }),
 });

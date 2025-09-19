@@ -1,4 +1,4 @@
-import { z } from 'npm:@hono/zod-openapi@0.19.8';
+import { z } from 'npm:@hono/zod-openapi@1.1.0';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
 import { InvoiceStatus } from '../../../modules/types/invoice/types.ts';
 
@@ -18,7 +18,7 @@ export const InvoiceIssuedDataResponseSchema = z.object({
 export const InvoiceResponseSchema = z.object({
   id: ZodSchemas.nanoid(),
   merchantId: ZodSchemas.nanoid(),
-  status: z.nativeEnum(InvoiceStatus),
+  status: z.enum(InvoiceStatus),
   totalAmount: z.number().int(),
   period: z.string().length(6),
   issuedData: InvoiceIssuedDataResponseSchema,

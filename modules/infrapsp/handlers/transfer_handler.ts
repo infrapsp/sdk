@@ -4,7 +4,7 @@ import { CreateTransferBodySchema } from '../../../modules/types/transfer/create
 import { TransferResponseDto } from '../../../modules/types/transfer/transfer_response.ts';
 import { FindTransferQuerySchema } from '../../../modules/types/transfer/find_transfer_request.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
-import type { z } from 'npm:@hono/zod-openapi@0.19.8';
+import type { z } from 'npm:@hono/zod-openapi@1.1.0';
 
 export class TransferHandler {
   private readonly basePath = '/v1/transfers';

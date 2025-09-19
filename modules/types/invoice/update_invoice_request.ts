@@ -1,4 +1,4 @@
-import { z } from 'npm:@hono/zod-openapi@0.19.8';
+import { z } from 'npm:@hono/zod-openapi@1.1.0';
 import { BaseParamsSchema } from '../../../modules/types/base/requests.ts';
 import { ZodHelpers } from '../../../modules/types/zod.ts';
 import { InvoiceStatus } from '../../../modules/types/invoice/types.ts';
@@ -18,8 +18,8 @@ export const UpdateInvoiceIssuedDataSchema = z.object({
 });
 
 export const UpdateInvoiceBodySchema = z.object({
-  metadata: z.record(z.string().or(z.number())),
-  status: z.nativeEnum(InvoiceStatus),
+  metadata: z.record(z.string(), z.string().or(z.number())),
+  status: z.enum(InvoiceStatus),
   issuedData: UpdateInvoiceIssuedDataSchema,
 }).partial().transform((dto, ctx) => {
   if (Object.keys(dto).length === 0) {

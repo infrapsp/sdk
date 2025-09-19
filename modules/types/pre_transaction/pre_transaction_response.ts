@@ -1,4 +1,4 @@
-import { z } from 'npm:@hono/zod-openapi@0.19.8';
+import { z } from 'npm:@hono/zod-openapi@1.1.0';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
 import {
   TransactionCustomerResponseSchema,
@@ -10,25 +10,25 @@ import { TransactionStatus } from '../../../modules/types/transaction/types.ts';
 
 export const PreTransactionTransactionResponseSchema = z.object({
   id: ZodSchemas.nanoid(),
-  status: z.nativeEnum(TransactionStatus),
+  status: z.enum(TransactionStatus),
   method: z.string(),
 });
 
 export const PreTransactionResponseSchema = z.object({
   id: ZodSchemas.nanoid(),
   merchantId: ZodSchemas.nanoid(),
-  status: z.nativeEnum(PreTransactionStatus),
+  status: z.enum(PreTransactionStatus),
   description: z.string(),
   items: z.array(TransactionItemResponseSchema),
   shipping: TransactionShippingResponseSchema.optional().nullable(),
   amount: z.number().positive().int(),
   customer: TransactionCustomerResponseSchema.optional().nullable(),
-  transactions: z.array(PreTransactionTransactionResponseSchema).default([]),
+  transactions: z.array(PreTransactionTransactionResponseSchema).default(() => []),
   expirationDate: z.date(),
   maxAttempts: z.number().int().positive(),
-  notifyUrl: z.string().url().nullable(),
+  notifyUrl: z.url().nullable(),
   externalId: z.string().nullable(),
-  metadata: z.record(z.string()),
+  metadata: z.record(z.string(), z.string()),
   createdAt: z.date(),
   updatedAt: z.date(),
 });

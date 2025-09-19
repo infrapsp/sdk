@@ -40,6 +40,8 @@ export type LogtoProviderConfig = {
 export type RedeProviderConfig = {
   pv: string;
   token: string;
+  chargebackClientId: string;
+  chargebackClientSecret: string;
 };
 
 export type ClearsaleProviderConfig = {

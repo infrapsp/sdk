@@ -4,7 +4,7 @@ import { CreateTransactionCheckoutBodySchema } from '../../../modules/types/tran
 import { TransactionCheckoutResponseDto } from '../../../modules/types/transaction/transaction_checkout_response.ts';
 import { PreTransactionCheckoutResponseDto } from '../../../modules/types/pre_transaction/pre_transaction_checkout_response.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
-import type { z } from 'npm:@hono/zod-openapi@0.19.8';
+import type { z } from 'npm:@hono/zod-openapi@1.1.0';
 
 export class CheckoutHandler {
   private readonly basePath = '/v1/checkout';

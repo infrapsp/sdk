@@ -1,4 +1,4 @@
-import { z } from 'npm:@hono/zod-openapi@0.19.8';
+import { z } from 'npm:@hono/zod-openapi@1.1.0';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
 import { DocumentType, MerchantAutoTransferFrequency } from '../../../modules/types/merchant/types.ts';
 import { ZodHelpers, ZodRefines } from '../../../modules/types/zod.ts';
@@ -7,7 +7,7 @@ export const CreateMerchantAutoTransferSettingsBodySchema = z.object({
   isEnabled: z.literal(false),
 }).or(z.object({
   isEnabled: z.literal(true),
-  frequency: z.nativeEnum(MerchantAutoTransferFrequency),
+  frequency: z.enum(MerchantAutoTransferFrequency),
   day: z.number().min(0).max(6).optional(),
   date: z.number().min(1).max(25).optional(),
 })).transform((dto, ctx) => {
@@ -35,7 +35,7 @@ export const CreateMerchantSettingsBodySchema = z.object({
 });
 
 export const CreateMerchantBillingBodySchema = z.object({
-  email: z.string().email().max(128),
+  email: z.email().max(128),
   address: z.object({
     line1: z.string().max(200),
     line2: z.string().max(100).optional(),
@@ -50,16 +50,16 @@ export const CreateMerchantBodySchema = z.object({
   tenantId: ZodSchemas.nanoid(),
   documentNumber: ZodSchemas.document(),
   externalUserId: z.string().optional(),
-  documentType: z.nativeEnum(DocumentType),
+  documentType: z.enum(DocumentType),
   externalId: z.string().max(128).optional(),
   segmentId: ZodSchemas.nanoid(),
   companyName: z.string().max(320).optional(),
   personName: z.string().min(1).max(50),
-  personEmail: z.string().email().max(128),
+  personEmail: z.email().max(128),
   tradingName: z.string().max(120),
   billing: CreateMerchantBillingBodySchema,
   url: z.string(),
-  settings: CreateMerchantSettingsBodySchema.optional().default({}),
+  settings: CreateMerchantSettingsBodySchema.optional().default(() => ({})),
 }).transform((dto, ctx) => {
   ZodRefines.matchDocument(ctx, dto.documentNumber, dto.documentType);
   ZodRefines.hasCompanyData(ctx, dto.companyName, dto.documentType, 'companyName');

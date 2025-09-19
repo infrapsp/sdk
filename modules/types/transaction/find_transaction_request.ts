@@ -1,22 +1,24 @@
 import { BaseParamsSchema, BaseQuerySchema } from '../../../modules/types/base/requests.ts';
-import { z } from 'npm:@hono/zod-openapi@0.19.8';
+import { z } from 'npm:@hono/zod-openapi@1.1.0';
 import { PaymentMethod, TransactionStatus } from '../../../modules/types/transaction/types.ts';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
 import { SortOrder } from '../../../modules/types/base/types.ts';
 
 export const FindTransactionQuerySchema = BaseQuerySchema.and(
   z.object({
-    method: z.nativeEnum(PaymentMethod).optional(),
-    status: ZodSchemas.stringArray(z.nativeEnum(TransactionStatus)).optional(),
+    method: z.enum(PaymentMethod).optional(),
+    status: ZodSchemas.stringArray(z.enum(TransactionStatus)).optional(),
     search: z.string().max(128).optional(),
-    notStatus: ZodSchemas.stringArray(z.nativeEnum(TransactionStatus)).optional(),
+    notStatus: ZodSchemas.stringArray(z.enum(TransactionStatus)).optional(),
     sortField: z.enum(['createdAt', 'updatedAt', 'paidAt', 'refundedAt']).default('createdAt'),
     externalId: z.string().max(128).optional(),
     externalSaleChannel: ZodSchemas.alphanumericWithDash().max(128).optional(),
     preTransactionId: ZodSchemas.nanoid().optional(),
-    sortOrder: z.nativeEnum(SortOrder).default(SortOrder.DESC),
+    sortOrder: z.enum(SortOrder).default(SortOrder.DESC),
     amountRefundedGte: z.coerce.number().min(0).optional(),
     amountRefundedLte: z.coerce.number().min(0).optional(),
+    amountChargedbackGte: z.coerce.number().min(0).optional(),
+    amountChargedbackLte: z.coerce.number().min(0).optional(),
   }),
 );
 

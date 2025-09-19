@@ -1,4 +1,4 @@
-import { z } from 'npm:@hono/zod-openapi@0.19.8';
+import { z } from 'npm:@hono/zod-openapi@1.1.0';
 import {
   CreateTransactionCustomerBodySchema,
   CreateTransactionItemBodySchema,
@@ -14,9 +14,9 @@ export const CreatePreTransactionBodySchema = z.object({
   customer: CreateTransactionCustomerBodySchema.optional(),
   expirationDate: ZodSchemas.datetime().default(() => new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)), // 30 days from now
   maxAttempts: z.number().int().positive().max(3).default(3),
-  notifyUrl: z.string().url().optional(),
+  notifyUrl: z.url().optional(),
   externalId: z.string().max(128).optional(),
-  metadata: z.record(z.string()).optional(),
+  metadata: z.record(z.string(), z.string()).optional(),
 }).transform((dto, ctx) => {
   if (dto.expirationDate.getTime() > new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).getTime()) {
     ZodHelpers.issue(ctx, 'expirationDate', 'Expiration date is more than 30 days from now');

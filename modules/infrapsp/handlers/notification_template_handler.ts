@@ -1,7 +1,7 @@
 import { AsyncResult } from '../../../modules/types/result.ts';
 import { validateResponse } from '../../../modules/infrapsp/validate_response.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
-import type { z } from 'npm:@hono/zod-openapi@0.19.8';
+import type { z } from 'npm:@hono/zod-openapi@1.1.0';
 import { NotificationTemplateResponseDto } from '../../../modules/types/notification_template/notification_template_response.ts';
 import { FindNotificationTemplateQuerySchema } from '../../../modules/types/notification_template/find_notification_template_request.ts';
 import { UpdateNotificationTemplateBodySchema } from '../../../modules/types/notification_template/update_notification_template_request.ts';

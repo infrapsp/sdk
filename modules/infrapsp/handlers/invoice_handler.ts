@@ -6,7 +6,7 @@ import { FindInvoiceQuerySchema } from '../../../modules/types/invoice/find_invo
 import { GenerateInvoiceReportQuerySchema } from '../../../modules/types/invoice/generate_report_request.ts';
 import { CommonError } from '../../../modules/errors/common_error.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
-import type { z } from 'npm:@hono/zod-openapi@0.19.8';
+import type { z } from 'npm:@hono/zod-openapi@1.1.0';
 
 export class InvoiceHandler {
   private readonly basePath = '/v1/invoices';

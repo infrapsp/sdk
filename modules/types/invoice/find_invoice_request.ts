@@ -1,5 +1,5 @@
 import { BaseParamsSchema, BaseQuerySchema } from '../../../modules/types/base/requests.ts';
-import { z } from 'npm:@hono/zod-openapi@0.19.8';
+import { z } from 'npm:@hono/zod-openapi@1.1.0';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
 import { InvoiceStatus } from '../../../modules/types/invoice/types.ts';
 import { SortOrder } from '../../../modules/types/base/types.ts';
@@ -11,10 +11,10 @@ export const FindInvoiceQuerySchema = BaseQuerySchema.and(
     merchantId: ZodSchemas.nanoid().optional(),
     tenantId: ZodSchemas.nanoid().optional(),
     period: ZodSchemas.alphanumeric().length(6).optional(),
-    status: ZodSchemas.stringArray(z.nativeEnum(InvoiceStatus)).optional(),
-    notStatus: ZodSchemas.stringArray(z.nativeEnum(InvoiceStatus)).optional(),
+    status: ZodSchemas.stringArray(z.enum(InvoiceStatus)).optional(),
+    notStatus: ZodSchemas.stringArray(z.enum(InvoiceStatus)).optional(),
     sortField: z.enum(['createdAt', 'paymentDate']).default('createdAt'),
-    sortOrder: z.nativeEnum(SortOrder).default(SortOrder.DESC),
+    sortOrder: z.enum(SortOrder).default(SortOrder.DESC),
   }),
 );
 

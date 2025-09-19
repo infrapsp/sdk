@@ -1,4 +1,4 @@
-import { z } from 'npm:@hono/zod-openapi@0.19.8';
+import { z } from 'npm:@hono/zod-openapi@1.1.0';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
 import { FeeRuleEntity, FeeRuleMethod } from '../../../modules/types/fee_rule/types.ts';
 import { ZodHelpers } from '../../../modules/types/zod.ts';
@@ -10,8 +10,8 @@ export const CreateFeeRuleBodySchema = z.object({
   name: z.string(),
   minAmount: z.number().int().min(0),
   maxAmount: z.number().int().max(999999999),
-  method: z.nativeEnum(FeeRuleMethod),
-  triggerEntity: z.nativeEnum(FeeRuleEntity),
+  method: z.enum(FeeRuleMethod),
+  triggerEntity: z.enum(FeeRuleEntity),
   fundSchedule: z.number(),
   startDate: ZodSchemas.datetime(),
   endDate: ZodSchemas.datetime(),

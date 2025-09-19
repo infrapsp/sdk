@@ -1,5 +1,5 @@
 import { ZodSchemas } from '../../../modules/types/zod.ts';
-import { z } from 'npm:@hono/zod-openapi@0.19.8';
+import { z } from 'npm:@hono/zod-openapi@1.1.0';
 import { FeeRuleEntity, FeeRuleMethod } from '../../../modules/types/fee_rule/types.ts';
 
 export const FindFeeRuleQuerySchema = z.object({
@@ -9,8 +9,8 @@ export const FindFeeRuleQuerySchema = z.object({
 export const RestrictFindFeeRuleQuerySchema = z.object({
   isEnabled: z.boolean().optional(),
   merchantId: ZodSchemas.nanoid().optional(),
-  method: z.nativeEnum(FeeRuleMethod).optional(),
-  triggerEntity: z.nativeEnum(FeeRuleEntity).optional(),
+  method: z.enum(FeeRuleMethod).optional(),
+  triggerEntity: z.enum(FeeRuleEntity).optional(),
 });
 
 export type FindFeeRuleQueryDto = z.infer<typeof FindFeeRuleQuerySchema>;

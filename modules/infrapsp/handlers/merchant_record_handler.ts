@@ -5,7 +5,7 @@ import { MerchantRecordRequestResponseDto, MerchantRecordResponseDto } from '../
 import { FindMerchantRecordQuerySchema, FindMerchantRecordRequestQuerySchema } from '../../../modules/types/merchant_record/find_merchant_record_request.ts';
 import { CreateMerchantRecordBodySchema } from '../../../modules/types/merchant_record/create_merchant_record_request.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
-import type { z } from 'npm:@hono/zod-openapi@0.19.8';
+import type { z } from 'npm:@hono/zod-openapi@1.1.0';
 import { UpdateMerchantRecordBodySchema } from '../../../modules/types/merchant_record/update_merchant_record_request.ts';
 
 export class MerchantRecordHandler {

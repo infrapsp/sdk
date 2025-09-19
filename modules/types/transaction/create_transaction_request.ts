@@ -1,9 +1,9 @@
-import { z } from 'npm:@hono/zod-openapi@0.19.8';
+import { z } from 'npm:@hono/zod-openapi@1.1.0';
 import { PaymentMethod } from '../../../modules/types/transaction/types.ts';
 import { DocumentType, Gender } from '../../../modules/types/merchant/types.ts';
 import { ZodRefines, ZodSchemas } from '../../../modules/types/zod.ts';
 import { CreateAddressBodySchema } from '../../../modules/types/address/create_address_request.ts';
-import { BaseParamsSchema, EmptySchema } from '../../../modules/types/base/requests.ts';
+import { BaseParamsSchema } from '../../../modules/types/base/requests.ts';
 
 export const CreateTransactionPixMethodSettingsBodySchema = z.object({
   expiresIn: z.number().positive().int(),
@@ -19,7 +19,7 @@ export const CreateTransactionCreditCardMethodSettingsBodySchema = z.object({
 
 export const CreateTransactionMethodSettingsBodySchema = CreateTransactionPixMethodSettingsBodySchema.or(
   CreateTransactionCreditCardMethodSettingsBodySchema,
-).or(EmptySchema);
+);
 
 export const CreateTransactionItemBodySchema = z.object({
   description: z.string(),
@@ -48,13 +48,13 @@ export const CreateTransactionSplitBodySchema = z.object({
 export const CreateTransactionCustomerBodySchema = z.object({
   companyName: z.string().max(320).optional(),
   personName: z.string().min(1).max(50),
-  documentType: z.nativeEnum(DocumentType),
+  documentType: z.enum(DocumentType),
   documentNumber: ZodSchemas.document(),
   birthdate: ZodSchemas.datetime().optional(),
-  gender: z.nativeEnum(Gender),
+  gender: z.enum(Gender),
   phones: z.array(ZodSchemas.phone()),
   address: CreateAddressBodySchema,
-  email: z.string().email().max(128),
+  email: z.email().max(128),
 }).transform((dto, ctx) => {
   ZodRefines.matchDocument(ctx, dto.documentNumber, dto.documentType);
   ZodRefines.hasCompanyData(ctx, dto.companyName, dto.documentType, 'companyName');
@@ -62,14 +62,14 @@ export const CreateTransactionCustomerBodySchema = z.object({
 });
 
 export const BaseCreateTransactionBodySchema = z.object({
-  method: z.nativeEnum(PaymentMethod),
+  method: z.enum(PaymentMethod),
   methodSettings: CreateTransactionMethodSettingsBodySchema,
   items: z.array(CreateTransactionItemBodySchema),
   shipping: CreateTransactionShippingBodySchema.optional().nullable(),
-  notifyUrl: z.string().url().optional(),
+  notifyUrl: z.url().optional(),
   externalId: z.string().max(128).optional(),
   externalSaleChannel: z.string().regex(/^[^\s]+$/).max(128).optional().nullable(),
-  metadata: z.record(z.string()).optional(),
+  metadata: z.record(z.string(), z.string()).optional(),
 });
 
 export const CreateTransactionCheckoutBodySchema = BaseCreateTransactionBodySchema.and(z.object({
@@ -79,7 +79,7 @@ export const CreateTransactionCheckoutBodySchema = BaseCreateTransactionBodySche
 export const CreateTransactionBodySchema = BaseCreateTransactionBodySchema.and(z.object({
   amount: z.number().positive().int(),
   customer: CreateTransactionCustomerBodySchema,
-  splits: z.array(CreateTransactionSplitBodySchema).optional().default([]),
+  splits: z.array(CreateTransactionSplitBodySchema).optional().default(() => []),
 }));
 
 export const CreateTransactionCheckoutParamsSchema = BaseParamsSchema;

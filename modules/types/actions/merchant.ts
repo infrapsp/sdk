@@ -12,7 +12,7 @@ export const ProcessRegistrationBodySchema = z.object({
     merchant: z.object({
       url: z.string(),
       personName: z.string(),
-      personEmail: z.string().email(),
+      personEmail: z.email(),
       companyName: z.string().optional(),
       tradingName: z.string(),
       cnae: z.string().optional(),
@@ -29,7 +29,7 @@ export const ProcessRegistrationBodySchema = z.object({
       }),
     }).optional(),
     attempt: z.number().int().min(1),
-    status: z.nativeEnum(RegistrationStatus),
+    status: z.enum(RegistrationStatus),
   }),
 });
 

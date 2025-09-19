@@ -1,4 +1,4 @@
-import { z } from 'npm:@hono/zod-openapi@0.19.8';
+import { z } from 'npm:@hono/zod-openapi@1.1.0';
 import { BaseParamsSchema } from '../../../modules/types/base/requests.ts';
 import { ZodHelpers, ZodSchemas } from '../../../modules/types/zod.ts';
 import { MerchantAutoTransferFrequency, MerchantStatus } from '../../../modules/types/merchant/types.ts';
@@ -10,7 +10,7 @@ export const UpdateMerchantAutoTransferSettingsBodySchema = z.object({
   isEnabled: z.literal(false),
 }).or(z.object({
   isEnabled: z.literal(true),
-  frequency: z.nativeEnum(MerchantAutoTransferFrequency),
+  frequency: z.enum(MerchantAutoTransferFrequency),
   day: z.number().min(0).max(6).optional(),
   date: z.number().min(1).max(25).optional(),
 })).transform((dto, ctx) => {
@@ -40,7 +40,7 @@ export const UpdateMerchantSettingsBodySchema = z.object({
 });
 
 export const UpdateMerchantBillingBodySchema = z.object({
-  email: z.string().email().max(128),
+  email: z.email().max(128),
   address: UpdateAddressBodySchema,
 }).partial();
 
@@ -48,11 +48,11 @@ export const UpdateMerchantBodySchema = z.object({
   companyName: z.string().max(320),
   tradingName: z.string().max(120),
   personName: z.string().min(1).max(50),
-  personEmail: z.string().email().max(128),
+  personEmail: z.email().max(128),
   externalId: z.string().max(128),
   settings: UpdateMerchantSettingsBodySchema,
   billing: UpdateMerchantBillingBodySchema,
-  metadata: z.record(z.string().or(z.number().or(z.boolean()))),
+  metadata: z.record(z.string(), z.string().or(z.number().or(z.boolean()))),
 }).partial().transform((dto, ctx) => {
   if (Object.keys(dto).length === 0) {
     ZodHelpers.issue(ctx, 'body', 'At least one field must be provided');
@@ -63,9 +63,9 @@ export const UpdateMerchantBodySchema = z.object({
 
 export const RestrictUpdateMerchantBodySchema = z.object({
   tierId: ZodSchemas.nanoid(),
-  status: z.nativeEnum(MerchantStatus),
+  status: z.enum(MerchantStatus),
   externalId: z.string().max(128),
-  metadata: z.record(z.string().or(z.number().or(z.boolean()))),
+  metadata: z.record(z.string(), z.string().or(z.number().or(z.boolean()))),
 }).partial().transform((dto, ctx) => {
   if (Object.keys(dto).length === 0) {
     ZodHelpers.issue(ctx, 'body', 'At least one field must be provided');

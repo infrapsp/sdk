@@ -1,4 +1,4 @@
-import { z } from 'npm:@hono/zod-openapi@0.19.8';
+import { z } from 'npm:@hono/zod-openapi@1.1.0';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
 import { PayableMethod, PayableStatus, PayableType } from '../../../modules/types/payable/types.ts';
 
@@ -10,12 +10,12 @@ export const PayableResponseSchema = z.object({
   transactionSplitId: ZodSchemas.nanoid().optional().nullable(),
   transactionRefundId: ZodSchemas.nanoid().optional().nullable(),
   isTransactionOwner: z.boolean().optional().nullable(),
-  status: z.nativeEnum(PayableStatus),
+  status: z.enum(PayableStatus),
   amount: z.number().int(),
   fee: z.number().int(),
   paymentDate: z.date(),
-  method: z.nativeEnum(PayableMethod),
-  type: z.nativeEnum(PayableType),
+  method: z.enum(PayableMethod),
+  type: z.enum(PayableType),
   createdAt: z.date(),
   updatedAt: z.date(),
 });

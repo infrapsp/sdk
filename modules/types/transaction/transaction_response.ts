@@ -1,9 +1,10 @@
-import { z } from 'npm:@hono/zod-openapi@0.19.8';
+import { z } from 'npm:@hono/zod-openapi@1.1.0';
 import { PaymentMethod, TransactionStatus } from '../../../modules/types/transaction/types.ts';
 import { DocumentType, Gender } from '../../../modules/types/merchant/types.ts';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
 import { AddressResponseSchema } from '../../../modules/types/address/address_response.ts';
 import { TransactionRefundResponseSchema } from '../../../modules/types/transaction_refund/transaction_refund_response.ts';
+import { TransactionChargebackResponseSchema } from '../../../modules/types/transaction_chargeback/transaction_chargeback_response.ts';
 
 export const TransactionPixMethodSettingsResponseSchema = z.object({
   expiresIn: z.number().positive().int(),
@@ -86,17 +87,17 @@ export const TransactionSplitResponseSchema = z.object({
 export const TransactionCustomerResponseSchema = z.object({
   companyName: z.string().nullable().optional(),
   personName: z.string(),
-  documentType: z.nativeEnum(DocumentType),
+  documentType: z.enum(DocumentType),
   documentNumber: ZodSchemas.document(),
   birthdate: ZodSchemas.datetime().optional().nullable(),
-  gender: z.nativeEnum(Gender),
+  gender: z.enum(Gender),
   phones: z.array(ZodSchemas.phone()),
   address: AddressResponseSchema,
-  email: z.string().email(),
+  email: z.email(),
 });
 
 export const TransactionStatusHistoryResponseSchema = z.object({
-  status: z.nativeEnum(TransactionStatus),
+  status: z.enum(TransactionStatus),
   message: z.string(),
   createdAt: z.date(),
 });
@@ -106,27 +107,30 @@ export const TransactionResponseSchema = z.object({
   merchantId: ZodSchemas.nanoid(),
   preTransactionId: ZodSchemas.nanoid().nullable().optional(),
   providerId: z.string().nullable().optional(),
-  status: z.nativeEnum(TransactionStatus),
+  status: z.enum(TransactionStatus),
   statusMessage: z.string(),
   statusHistory: z.array(TransactionStatusHistoryResponseSchema),
-  method: z.nativeEnum(PaymentMethod),
+  method: z.enum(PaymentMethod),
   methodSettings: TransactionMethodSettingsResponseSchema,
   items: z.array(TransactionItemResponseSchema),
   refunds: z.array(TransactionRefundResponseSchema),
+  chargebacks: z.array(TransactionChargebackResponseSchema),
   shipping: TransactionShippingResponseSchema.optional().nullable(),
   methodData: TransactionMethodDataResponseSchema,
   paidData: TransactionPaidDataResponseSchema,
   amount: z.number().positive().int(),
   amountRefunded: z.number().nonnegative().int(),
+  amountChargedback: z.number().nonnegative().int(),
   customer: TransactionCustomerResponseSchema.optional().nullable(),
-  notifyUrl: z.string().url().nullable(),
+  notifyUrl: z.url().nullable(),
   splits: z.array(TransactionSplitResponseSchema),
   externalId: z.string().nullable(),
   externalSaleChannel: z.string().nullable(),
   antifraudData: TransactionAntifraudDataResponseSchema.optional().nullable(),
-  metadata: z.record(z.string()),
+  metadata: z.record(z.string(), z.string()),
   paidAt: z.date().nullable(),
   refundedAt: z.date().nullable(),
+  chargedbackAt: z.date().nullable(),
   createdAt: z.date(),
   updatedAt: z.date(),
 });

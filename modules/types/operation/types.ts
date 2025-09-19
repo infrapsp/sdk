@@ -10,5 +10,6 @@ export enum OriginEntity {
 
 export enum OriginMethod {
   PIX = 'pix',
+  CREDIT_CARD = 'credit_card',
   INTER = 'inter',
 }

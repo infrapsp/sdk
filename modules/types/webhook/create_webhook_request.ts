@@ -1,8 +1,8 @@
-import { z } from 'npm:@hono/zod-openapi@0.19.8';
+import { z } from 'npm:@hono/zod-openapi@1.1.0';
 
 export const CreateWebhookBodySchema = z.object({
   description: z.string().max(128).optional(),
-  url: z.string().url(),
+  url: z.url(),
 });
 
 export type CreateWebhookBodyDto = z.infer<typeof CreateWebhookBodySchema>;

@@ -2,15 +2,10 @@ export enum TransactionChargebackStatus {
   PENDING = 'pending',
   WAITING_RESPONSE = 'waiting_response',
   UNDER_REVIEW = 'under_review',
+  DISPUTING = 'disputing',
   WON = 'won',
   LOST = 'lost',
   CANCELED = 'canceled',
-}
-
-export enum ChargebackNotificationStatus {
-  NEW = 'new',
-  IGNORED = 'ignored',
-  DISPUTE = 'dispute',
 }
 
 export enum TransactionChargebackRequiredDocument {

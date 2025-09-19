@@ -16,7 +16,7 @@ export const FindPayableQuerySchema = z.object({
       transactionRefundId: ZodSchemas.nanoid().optional(),
       transactionSplitId: ZodSchemas.nanoid().optional(),
       transferId: ZodSchemas.nanoid().optional(),
-      type: z.enum(PayableType).optional(),
+      type: ZodSchemas.stringArray(z.enum(PayableType)).optional(),
       method: z.enum(PayableMethod).optional(),
       status: ZodSchemas.stringArray(z.enum(PayableStatus)).optional(),
       notStatus: ZodSchemas.stringArray(z.enum(PayableStatus)).optional(),

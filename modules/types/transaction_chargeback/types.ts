@@ -28,9 +28,9 @@ export enum TransactionChargebackRequiredDocument {
 }
 
 export enum TransactionChargebackReason {
-  FRAUD = 'FRAUD', // transação fraudulenta
-  COMMERCIAL_DISAGREEMENT = 'COMMERCIAL_DISAGREEMENT', // desacordo comercial
-  PROCESSING_ERROR = 'PROCESSING_ERROR', // erro de processamento
-  AUTHORIZATION = 'AUTHORIZATION', // autorização
-  UNKOWN = 'UNKNOWN', // desconhecido
+  FRAUD = 'fraud', // transação fraudulenta
+  COMMERCIAL_DISAGREEMENT = 'commercial_disagreement', // desacordo comercial
+  PROCESSING_ERROR = 'processing_error', // erro de processamento
+  AUTHORIZATION = 'authorization', // autorização
+  UNKNOWN = 'unknown', // desconhecido
 }

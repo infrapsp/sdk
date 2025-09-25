@@ -14,7 +14,6 @@ export const TransactionChargebackStatusHistoryResponseSchema = z.object({
 
 export const TransactionChargebackResponseSchema = z.object({
   id: ZodSchemas.nanoid(),
-  chargebackNotificationId: ZodSchemas.nanoid(),
   transactionId: ZodSchemas.nanoid(),
   providerId: z.string().optional().nullable(),
   amount: z.number(),

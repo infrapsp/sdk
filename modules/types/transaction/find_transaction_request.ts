@@ -15,10 +15,10 @@ export const FindTransactionQuerySchema = BaseQuerySchema.and(
     externalSaleChannel: ZodSchemas.alphanumericWithDash().max(128).optional(),
     preTransactionId: ZodSchemas.nanoid().optional(),
     sortOrder: z.enum(SortOrder).default(SortOrder.DESC),
-    amountRefundedGte: z.coerce.number().min(0).optional(),
-    amountRefundedLte: z.coerce.number().min(0).optional(),
-    amountChargedbackGte: z.coerce.number().min(0).optional(),
-    amountChargedbackLte: z.coerce.number().min(0).optional(),
+    amountRefundedGte: z.coerce.number<number>().min(0).optional(),
+    amountRefundedLte: z.coerce.number<number>().min(0).optional(),
+    amountChargedbackGte: z.coerce.number<number>().min(0).optional(),
+    amountChargedbackLte: z.coerce.number<number>().min(0).optional(),
   }),
 );
 

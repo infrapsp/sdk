@@ -8,8 +8,8 @@ export const BaseParamsSchema = z.object({
 export const BaseQuerySchema = z.object({
   createdAtLte: ZodSchemas.datetime().default(() => new Date()),
   createdAtGte: ZodSchemas.datetime().default(() => new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 30 * 12)), // 1 year
-  page: z.coerce.number<number>().positive().int().default(1),
-  pageSize: z.coerce.number<number>().positive().int().max(1000).default(10),
+  page: z.coerce.number().positive().int().default(1),
+  pageSize: z.coerce.number().positive().int().max(1000).default(10),
 }).transform((dto, ctx) => {
   ZodRefines.validDateRange(ctx, dto.createdAtGte, dto.createdAtLte, 1000 * 60 * 60 * 24 * 30 * 12, 'createdAt');
   return dto;

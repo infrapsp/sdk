@@ -1,7 +1,7 @@
 import { BaseParamsSchema, BaseQuerySchema } from '../../../modules/types/base/requests.ts';
 import { z } from 'npm:@hono/zod-openapi@1.1.0';
 import { ZodHelpers, ZodRefines, ZodSchemas } from '../../../modules/types/zod.ts';
-import { PayableMethod, PayableStatus, PayableType } from '../../../modules/types/payable/types.ts';
+import { PayableEntity, PayableMethod, PayableStatus, PayableType } from '../../../modules/types/payable/types.ts';
 import { SortOrder } from '../../../modules/types/base/types.ts';
 
 export const FindPayableParamsSchema = BaseParamsSchema;
@@ -12,8 +12,8 @@ export const FindPayableQuerySchema = BaseQuerySchema.and(
     transactionRefundId: ZodSchemas.nanoid().optional(),
     transactionSplitId: ZodSchemas.nanoid().optional(),
     transferId: ZodSchemas.nanoid().optional(),
-    entity: ZodSchemas.stringArray(z.enum(['transfer', 'transaction', 'transactionRefund'])).optional(),
-    notEntity: ZodSchemas.stringArray(z.enum(['transfer', 'transaction', 'transactionRefund'])).optional(),
+    entity: ZodSchemas.stringArray(z.enum(PayableEntity)).optional(),
+    notEntity: ZodSchemas.stringArray(z.enum(PayableEntity)).optional(),
     type: ZodSchemas.stringArray(z.enum(PayableType)).optional(),
     method: z.enum(PayableMethod).optional(),
     status: ZodSchemas.stringArray(z.enum(PayableStatus)).optional(),

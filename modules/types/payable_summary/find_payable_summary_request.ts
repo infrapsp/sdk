@@ -1,11 +1,14 @@
 import { z } from 'npm:@hono/zod-openapi@1.1.0';
 import { ZodHelpers, ZodRefines, ZodSchemas } from '../../../modules/types/zod.ts';
-import { PayableStatus } from '../../../modules/types/payable/types.ts';
+import { PayableEntity, PayableStatus } from '../../../modules/types/payable/types.ts';
 
 export const FindPayableSummaryQuerySchema = z.object({
   transactionIds: ZodSchemas.stringArray(ZodSchemas.nanoid()).optional(),
   transferIds: ZodSchemas.stringArray(ZodSchemas.nanoid()).optional(),
   status: ZodSchemas.stringArray(z.enum(PayableStatus)).optional(),
+  entity: ZodSchemas.stringArray(z.enum(PayableEntity)).optional(),
+  notStatus: ZodSchemas.stringArray(z.enum(PayableStatus)).optional(),
+  notEntity: ZodSchemas.stringArray(z.enum(PayableEntity)).optional(),
   paymentDateLte: ZodSchemas.datetime().optional(),
   paymentDateGte: ZodSchemas.datetime().optional(),
 }).transform((dto, ctx) => {

@@ -13,3 +13,9 @@ export enum PayableType {
   CREDIT = 'credit',
   DEBIT = 'debit',
 }
+
+export enum PayableEntity {
+  TRANSFER = 'transfer',
+  TRANSACTION = 'transaction',
+  TRANSACTION_REFUND = 'transactionRefund',
+}

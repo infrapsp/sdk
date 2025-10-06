@@ -24,10 +24,12 @@ import { NotificationTemplateHandler } from '../../modules/infrapsp/handlers/not
 import { NotificationHandler } from '../../modules/infrapsp/handlers/notification_handler.ts';
 import { TransactionSplitHandler } from '../../modules/infrapsp/handlers/transaction_split_handler.ts';
 import { DashboardHandler } from '../../modules/infrapsp/handlers/dashboard_handler.ts';
+import { AnalysisHandler } from '../../modules/infrapsp/handlers/analysis_handler.ts';
 
 export class InfraPSPClient {
   private readonly httpClient: HttpClient;
 
+  public readonly analysis: AnalysisHandler;
   public readonly apiKey: ApiKeyHandler;
   public readonly balance: BalanceHandler;
   public readonly checkout: CheckoutHandler;
@@ -60,6 +62,7 @@ export class InfraPSPClient {
 
     this.httpClient = new HttpClient(config.baseUrl, { headers });
 
+    this.analysis = new AnalysisHandler(this.httpClient);
     this.apiKey = new ApiKeyHandler(this.httpClient);
     this.balance = new BalanceHandler(this.httpClient);
     this.checkout = new CheckoutHandler(this.httpClient);

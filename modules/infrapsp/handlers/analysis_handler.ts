@@ -7,7 +7,7 @@ import type { HttpClient } from '../../../modules/http/http_client.ts';
 import type { z } from 'npm:@hono/zod-openapi@1.1.0';
 
 export class AnalysisHandler {
-  private readonly basePath = '/v1/analysis';
+  private readonly basePath = '/v1/aml/analyses';
 
   constructor(private readonly httpClient: HttpClient) {}
 

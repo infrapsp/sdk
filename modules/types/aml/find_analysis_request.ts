@@ -16,7 +16,7 @@ export const FindAnalysisQuerySchema = BaseQuerySchema.and(
     riskLevel: ZodSchemas.stringArray(z.enum(AnalysisRiskLevel)).optional(),
     notRiskLevel: ZodSchemas.stringArray(z.enum(AnalysisRiskLevel)).optional(),
     notEntity: ZodSchemas.stringArray(z.enum(AmlEntity)).optional(),
-    isNotified: z.boolean().optional(),
+    isNotified: z.coerce.boolean().optional(),
     assigneeId: z.string().optional(),
     scoreGte: z.coerce.number().min(0).optional(),
     scoreLte: z.coerce.number().min(0).optional(),

@@ -22,6 +22,7 @@ export const AnalysisResponseSchema = z.object({
   entityId: ZodSchemas.nanoid(),
   requiresReview: z.boolean(),
   riskLevel: z.enum(AnalysisRiskLevel),
+  payload: z.record(z.string(), z.unknown()),
   score: z.number().min(0),
   isNotified: z.boolean(),
   assigneeId: z.string().nullable(),

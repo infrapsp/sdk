@@ -2,12 +2,22 @@ import { z } from 'npm:@hono/zod-openapi@1.1.0';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
 import { AmlEntity, AnalysisRiskLevel, AnalysisStatus } from '../../../modules/types/aml/types.ts';
 
+export const RuleResponseSchema = z.object({
+  id: ZodSchemas.nanoid(),
+  score: z.number().min(0),
+  name: z.string(),
+  description: z.string().nullable(),
+  isEnabled: z.boolean(),
+  entity: z.enum(AmlEntity),
+});
+
 export const RuleEvalReponseSchema = z.object({
   id: ZodSchemas.nanoid(),
   ruleId: ZodSchemas.nanoid(),
   query: z.string(),
   score: z.number().min(0),
   hit: z.boolean(),
+  rule: RuleResponseSchema.optional(),
   result: z.record(z.string(), z.unknown()),
   params: z.array(z.unknown()),
   createdAt: z.date(),
@@ -32,3 +42,4 @@ export const AnalysisResponseSchema = z.object({
 });
 
 export type AnalysisResponseDto = z.infer<typeof AnalysisResponseSchema>;
+export type RuleResponseDto = z.infer<typeof RuleResponseSchema>;

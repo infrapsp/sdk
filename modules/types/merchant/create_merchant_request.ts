@@ -10,6 +10,7 @@ export const CreateMerchantAutoTransferSettingsBodySchema = z.object({
   frequency: z.enum(MerchantAutoTransferFrequency),
   day: z.number().min(0).max(6).optional(),
   date: z.number().min(1).max(25).optional(),
+  residualAmount: z.number().int().min(0).default(0),
 })).transform((dto, ctx) => {
   if (dto.isEnabled && dto.frequency === MerchantAutoTransferFrequency.WEEKLY && !dto.day) {
     ZodHelpers.issue(ctx, 'day', 'Required for autoTransferFrequency weekly.');

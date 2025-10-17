@@ -25,6 +25,7 @@ export type MerchantAutoTransferSettings = { isEnabled: false } | {
   isEnabled: true;
   frequency: MerchantAutoTransferFrequency;
   day?: number;
+  residualAmount: number;
 };
 
 export type MerchantEmailSettings = {

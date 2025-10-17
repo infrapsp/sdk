@@ -7,9 +7,10 @@ export const MerchantAutoTransferSettingsResponseSchema = z.object({
   isEnabled: z.literal(false),
 }).or(z.object({
   isEnabled: z.literal(true),
-  frequency: z.nativeEnum(MerchantAutoTransferFrequency),
+  frequency: z.enum(MerchantAutoTransferFrequency),
   day: z.number().min(0).max(6).optional(),
   date: z.number().min(1).max(25).optional(),
+  residualAmount: z.number().int().min(0),
 }));
 
 export const MerchantEmailSettingsResponseSchema = z.object({

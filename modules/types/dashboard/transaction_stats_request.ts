@@ -19,4 +19,5 @@ export const FindTransactionStatsQuerySchema = BaseDashboardQuerySchema.and(z.ob
   groupBy: ZodSchemas.stringArray(z.enum(['timeKey', 'status', 'method'])).default(
     (): ('timeKey' | 'status' | 'method')[] => ['timeKey', 'status', 'method'],
   ),
+  aggTimeZone: z.string().regex(/^(\+|-)(0[0-9]|1[0-4]):([0-5][0-9])$/).optional(),
 }));

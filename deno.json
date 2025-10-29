@@ -5,5 +5,12 @@
   "exports": "./modules/mod.ts",
   "compilerOptions": {
     "useUnknownInCatchVariables": false
+  },
+  "publish": {
+    "include": [
+      "LICENSE",
+      "deno.json",
+      "modules/**/*.ts"
+    ]
   }
 }

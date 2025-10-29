@@ -1,16 +1,9 @@
 {
   "name": "@infrapsp/sdk",
-  "version": "1.0.55",
+  "version": "1.0.56",
   "license": "MIT",
   "exports": "./modules/mod.ts",
   "compilerOptions": {
     "useUnknownInCatchVariables": false
-  },
-  "publish": {
-    "include": [
-      "LICENSE",
-      "deno.json",
-      "modules/**/*.ts"
-    ]
   }
 }

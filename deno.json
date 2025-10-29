@@ -1,0 +1,9 @@
+{
+  "name": "@infrapsp/sdk",
+  "version": "0.0.1",
+  "license": "MIT",
+  "exports": "./modules/mod.ts",
+  "compilerOptions": {
+    "useUnknownInCatchVariables": false
+  }
+}

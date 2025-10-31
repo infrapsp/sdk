@@ -16,6 +16,7 @@ export const PayableResponseSchema = z.object({
   paymentDate: z.date(),
   method: z.enum(PayableMethod),
   type: z.enum(PayableType),
+  installment: z.number().int(),
   createdAt: z.date(),
   updatedAt: z.date(),
 });

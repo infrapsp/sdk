@@ -17,7 +17,7 @@ export const FindAnalysisQuerySchema = BaseQuerySchema.and(
     notRiskLevel: ZodSchemas.stringArray(z.enum(AnalysisRiskLevel)).optional(),
     notEntity: ZodSchemas.stringArray(z.enum(AmlEntity)).optional(),
     isNotified: z.coerce.boolean().optional(),
-    assigneeId: z.string().optional(),
+    assigneeId: ZodSchemas.stringArray(z.string()).optional(),
     scoreGte: z.coerce.number().min(0).optional(),
     scoreLte: z.coerce.number().min(0).optional(),
     sortField: z.enum(['createdAt', 'paymentDate']).default('createdAt'),

@@ -25,6 +25,7 @@ import { NotificationHandler } from '../../modules/infrapsp/handlers/notificatio
 import { TransactionSplitHandler } from '../../modules/infrapsp/handlers/transaction_split_handler.ts';
 import { DashboardHandler } from '../../modules/infrapsp/handlers/dashboard_handler.ts';
 import { AnalysisHandler } from '../../modules/infrapsp/handlers/analysis_handler.ts';
+import { TransactionChargebackHandler } from '../../modules/infrapsp/handlers/transaction_chargeback_handler.ts';
 import { RecordHandler } from '../../modules/infrapsp/handlers/record_handler.ts';
 
 export class InfraPSPClient {
@@ -49,6 +50,7 @@ export class InfraPSPClient {
   public readonly records: RecordHandler;
   public readonly preTransactions: PreTransactionHandler;
   public readonly transactions: TransactionHandler;
+  public readonly transactionChargebacks: TransactionChargebackHandler;
   public readonly transactionRefunds: TransactionRefundHandler;
   public readonly transactionSplits: TransactionSplitHandler;
   public readonly transfers: TransferHandler;
@@ -82,6 +84,7 @@ export class InfraPSPClient {
     this.payableSummary = new PayableSummaryHandler(this.httpClient);
     this.preTransactions = new PreTransactionHandler(this.httpClient);
     this.transactions = new TransactionHandler(this.httpClient);
+    this.transactionChargebacks = new TransactionChargebackHandler(this.httpClient);
     this.transactionRefunds = new TransactionRefundHandler(this.httpClient);
     this.transactionSplits = new TransactionSplitHandler(this.httpClient);
     this.transfers = new TransferHandler(this.httpClient);

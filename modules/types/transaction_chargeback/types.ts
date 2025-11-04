@@ -21,7 +21,7 @@ export enum TransactionChargebackRequiredDocument {
   SERVICE_PROOF = 'SERVICE_PROOF', // prova de que o titular do cartão está usufruindo do serviço
 
   DELIVERY_PROOF = 'DELIVERY_PROOF', // documento de entrega ou prestação de serviço
-  RETURN_REPAIR_POLICY = 'RETURN_POLICY', // política de troca/cancelamento/reparo
+  RETURN_REPAIR_POLICY = 'RETURN_REPAIR_POLICY', // política de troca/cancelamento/reparo
   EXPLANATION_LETTER = 'EXPLANATION_LETTER', // carta explicando o ocorrido
   REPAIR_PROOF = 'REPAIR_PROOF', // evidência de reparo ou defeito do produto
   NON_CANCELLATION_PROOF = 'NON_CANCELLATION_PROOF', // prova de que cancelamento foi iniciado pelo estabelecimento e não foi confirmado pelo titular do cartão

@@ -6,6 +6,7 @@ import { TransactionChargebackStatus } from '../../../modules/types/transaction_
 
 export const FindTransactionChargebackQuerySchema = BaseQuerySchema.and(
   z.object({
+    id: ZodSchemas.nanoid().optional(),
     status: ZodSchemas.stringArray(z.enum(TransactionChargebackStatus)).optional(),
     notStatus: ZodSchemas.stringArray(z.enum(TransactionChargebackStatus)).optional(),
     sortField: z.enum(['createdAt']).default('createdAt'),

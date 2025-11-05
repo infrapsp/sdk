@@ -1,6 +1,5 @@
 import { AsyncResult } from '../../../modules/types/result.ts';
 import { validateResponse } from '../../../modules/infrapsp/validate_response.ts';
-import { TransactionResponseDto } from '../../../modules/types/transaction/transaction_response.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
 import type { z } from 'npm:@hono/zod-openapi@1.1.0';
 import { FindTransactionChargebackQuerySchema } from '../../../modules/types/transaction_chargeback/find_transaction_chargeback_request.ts';
@@ -14,7 +13,7 @@ export class TransactionChargebackHandler {
 
   constructor(private readonly httpClient: HttpClient) {}
 
-  async find(transactionId: string, id: string, requestInit: RequestInit = {}): AsyncResult<TransactionResponseDto> {
+  async find(transactionId: string, id: string, requestInit: RequestInit = {}): AsyncResult<TransactionChargebackResponseDto> {
     const url = this.basePath;
 
     const response = await this.httpClient.get(`${url}/${transactionId}/chargebacks/${id}`, requestInit);
@@ -25,7 +24,10 @@ export class TransactionChargebackHandler {
     return validateResponse({ data, status });
   }
 
-  async findMany(query?: z.input<typeof FindTransactionChargebackQuerySchema>, requestInit: RequestInit = {}): AsyncResult<TransactionResponseDto[]> {
+  async findMany(
+    query?: z.input<typeof FindTransactionChargebackQuerySchema>,
+    requestInit: RequestInit = {},
+  ): AsyncResult<TransactionChargebackResponseDto[]> {
     const queryPath = new URLSearchParams(query as unknown as Record<string, string>);
 
     if (query?.createdAtGte) queryPath.set('createdAtGte', new Date(query.createdAtGte).toISOString());

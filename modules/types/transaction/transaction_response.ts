@@ -20,6 +20,7 @@ export const TransactionCreditCardMethodSettingsResponseSchema = z.object({
   brand: z.string(),
   bin: z.string(),
   last4: z.string(),
+  hasChargebackGuarantee: z.boolean(),
 });
 
 export const TransactionMethodSettingsResponseSchema = TransactionPixMethodSettingsResponseSchema.or(

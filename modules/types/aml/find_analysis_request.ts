@@ -22,6 +22,7 @@ export const FindAnalysisQuerySchema = BaseQuerySchema.and(
     scoreLte: z.coerce.number().min(0).optional(),
     sortField: z.enum(['createdAt', 'paymentDate']).default('createdAt'),
     sortOrder: z.enum(SortOrder).default(SortOrder.DESC),
+    search: z.string().max(128).optional(),
   }),
 );
 

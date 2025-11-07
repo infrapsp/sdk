@@ -53,6 +53,7 @@ export type CreditCardMethodSettings = {
   brand: string;
   bin: string;
   last4: string;
+  hasChargebackGuarantee?: boolean;
 };
 
 export type CreditCardMethodData = {

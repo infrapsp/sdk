@@ -7,7 +7,7 @@ export const UpdateAnalysisParamsSchema = BaseParamsSchema;
 
 export const UpdateAnalysisBodySchema = z.object({
   status: z.enum(AnalysisStatus),
-  assigneeId: z.string(),
+  assigneeId: z.string().nullable(),
   isNotified: z.boolean(),
 }).partial().transform((dto, ctx) => {
   if (Object.keys(dto).length === 0) {

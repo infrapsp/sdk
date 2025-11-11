@@ -29,7 +29,7 @@ export const RecordResponseSchema = z.object({
   externalUserId: z.string().nullable().optional(),
   createdAt: z.date(),
   updatedAt: z.date(),
-  merchant: RecordMerchantResponseSchema.optional(),
+  merchant: RecordMerchantResponseSchema,
 });
 
 export type RecordResponseDto = z.infer<typeof RecordResponseSchema>;

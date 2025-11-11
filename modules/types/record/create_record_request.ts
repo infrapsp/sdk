@@ -18,5 +18,4 @@ export const RestrictCreateRecordBodySchema = BaseCreateRecordBodySchema.and(z.o
 }));
 
 export type CreateRecordBodyDto = z.infer<typeof CreateRecordBodySchema>;
-export type CreateRecordRequestBodyDto = z.infer<typeof RestrictCreateRecordBodySchema>;
-export type CreateRecordCommentBodyDto = z.infer<typeof CreateRecordBodySchema>;
+export type RestrictCreateRecordBodyDto = z.infer<typeof RestrictCreateRecordBodySchema>;

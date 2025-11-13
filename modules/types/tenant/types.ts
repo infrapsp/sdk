@@ -49,11 +49,6 @@ export type ClearsaleProviderConfig = {
   password: string;
 };
 
-export type MarbleProviderConfig = {
-  isEnabled: boolean;
-  apiKey: string;
-};
-
 export type CafProviderConfig = {
   apiKey: string;
   pjTemplateId: string;

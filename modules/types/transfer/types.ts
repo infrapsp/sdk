@@ -23,12 +23,4 @@ export type TransferPixMethodDestination = {
   documentType?: DocumentType;
 };
 
-export type TransferAntifraudData = EmptyObject | {
-  marble?: {
-    score: number;
-    status: string;
-    decisionId: string;
-  };
-};
-
 export type TransferMethodDestination = EmptyObject | TransferPixMethodDestination;

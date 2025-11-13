@@ -70,16 +70,6 @@ export type CreditCardPaidData = {
 export type TransactionAntifraudData = EmptyObject | {
   score?: number;
   status?: string;
-  marble?: {
-    score: number;
-    status: string;
-    decisionId: string;
-    openSanctions: {
-      topics: string[];
-      entityId: string;
-      score: number;
-    }[];
-  };
 };
 
 export type TransactionMethodSettings = EmptyObject | PixMethodSettings | CreditCardMethodSettings;

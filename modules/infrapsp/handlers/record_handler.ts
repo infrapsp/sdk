@@ -19,12 +19,16 @@ export class RecordHandler {
   ): AsyncResult<RecordResponseDto> {
     const url = this.basePath;
 
+    const form = new FormData();
+    form.append('entity', body.entity);
+    form.append('entityId', body.entityId);
+    form.append('request', body.request);
+
     const response = await this.httpClient.post(url, {
       ...requestInit,
-      body: JSON.stringify(body),
+      body: form,
       headers: {
         ...requestInit.headers,
-        'Content-Type': 'application/json',
       },
     });
 

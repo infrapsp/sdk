@@ -56,3 +56,10 @@ export type CafProviderConfig = {
   pjTransactionTemplateId: string;
   pfTransactionTemplateId: string;
 };
+
+export type B3ProviderConfig = {
+  certificatePem: string;
+  tenantId: string;
+  tokenIssuer: string;
+  documentNumber: string;
+};

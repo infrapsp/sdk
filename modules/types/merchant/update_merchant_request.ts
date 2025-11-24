@@ -1,8 +1,9 @@
 import { z } from 'npm:@hono/zod-openapi@1.1.0';
 import { BaseParamsSchema } from '../../../modules/types/base/requests.ts';
 import { ZodHelpers, ZodSchemas } from '../../../modules/types/zod.ts';
-import { MerchantAutoTransferFrequency, MerchantStatus } from '../../../modules/types/merchant/types.ts';
+import { MerchantAutoTransferFrequency, MerchantPaymentMethodStatus, MerchantStatus } from '../../../modules/types/merchant/types.ts';
 import { UpdateAddressBodySchema } from '../../../modules/types/address/update_address_request.ts';
+import { PaymentMethod } from '../../../modules/types/transaction/types.ts';
 
 export const UpdateMerchantParamsSchema = BaseParamsSchema;
 
@@ -62,10 +63,26 @@ export const UpdateMerchantBodySchema = z.object({
   return dto;
 });
 
+export const RestrictMerchantPaymentMethodsSettingsSchema = z.object({
+  [PaymentMethod.PIX]: z.enum(MerchantPaymentMethodStatus),
+  [PaymentMethod.CREDIT_CARD]: z.enum(MerchantPaymentMethodStatus),
+}).partial();
+
+export const RestrictUpdateMerchantSettingsBodySchema = z.object({
+  paymentMethods: RestrictMerchantPaymentMethodsSettingsSchema,
+}).partial().transform((dto, ctx) => {
+  if (Object.keys(dto).length === 0) {
+    ZodHelpers.issue(ctx, 'body', 'At least one field must be provided');
+  }
+
+  return dto;
+});
+
 export const RestrictUpdateMerchantBodySchema = z.object({
   tierId: ZodSchemas.nanoid(),
   status: z.enum(MerchantStatus),
   externalId: z.string().max(128),
+  settings: RestrictUpdateMerchantSettingsBodySchema,
   metadata: z.record(z.string(), z.string().or(z.number().or(z.boolean()))),
 }).partial().transform((dto, ctx) => {
   if (Object.keys(dto).length === 0) {

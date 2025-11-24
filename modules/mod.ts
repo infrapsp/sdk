@@ -73,6 +73,7 @@ export * from './types/record/update_record_request.ts';
 export * from './types/transfer/create_transfer_request.ts';
 export * from './types/transfer/find_transfer_request.ts';
 export * from './types/transfer/transfer_response.ts';
+export * from './types/transfer/transfer_summary_response.ts';
 export * from './types/transfer/types.ts';
 export * from './types/address/address_response.ts';
 export * from './types/address/create_address_request.ts';

@@ -21,6 +21,12 @@ export enum MerchantAutoTransferFrequency {
   MONTLHY = 'monthly',
 }
 
+export enum MerchantPaymentMethodStatus {
+  ENABLED = 'enabled',
+  DISABLED = 'disabled',
+  BLOCKED = 'blocked',
+}
+
 export type MerchantAutoTransferSettings = { isEnabled: false } | {
   isEnabled: true;
   frequency: MerchantAutoTransferFrequency;

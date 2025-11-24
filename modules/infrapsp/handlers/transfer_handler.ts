@@ -5,6 +5,7 @@ import { TransferResponseDto } from '../../../modules/types/transfer/transfer_re
 import { FindTransferQuerySchema } from '../../../modules/types/transfer/find_transfer_request.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
 import type { z } from 'npm:@hono/zod-openapi@1.1.0';
+import { TransferSummaryResponseDto } from '../../../modules/types/transfer/transfer_summary_response.ts';
 
 export class TransferHandler {
   private readonly basePath = '/v1/transfers';
@@ -47,6 +48,16 @@ export class TransferHandler {
     if (query?.createdAtLte) queryPath.set('createdAtLte', new Date(query.createdAtLte).toISOString());
 
     const url = query ? this.basePath + '?' + queryPath : this.basePath;
+
+    const response = await this.httpClient.get(url, requestInit);
+
+    const data = await response.json();
+
+    return validateResponse({ data, status: response.status });
+  }
+
+  async findSummary(requestInit: RequestInit = {}): AsyncResult<TransferSummaryResponseDto> {
+    const url = `v1/transfer-summary`;
 
     const response = await this.httpClient.get(url, requestInit);
 

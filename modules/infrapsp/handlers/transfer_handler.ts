@@ -57,7 +57,7 @@ export class TransferHandler {
   }
 
   async findSummary(requestInit: RequestInit = {}): AsyncResult<TransferSummaryResponseDto> {
-    const url = `v1/transfer-summary`;
+    const url = `/v1/transfer-summary`;
 
     const response = await this.httpClient.get(url, requestInit);
 

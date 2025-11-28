@@ -78,7 +78,7 @@ export class TransactionChargebackHandler {
     const formData = new FormData();
     formData.append('doc', body.file);
 
-    const response = await this.httpClient.post(url, {
+    const response = await this.httpClient.put(url, {
       ...requestInit,
       body: formData,
       headers: {

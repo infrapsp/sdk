@@ -4,7 +4,6 @@ import { PayableSummaryResponseDto } from '../../../modules/types/payable_summar
 import { FindPayableSummaryQuerySchema } from '../../../modules/types/payable_summary/find_payable_summary_request.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
 import type { z } from 'npm:@hono/zod-openapi@1.1.0';
-import type { PayableSummaryAggregationResponseDto } from '../../../modules/types/payable_summary/payable_summary_aggregation_response.ts';
 
 export class PayableSummaryHandler {
   private readonly basePath = '/v1/payable-summary';
@@ -18,16 +17,6 @@ export class PayableSummaryHandler {
     if (query?.paymentDateGte) queryPath.set('paymentDateGte', new Date(query.paymentDateGte).toISOString());
 
     const url = query ? this.basePath + '?' + queryPath : this.basePath;
-
-    const response = await this.httpClient.get(url, requestInit);
-
-    const data = await response.json();
-
-    return validateResponse({ data, status: response.status });
-  }
-
-  async findAggregation(requestInit: RequestInit = {}): AsyncResult<PayableSummaryAggregationResponseDto> {
-    const url = `${this.basePath}/aggregation`;
 
     const response = await this.httpClient.get(url, requestInit);
 

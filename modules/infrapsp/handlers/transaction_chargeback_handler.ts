@@ -76,7 +76,7 @@ export class TransactionChargebackHandler {
     const url = `${this.basePath}/${transactionId}/chargebacks/${id}/document-upload`;
 
     const formData = new FormData();
-    formData.append('doc', body.file);
+    formData.append('file', body.file);
 
     const response = await this.httpClient.put(url, {
       ...requestInit,

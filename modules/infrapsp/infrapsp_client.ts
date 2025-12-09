@@ -17,7 +17,6 @@ import { TierHandler } from '../../modules/infrapsp/handlers/tier_handler.ts';
 import { WebhookHandler } from '../../modules/infrapsp/handlers/webhook_handler.ts';
 import { CheckoutHandler } from '../../modules/infrapsp/handlers/checkout_handler.ts';
 import { PreTransactionHandler } from '../../modules/infrapsp/handlers/pre_transaction_handler.ts';
-import { MerchantRecordHandler } from '../../modules/infrapsp/handlers/merchant_record_handler.ts';
 import { HttpClient } from '../../modules/http/http_client.ts';
 import { NotificationBellHandler } from '../../modules/infrapsp/handlers/notification_bell_handler.ts';
 import { NotificationTemplateHandler } from '../../modules/infrapsp/handlers/notification_template_handler.ts';
@@ -41,7 +40,6 @@ export class InfraPSPClient {
   public readonly impersonate: ImpersonateHandler;
   public readonly invoices: InvoiceHandler;
   public readonly merchants: MerchantHandler;
-  public readonly merchantRecords: MerchantRecordHandler;
   public readonly notification: NotificationHandler;
   public readonly notificationBell: NotificationBellHandler;
   public readonly notificationTemplate: NotificationTemplateHandler;
@@ -76,7 +74,6 @@ export class InfraPSPClient {
     this.impersonate = new ImpersonateHandler(this.httpClient);
     this.invoices = new InvoiceHandler(this.httpClient);
     this.merchants = new MerchantHandler(this.httpClient);
-    this.merchantRecords = new MerchantRecordHandler(this.httpClient);
     this.notification = new NotificationHandler(this.httpClient);
     this.notificationBell = new NotificationBellHandler(this.httpClient);
     this.notificationTemplate = new NotificationTemplateHandler(this.httpClient);

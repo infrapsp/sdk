@@ -1,7 +1,7 @@
 import { z } from 'npm:@hono/zod-openapi@1.1.0';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
 import { DocumentType, MerchantStatus } from '../../../modules/types/merchant/types.ts';
-import { RecordRequestType, RecordStatus } from '../../../modules/types/record/types.ts';
+import { RecordEntity, RecordRequestType, RecordStatus } from '../../../modules/types/record/types.ts';
 
 export const RecordMerchantResponseSchema = z.object({
   id: ZodSchemas.nanoid(),
@@ -23,6 +23,8 @@ export const RecordResponseSchema = z.object({
   comment: z.string().nullable().optional(),
   request: z.enum(RecordRequestType).nullable().optional(),
   status: z.enum(RecordStatus),
+  entity: z.enum(RecordEntity),
+  entityId: ZodSchemas.nanoid(),
   attachments: z.array(z.object({
     path: z.string(),
   })),

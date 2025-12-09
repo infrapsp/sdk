@@ -62,4 +62,5 @@ export type B3ProviderConfig = {
   tenantId: string;
   tokenIssuer: string;
   documentNumber: string;
+  orgId: string;
 };

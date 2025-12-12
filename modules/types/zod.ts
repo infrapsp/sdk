@@ -26,6 +26,7 @@ export const ZodSchemas = {
   numeric: () => z.string().regex(/^[0-9]+$/),
   phone: () => z.string().regex(/^\+[0-9]{3,15}$/),
   stringArray: <T extends z.ZodType>(e: T) => z.preprocess((val) => String(val ?? '').split(','), z.array(e)),
+  stringBoolean: () => z.preprocess((val) => val === 'true' ? true : val === 'false' ? false : val, z.boolean()),
   booleanString: () => z.string().transform((data) => JSON.parse(data)).pipe(z.boolean()),
 };
 

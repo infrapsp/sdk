@@ -18,6 +18,7 @@ export const InvoiceIssuedDataResponseSchema = z.object({
 export const InvoiceResponseSchema = z.object({
   id: ZodSchemas.nanoid(),
   merchantId: ZodSchemas.nanoid(),
+  provider: z.string().or(z.null()),
   status: z.enum(InvoiceStatus),
   totalAmount: z.number().int(),
   period: z.string().length(6),

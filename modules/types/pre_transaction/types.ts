@@ -8,6 +8,10 @@ export enum PreTransactionStatus {
   COMPLETED = 'completed',
 }
 
+export type PreTransactionCreditCardSettings = {
+  maxInstallments?: number;
+};
+
 export type PreTransactionCustomer = {
   companyName?: string;
   personName: string;

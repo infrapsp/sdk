@@ -11,6 +11,7 @@ export enum RecordStatus {
 export enum RecordEntity {
   MERCHANT = 'merchant',
   ANALYSIS = 'analysis',
+  UNIT_RECEIVABLE = 'unit_receivable',
 }
 
 export enum RecordRequestType {

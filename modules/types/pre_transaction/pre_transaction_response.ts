@@ -14,6 +14,10 @@ export const PreTransactionTransactionResponseSchema = z.object({
   method: z.string(),
 });
 
+export const PreTransactionCreditCardSettingsResponseSchema = z.object({
+  maxInstallments: z.number().int().max(12).positive(),
+}).partial();
+
 export const PreTransactionResponseSchema = z.object({
   id: ZodSchemas.nanoid(),
   merchantId: ZodSchemas.nanoid(),
@@ -26,6 +30,7 @@ export const PreTransactionResponseSchema = z.object({
   transactions: z.array(PreTransactionTransactionResponseSchema).default(() => []),
   expirationDate: z.date(),
   maxAttempts: z.number().int().positive(),
+  creditCardSettings: PreTransactionCreditCardSettingsResponseSchema,
   notifyUrl: z.url().nullable(),
   externalId: z.string().nullable(),
   metadata: z.record(z.string(), z.string()),

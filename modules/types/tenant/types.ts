@@ -63,4 +63,8 @@ export type B3ProviderConfig = {
   tokenIssuer: string;
   documentNumber: string;
   orgId: string;
+  compeCode: string;
+  ispb: string;
+  accountNumber: string;
+  branchNumber: string;
 };

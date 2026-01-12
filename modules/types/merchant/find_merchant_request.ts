@@ -13,6 +13,7 @@ export const FindMerchantQuerySchema = BaseQuerySchema.and(
     sortField: z.enum(['createdAt', 'updatedAt']).default('createdAt'),
     sortOrder: z.enum(SortOrder).default(SortOrder.DESC),
     search: z.string().optional(),
+    tags: ZodSchemas.stringArray(z.string().regex(/^[a-zA-Z0-9-]+$/).max(32)).optional(),
   }),
 );
 

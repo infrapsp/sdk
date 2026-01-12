@@ -42,6 +42,7 @@ export type RedeProviderConfig = {
   token: string;
   chargebackClientId: string;
   chargebackClientSecret: string;
+  paymentFacilitatorId: { [key: string]: string };
 };
 
 export type ClearsaleProviderConfig = {

@@ -83,6 +83,7 @@ export const RestrictUpdateMerchantBodySchema = z.object({
   status: z.enum(MerchantStatus),
   externalId: z.string().max(128),
   settings: RestrictUpdateMerchantSettingsBodySchema,
+  tags: z.array(z.string().regex(/^[a-zA-Z0-9-]+$/).max(32)).max(5),
   metadata: z.record(z.string(), z.string().or(z.number().or(z.boolean()))),
 }).partial().transform((dto, ctx) => {
   if (Object.keys(dto).length === 0) {

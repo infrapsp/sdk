@@ -5,6 +5,7 @@ import {
   CreateTransactionShippingBodySchema,
 } from '../../../modules/types/transaction/create_transaction_request.ts';
 import { ZodHelpers, ZodSchemas } from '../../../modules/types/zod.ts';
+import { PaymentMethod } from '../../../modules/types/transaction/types.ts';
 
 export const CreatePreTransactionCreditCardSettingsBodySchema = z.object({
   maxInstallments: z.number().positive().int().min(1).max(12).default(1),
@@ -16,6 +17,7 @@ export const CreatePreTransactionBodySchema = z.object({
   items: z.array(CreateTransactionItemBodySchema),
   shipping: CreateTransactionShippingBodySchema.optional().nullable(),
   customer: CreateTransactionCustomerBodySchema.optional(),
+  availableMethods: z.array(z.enum(PaymentMethod)).min(1),
   creditCardSettings: CreatePreTransactionCreditCardSettingsBodySchema.optional(),
   expirationDate: ZodSchemas.datetime().default(() => new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)), // 30 days from now
   maxAttempts: z.number().int().positive().max(3).default(3),

@@ -6,7 +6,7 @@ import {
   TransactionShippingResponseSchema,
 } from '../../../modules/types/transaction/transaction_response.ts';
 import { PreTransactionStatus } from '../../../modules/types/pre_transaction/types.ts';
-import { TransactionStatus } from '../../../modules/types/transaction/types.ts';
+import { PaymentMethod, TransactionStatus } from '../../../modules/types/transaction/types.ts';
 
 export const PreTransactionTransactionResponseSchema = z.object({
   id: ZodSchemas.nanoid(),
@@ -26,6 +26,7 @@ export const PreTransactionResponseSchema = z.object({
   items: z.array(TransactionItemResponseSchema),
   shipping: TransactionShippingResponseSchema.optional().nullable(),
   amount: z.number().positive().int(),
+  availableMethods: z.array(z.enum(PaymentMethod)),
   customer: TransactionCustomerResponseSchema.optional().nullable(),
   transactions: z.array(PreTransactionTransactionResponseSchema).default(() => []),
   expirationDate: z.date(),

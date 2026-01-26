@@ -1,6 +1,7 @@
 import { AsyncResult } from '../../../modules/types/result.ts';
 import { validateResponse } from '../../../modules/infrapsp/validate_response.ts';
 import { InvoiceResponseDto } from '../../../modules/types/invoice/invoice_response.ts';
+import { isError } from '../../../modules/errors/is_error.ts';
 import { UpdateInvoiceBodySchema } from '../../../modules/types/invoice/update_invoice_request.ts';
 import { FindInvoiceQuerySchema } from '../../../modules/types/invoice/find_invoice_request.ts';
 import { GenerateInvoiceReportQuerySchema } from '../../../modules/types/invoice/generate_report_request.ts';
@@ -18,6 +19,8 @@ export class InvoiceHandler {
 
     const response = await this.httpClient.get(url, requestInit);
 
+    if (isError(response)) return response;
+
     const data = await response.json();
     const status = response.status;
 
@@ -33,6 +36,8 @@ export class InvoiceHandler {
     const url = query ? this.basePath + '?' + queryPath : this.basePath;
 
     const response = await this.httpClient.get(url, requestInit);
+
+    if (isError(response)) return response;
 
     const data = await response.json();
 
@@ -54,6 +59,8 @@ export class InvoiceHandler {
       },
     });
 
+    if (isError(response)) return response;
+
     const data = await response.json();
     const status = response.status;
 
@@ -69,6 +76,8 @@ export class InvoiceHandler {
     const url = query ? `${this.basePath}/report` + '?' + queryPath : `${this.basePath}/report`;
 
     const response = await this.httpClient.get(url, requestInit);
+
+    if (isError(response)) return response;
 
     const status = response.status;
 

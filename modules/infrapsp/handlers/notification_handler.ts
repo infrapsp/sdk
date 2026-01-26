@@ -1,6 +1,7 @@
 import { AsyncResult } from '../../../modules/types/result.ts';
 import { validateResponse } from '../../../modules/infrapsp/validate_response.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
+import { isError } from '../../../modules/errors/is_error.ts';
 import { CreateBulkNotificationCsvBodySchema, CreateNotificationBodyDto } from '../../../modules/types/notification/create_notification_request.ts';
 import { NotificationResponseDto } from '../../../modules/types/notification/notification_response.ts';
 import { z } from 'npm:@hono/zod-openapi@1.1.0';
@@ -21,6 +22,8 @@ export class NotificationHandler {
         'Content-Type': 'application/json',
       },
     });
+
+    if (isError(response)) return response;
 
     const data = await response.json();
     const status = response.status;
@@ -45,6 +48,8 @@ export class NotificationHandler {
         ...requestInit.headers,
       },
     });
+
+    if (isError(response)) return response;
 
     const status = response.status;
 

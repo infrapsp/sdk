@@ -1,6 +1,7 @@
 import { AsyncResult } from '../../../modules/types/result.ts';
 import { validateResponse } from '../../../modules/infrapsp/validate_response.ts';
 import { PayableResponseDto } from '../../../modules/types/payable/payable_response.ts';
+import { isError } from '../../../modules/errors/is_error.ts';
 import { FindPayableQuerySchema } from '../../../modules/types/payable/find_payable_request.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
 import type { z } from 'npm:@hono/zod-openapi@1.1.0';
@@ -14,6 +15,8 @@ export class PayableHandler {
     const url = this.basePath;
 
     const response = await this.httpClient.get(`${url}/${id}`, requestInit);
+
+    if (isError(response)) return response;
 
     const data = await response.json();
     const status = response.status;
@@ -30,6 +33,8 @@ export class PayableHandler {
     const url = query ? this.basePath + '?' + queryPath : this.basePath;
 
     const response = await this.httpClient.get(url, requestInit);
+
+    if (isError(response)) return response;
 
     const data = await response.json();
 

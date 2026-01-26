@@ -1,6 +1,7 @@
 import { AsyncResult } from '../../../modules/types/result.ts';
 import { validateResponse } from '../../../modules/infrapsp/validate_response.ts';
 import { RecordResponseDto } from '../../../modules/types/record/record_response.ts';
+import { isError } from '../../../modules/errors/is_error.ts';
 import { FindRecordQuerySchema } from '../../../modules/types/record/find_record_request.ts';
 import { CreateRecordBodySchema, RestrictCreateRecordBodySchema } from '../../../modules/types/record/create_record_request.ts';
 import { UpdateRecordBodySchema } from '../../../modules/types/record/update_record_request.ts';
@@ -31,6 +32,8 @@ export class RecordHandler {
         ...requestInit.headers,
       },
     });
+
+    if (isError(response)) return response;
 
     const data = await response.json();
 
@@ -65,6 +68,8 @@ export class RecordHandler {
       },
     });
 
+    if (isError(response)) return response;
+
     const data = await response.json();
 
     return validateResponse({ data, status: response.status });
@@ -86,6 +91,8 @@ export class RecordHandler {
       },
     });
 
+    if (isError(response)) return response;
+
     const data = await response.json();
 
     return validateResponse({ data, status: response.status });
@@ -104,6 +111,8 @@ export class RecordHandler {
 
     const response = await this.httpClient.get(url, requestInit);
 
+    if (isError(response)) return response;
+
     const data = await response.json();
     const status = response.status;
 
@@ -114,6 +123,8 @@ export class RecordHandler {
     const url = `${this.restrictBasePath}/${id}`;
 
     const response = await this.httpClient.delete(url, requestInit);
+
+    if (isError(response)) return response;
 
     const data = await response.json();
     const status = response.status;

@@ -1,6 +1,7 @@
 import { AsyncResult } from '../../../modules/types/result.ts';
 import { GenerateStatementQuerySchema } from '../../../modules/types/operation/generate_statement_request.ts';
 import { CommonError } from '../../../modules/errors/common_error.ts';
+import { isError } from '../../../modules/errors/is_error.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
 import type { z } from 'npm:@hono/zod-openapi@1.1.0';
 
@@ -18,6 +19,8 @@ export class OperationHandler {
     const url = query ? `${this.basePath}/statement` + '?' + queryPath : `${this.basePath}/statements`;
 
     const response = await this.httpClient.get(url, requestInit);
+
+    if (isError(response)) return response;
 
     const status = response.status;
 

@@ -2,6 +2,7 @@ import { AsyncResult } from '../../../modules/types/result.ts';
 import { validateResponse } from '../../../modules/infrapsp/validate_response.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
 import type { z } from 'npm:@hono/zod-openapi@1.1.0';
+import { isError } from '../../../modules/errors/is_error.ts';
 import { NotificationBellResponseDto } from '../../../modules/types/notification_bell/notification_bell_response.ts';
 import { UpdateNotificationBellBodySchema } from '../../../modules/types/notification_bell/update_notification_bell_request.ts';
 
@@ -12,6 +13,8 @@ export class NotificationBellHandler {
 
   async findMany(requestInit: RequestInit = {}): AsyncResult<NotificationBellResponseDto[]> {
     const response = await this.httpClient.get(this.basePath, requestInit);
+
+    if (isError(response)) return response;
 
     const data = await response.json();
 
@@ -32,6 +35,8 @@ export class NotificationBellHandler {
         'Content-Type': 'application/json',
       },
     });
+
+    if (isError(response)) return response;
 
     const data = await response.json();
     const status = response.status;

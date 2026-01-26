@@ -1,6 +1,7 @@
 import { AsyncResult } from '../../../modules/types/result.ts';
 import { validateResponse } from '../../../modules/infrapsp/validate_response.ts';
 import { ImpersonateBodySchema } from '../../../modules/types/external_auth/impersonate_request.ts';
+import { isError } from '../../../modules/errors/is_error.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
 import type { z } from 'npm:@hono/zod-openapi@1.1.0';
 export class ImpersonateHandler {
@@ -22,6 +23,8 @@ export class ImpersonateHandler {
       },
     });
 
+    if (isError(response)) return response;
+
     if (response.status >= 200 && response.status < 300) {
       return validateResponse({ data: undefined, status: response.status });
     } else {
@@ -41,6 +44,8 @@ export class ImpersonateHandler {
       ...requestInit,
     });
 
+    if (isError(response)) return response;
+
     if (response.status >= 200 && response.status < 300) {
       return validateResponse({ data: undefined, status: response.status });
     } else {
@@ -59,6 +64,8 @@ export class ImpersonateHandler {
     const response = await this.httpClient.get(`${url}`, {
       ...requestInit,
     });
+
+    if (isError(response)) return response;
 
     const data = await response.json();
     const status = response.status;

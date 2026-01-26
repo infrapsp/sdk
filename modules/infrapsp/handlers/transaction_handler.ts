@@ -1,6 +1,7 @@
 import { AsyncResult } from '../../../modules/types/result.ts';
 import { validateResponse } from '../../../modules/infrapsp/validate_response.ts';
 import { CreateTransactionBodySchema } from '../../../modules/types/transaction/create_transaction_request.ts';
+import { isError } from '../../../modules/errors/is_error.ts';
 import { TransactionResponseDto } from '../../../modules/types/transaction/transaction_response.ts';
 import { FindTransactionQuerySchema } from '../../../modules/types/transaction/find_transaction_request.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
@@ -23,6 +24,8 @@ export class TransactionHandler {
       },
     });
 
+    if (isError(response)) return response;
+
     const data = await response.json();
     const status = response.status;
 
@@ -33,6 +36,8 @@ export class TransactionHandler {
     const url = this.basePath;
 
     const response = await this.httpClient.get(`${url}/${id}`, requestInit);
+
+    if (isError(response)) return response;
 
     const data = await response.json();
     const status = response.status;
@@ -49,6 +54,8 @@ export class TransactionHandler {
     const url = query ? this.basePath + '?' + queryPath : this.basePath;
 
     const response = await this.httpClient.get(url, requestInit);
+
+    if (isError(response)) return response;
 
     const data = await response.json();
 

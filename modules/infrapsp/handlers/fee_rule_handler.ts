@@ -1,6 +1,7 @@
 import { AsyncResult } from '../../../modules/types/result.ts';
 import { validateResponse } from '../../../modules/infrapsp/validate_response.ts';
 import { FindFeeRuleQuerySchema, RestrictFindFeeRuleQuerySchema } from '../../../modules/types/fee_rule/find_fee_rule_request.ts';
+import { isError } from '../../../modules/errors/is_error.ts';
 import { FeeRuleResponseDto } from '../../../modules/types/fee_rule/fee_rule_response.ts';
 import { CreateFeeRuleBodySchema } from '../../../modules/types/fee_rule/create_fee_rule_request.ts';
 import { UpdateFeeRuleBodySchema } from '../../../modules/types/fee_rule/update_fee_rule_request.ts';
@@ -25,6 +26,8 @@ export class FeeRuleHandler {
       },
     });
 
+    if (isError(response)) return response;
+
     const data = await response.json();
     const status = response.status;
 
@@ -42,6 +45,8 @@ export class FeeRuleHandler {
         'Content-Type': 'application/json',
       },
     });
+
+    if (isError(response)) return response;
 
     const data = await response.json();
     const status = response.status;
@@ -65,6 +70,8 @@ export class FeeRuleHandler {
     const url = query ? basePath + '?' + queryPath : basePath;
 
     const response = await this.httpClient.get(url, requestInit);
+
+    if (isError(response)) return response;
 
     const data = await response.json();
 

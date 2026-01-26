@@ -1,6 +1,7 @@
 import { AsyncResult } from '../../../modules/types/result.ts';
 import { validateResponse } from '../../../modules/infrapsp/validate_response.ts';
 import { CreateTransferBodySchema } from '../../../modules/types/transfer/create_transfer_request.ts';
+import { isError } from '../../../modules/errors/is_error.ts';
 import { TransferResponseDto } from '../../../modules/types/transfer/transfer_response.ts';
 import { FindTransferQuerySchema } from '../../../modules/types/transfer/find_transfer_request.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
@@ -24,6 +25,8 @@ export class TransferHandler {
       },
     });
 
+    if (isError(response)) return response;
+
     const data = await response.json();
     const status = response.status;
 
@@ -34,6 +37,8 @@ export class TransferHandler {
     const url = `${this.basePath}/${id}`;
 
     const response = await this.httpClient.get(url, requestInit);
+
+    if (isError(response)) return response;
 
     const data = await response.json();
     const status = response.status;
@@ -51,6 +56,8 @@ export class TransferHandler {
 
     const response = await this.httpClient.get(url, requestInit);
 
+    if (isError(response)) return response;
+
     const data = await response.json();
 
     return validateResponse({ data, status: response.status });
@@ -60,6 +67,8 @@ export class TransferHandler {
     const url = `/v1/transfer-summary`;
 
     const response = await this.httpClient.get(url, requestInit);
+
+    if (isError(response)) return response;
 
     const data = await response.json();
 

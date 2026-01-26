@@ -6,6 +6,7 @@ import { FindMerchantQuerySchema } from '../../../modules/types/merchant/find_me
 import type { HttpClient } from '../../../modules/http/http_client.ts';
 import type { z } from 'npm:@hono/zod-openapi@1.1.0';
 import { UploadMerchantLogoBodySchema } from '../../../modules/types/merchant/upload_merchant_logo_request.ts';
+import { isError } from '../../../modules/errors/is_error.ts';
 
 export class MerchantHandler {
   private readonly basePath = '/v1/merchants';
@@ -18,6 +19,8 @@ export class MerchantHandler {
 
     const response = await this.httpClient.get(url, requestInit);
 
+    if (isError(response)) return response;
+
     const data = await response.json();
     const status = response.status;
 
@@ -28,6 +31,8 @@ export class MerchantHandler {
     const url = `${this.basePath}/me`;
 
     const response = await this.httpClient.get(url, requestInit);
+
+    if (isError(response)) return response;
 
     const data = await response.json();
     const status = response.status;
@@ -44,6 +49,8 @@ export class MerchantHandler {
     const url = query ? this.basePath + '?' + queryPath : this.basePath;
 
     const response = await this.httpClient.get(url, requestInit);
+
+    if (isError(response)) return response;
 
     const data = await response.json();
 
@@ -76,6 +83,8 @@ export class MerchantHandler {
       },
     });
 
+    if (isError(response)) return response;
+
     const data = await response.json();
     const status = response.status;
 
@@ -100,6 +109,8 @@ export class MerchantHandler {
       },
     });
 
+    if (isError(response)) return response;
+
     const status = response.status;
 
     return validateResponse({ data: undefined, status });
@@ -117,6 +128,8 @@ export class MerchantHandler {
         ...requestInit.headers,
       },
     });
+
+    if (isError(response)) return response;
 
     const status = response.status;
 

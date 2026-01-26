@@ -17,7 +17,7 @@ export const CreatePreTransactionBodySchema = z.object({
   items: z.array(CreateTransactionItemBodySchema),
   shipping: CreateTransactionShippingBodySchema.optional().nullable(),
   customer: CreateTransactionCustomerBodySchema.optional(),
-  availableMethods: z.array(z.enum(PaymentMethod)).min(1),
+  availableMethods: z.array(z.enum(PaymentMethod)).min(1).default([PaymentMethod.PIX]),
   creditCardSettings: CreatePreTransactionCreditCardSettingsBodySchema.optional(),
   expirationDate: ZodSchemas.datetime().default(() => new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)), // 30 days from now
   maxAttempts: z.number().int().positive().max(3).default(3),

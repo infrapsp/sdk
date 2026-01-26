@@ -1,6 +1,7 @@
 import { AsyncResult } from '../../../modules/types/result.ts';
 import { validateResponse } from '../../../modules/infrapsp/validate_response.ts';
 import { CreateTransactionRefundBodySchema } from '../../../modules/types/transaction_refund/create_transaction_refund_request.ts';
+import { isError } from '../../../modules/errors/is_error.ts';
 import { TransactionRefundResponseDto } from '../../../modules/types/transaction_refund/transaction_refund_response.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
 import type { z } from 'npm:@hono/zod-openapi@1.1.0';
@@ -25,6 +26,8 @@ export class TransactionRefundHandler {
         'Content-Type': 'application/json',
       },
     });
+
+    if (isError(response)) return response;
 
     const data = await response.json();
     const status = response.status;

@@ -2,6 +2,7 @@ import { AsyncResult } from '../../../modules/types/result.ts';
 import { validateResponse } from '../../../modules/infrapsp/validate_response.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
 import type { z } from 'npm:@hono/zod-openapi@1.1.0';
+import { isError } from '../../../modules/errors/is_error.ts';
 import { TransactionStatsResponseDto } from '../../../modules/types/dashboard/transaction_stats_response.ts';
 import { FindTransactionStatsQuerySchema } from '../../../modules/types/dashboard/transaction_stats_request.ts';
 import { FindTransactionChargebackStatsQuerySchema } from '../../../modules/types/dashboard/transaction_chargeback_stats_request.ts';
@@ -26,6 +27,8 @@ export class DashboardHandler {
 
     const response = await this.httpClient.get(url, requestInit);
 
+    if (isError(response)) return response;
+
     const data = await response.json();
 
     return validateResponse({ data, status: response.status });
@@ -44,6 +47,8 @@ export class DashboardHandler {
     const url = query ? base + '?' + queryPath : base;
 
     const response = await this.httpClient.get(url, requestInit);
+
+    if (isError(response)) return response;
 
     const data = await response.json();
 

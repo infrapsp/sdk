@@ -2,6 +2,7 @@ import { AsyncResult } from '../../../modules/types/result.ts';
 import { validateResponse } from '../../../modules/infrapsp/validate_response.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
 import type { z } from 'npm:@hono/zod-openapi@1.1.0';
+import { isError } from '../../../modules/errors/is_error.ts';
 import { NotificationTemplateResponseDto } from '../../../modules/types/notification_template/notification_template_response.ts';
 import { FindNotificationTemplateQuerySchema } from '../../../modules/types/notification_template/find_notification_template_request.ts';
 import { UpdateNotificationTemplateBodySchema } from '../../../modules/types/notification_template/update_notification_template_request.ts';
@@ -15,6 +16,8 @@ export class NotificationTemplateHandler {
     const url = `${this.restrictBasePath}/${id}`;
 
     const response = await this.httpClient.get(url, requestInit);
+
+    if (isError(response)) return response;
 
     const data = await response.json();
     const status = response.status;
@@ -34,6 +37,8 @@ export class NotificationTemplateHandler {
     const url = query ? this.restrictBasePath + '?' + queryPath : this.restrictBasePath;
 
     const response = await this.httpClient.get(url, requestInit);
+
+    if (isError(response)) return response;
 
     const data = await response.json();
 
@@ -56,6 +61,8 @@ export class NotificationTemplateHandler {
       },
     });
 
+    if (isError(response)) return response;
+
     const data = await response.json();
     const status = response.status;
 
@@ -71,6 +78,8 @@ export class NotificationTemplateHandler {
     const response = await this.httpClient.delete(url, {
       ...requestInit,
     });
+
+    if (isError(response)) return response;
 
     const status = response.status;
 

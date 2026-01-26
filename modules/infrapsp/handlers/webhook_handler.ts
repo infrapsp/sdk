@@ -1,6 +1,7 @@
 import { AsyncResult } from '../../../modules/types/result.ts';
 import { validateResponse } from '../../../modules/infrapsp/validate_response.ts';
 import { CreateWebhookBodySchema } from '../../../modules/types/webhook/create_webhook_request.ts';
+import { isError } from '../../../modules/errors/is_error.ts';
 import { WebhookResponseDto } from '../../../modules/types/webhook/webhook_response.ts';
 import { UpdateWebhookBodySchema } from '../../../modules/types/webhook/update_webhook_request.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
@@ -23,6 +24,8 @@ export class WebhookHandler {
       },
     });
 
+    if (isError(response)) return response;
+
     const data = await response.json();
     const status = response.status;
 
@@ -33,6 +36,8 @@ export class WebhookHandler {
     const url = this.basePath;
 
     const response = await this.httpClient.get(url, requestInit);
+
+    if (isError(response)) return response;
 
     const data = await response.json();
 
@@ -51,6 +56,8 @@ export class WebhookHandler {
       },
     });
 
+    if (isError(response)) return response;
+
     const data = await response.json();
     const status = response.status;
 
@@ -65,6 +72,8 @@ export class WebhookHandler {
     const response = await this.httpClient.delete(`${url}/${id}`, {
       ...requestInit,
     });
+
+    if (isError(response)) return response;
 
     const status = response.status;
 

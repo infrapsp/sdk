@@ -1,6 +1,7 @@
 import { AsyncResult } from '../../../modules/types/result.ts';
 import { validateResponse } from '../../../modules/infrapsp/validate_response.ts';
 import { CreateTransactionCheckoutBodySchema } from '../../../modules/types/transaction/create_transaction_request.ts';
+import { isError } from '../../../modules/errors/is_error.ts';
 import { TransactionCheckoutResponseDto } from '../../../modules/types/transaction/transaction_checkout_response.ts';
 import { PreTransactionCheckoutResponseDto } from '../../../modules/types/pre_transaction/pre_transaction_checkout_response.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
@@ -27,6 +28,8 @@ export class CheckoutHandler {
       },
     });
 
+    if (isError(response)) return response;
+
     const data = await response.json();
     const status = response.status;
 
@@ -37,6 +40,8 @@ export class CheckoutHandler {
     const url = `${this.basePath}/pre-transactions/${preTransactionId}`;
 
     const response = await this.httpClient.get(url, requestInit);
+
+    if (isError(response)) return response;
 
     const data = await response.json();
 

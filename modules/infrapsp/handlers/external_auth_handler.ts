@@ -1,6 +1,7 @@
 import { AsyncResult } from '../../../modules/types/result.ts';
 import { validateResponse } from '../../../modules/infrapsp/validate_response.ts';
 import { ExternalAuthMerchantResponseDto } from '../../../modules/types/external_auth/external_auth_merchant_response.ts';
+import { isError } from '../../../modules/errors/is_error.ts';
 import { CreateRegistrationBodySchema } from '../../../modules/types/registration/create_registration_request.ts';
 import { RegistrationResponseDto } from '../../../modules/types/registration/registration_response.ts';
 import { FindExternalAuthQuerySchema } from '../../../modules/types/external_auth/find_external_auth_request.ts';
@@ -26,6 +27,8 @@ export class ExternalAuthHandler {
       },
     });
 
+    if (isError(response)) return response;
+
     const data = await response.json();
     const status = response.status;
 
@@ -37,6 +40,8 @@ export class ExternalAuthHandler {
 
     const response = await this.httpClient.get(url, requestInit);
 
+    if (isError(response)) return response;
+
     const data = await response.json();
 
     return validateResponse({ data, status: response.status });
@@ -46,6 +51,8 @@ export class ExternalAuthHandler {
     const url = `${this.basePath}/merchants`;
 
     const response = await this.httpClient.get(url, requestInit);
+
+    if (isError(response)) return response;
 
     const data = await response.json();
 
@@ -58,6 +65,8 @@ export class ExternalAuthHandler {
     const url = `${this.basePath}?${queryPath}`;
 
     const response = await this.httpClient.get(url, requestInit);
+
+    if (isError(response)) return response;
 
     const data = await response.json();
 
@@ -76,6 +85,8 @@ export class ExternalAuthHandler {
       },
     });
 
+    if (isError(response)) return response;
+
     const data = await response.json();
 
     return validateResponse({ data, status: response.status });
@@ -85,6 +96,8 @@ export class ExternalAuthHandler {
     const url = `${this.basePath}/${id}`;
 
     const response = await this.httpClient.delete(url, requestInit);
+
+    if (isError(response)) return response;
 
     const status = response.status;
 
@@ -102,6 +115,8 @@ export class ExternalAuthHandler {
         'Content-Type': 'application/json',
       },
     });
+
+    if (isError(response)) return response;
 
     const status = response.status;
 

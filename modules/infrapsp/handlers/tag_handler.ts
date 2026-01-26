@@ -1,6 +1,7 @@
 import { AsyncResult } from '../../../modules/types/result.ts';
 import { validateResponse } from '../../../modules/infrapsp/validate_response.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
+import { isError } from '../../../modules/errors/is_error.ts';
 import { TagResponseDto } from '../../../modules/types/tag/tag_response.ts';
 
 export class TagHandler {
@@ -12,6 +13,8 @@ export class TagHandler {
     const url = this.basePath;
 
     const response = await this.httpClient.get(url, requestInit);
+
+    if (isError(response)) return response;
 
     const data = await response.json();
 

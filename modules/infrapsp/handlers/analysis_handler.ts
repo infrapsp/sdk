@@ -1,6 +1,7 @@
 import { AsyncResult } from '../../../modules/types/result.ts';
 import { validateResponse } from '../../../modules/infrapsp/validate_response.ts';
 import { AnalysisResponseDto } from '../../../modules/types/aml/analysis_response.ts';
+import { isError } from '../../../modules/errors/is_error.ts';
 import { UpdateAnalysisBodySchema } from '../../../modules/types/aml/update_analysis_request.ts';
 import { FindAnalysisQuerySchema } from '../../../modules/types/aml/find_analysis_request.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
@@ -15,6 +16,8 @@ export class AnalysisHandler {
     const url = `${this.basePath}/${id}`;
 
     const response = await this.httpClient.get(url, requestInit);
+
+    if (isError(response)) return response;
 
     const data = await response.json();
     const status = response.status;
@@ -31,6 +34,8 @@ export class AnalysisHandler {
     const url = query ? this.basePath + '?' + queryPath : this.basePath;
 
     const response = await this.httpClient.get(url, requestInit);
+
+    if (isError(response)) return response;
 
     const data = await response.json();
 
@@ -52,6 +57,8 @@ export class AnalysisHandler {
         'Content-Type': 'application/json',
       },
     });
+
+    if (isError(response)) return response;
 
     const data = await response.json();
     const status = response.status;

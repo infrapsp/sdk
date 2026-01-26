@@ -1,3 +1,5 @@
+import { catcherAsync } from '../../modules/errors/catcher.ts';
+
 export class HttpClient {
   constructor(private readonly baseUrl: string, private readonly requestInit: RequestInit & { client?: Deno.HttpClient } = {}) {
   }
@@ -27,14 +29,16 @@ export class HttpClient {
   }
 
   private request(url: string, method: string, requestInit: RequestInit = {}) {
-    return fetch(this.baseUrl + url, {
-      ...this.requestInit,
-      ...requestInit,
-      method,
-      headers: {
-        ...this.requestInit.headers,
-        ...requestInit?.headers,
-      },
-    });
+    return catcherAsync(() =>
+      fetch(this.baseUrl + url, {
+        ...this.requestInit,
+        ...requestInit,
+        method,
+        headers: {
+          ...this.requestInit.headers,
+          ...requestInit?.headers,
+        },
+      })
+    );
   }
 }

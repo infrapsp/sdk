@@ -1,6 +1,7 @@
 import { AsyncResult } from '../../../modules/types/result.ts';
 import { validateResponse } from '../../../modules/infrapsp/validate_response.ts';
 import { CreatePreTransactionBodySchema } from '../../../modules/types/pre_transaction/create_pre_transaction_request.ts';
+import { isError } from '../../../modules/errors/is_error.ts';
 import { PreTransactionResponseDto } from '../../../modules/types/pre_transaction/pre_transaction_response.ts';
 import { FindPreTransactionQuerySchema } from '../../../modules/types/pre_transaction/find_pre_transaction_request.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
@@ -23,6 +24,8 @@ export class PreTransactionHandler {
       },
     });
 
+    if (isError(response)) return response;
+
     const data = await response.json();
     const status = response.status;
 
@@ -33,6 +36,8 @@ export class PreTransactionHandler {
     const url = this.basePath;
 
     const response = await this.httpClient.get(`${url}/${id}`, requestInit);
+
+    if (isError(response)) return response;
 
     const data = await response.json();
     const status = response.status;
@@ -50,6 +55,8 @@ export class PreTransactionHandler {
 
     const response = await this.httpClient.get(url, requestInit);
 
+    if (isError(response)) return response;
+
     const data = await response.json();
 
     return validateResponse({ data, status: response.status });
@@ -66,6 +73,8 @@ export class PreTransactionHandler {
         'Content-Type': 'application/json',
       },
     });
+
+    if (isError(response)) return response;
 
     const data = await response.json();
     const status = response.status;

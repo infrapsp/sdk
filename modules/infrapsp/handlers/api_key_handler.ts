@@ -1,6 +1,7 @@
 import { AsyncResult } from '../../../modules/types/result.ts';
 import { validateResponse } from '../../../modules/infrapsp/validate_response.ts';
 import { CreateApiKeyBodySchema } from '../../../modules/types/api_key/create_api_key_request.ts';
+import { isError } from '../../../modules/errors/is_error.ts';
 import { ApiKeyResponseDto } from '../../../modules/types/api_key/api_key_response.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
 import type { z } from 'npm:@hono/zod-openapi@1.1.0';
@@ -21,6 +22,8 @@ export class ApiKeyHandler {
       },
     });
 
+    if (isError(response)) return response;
+
     const data = await response.json();
     const status = response.status;
 
@@ -31,6 +34,8 @@ export class ApiKeyHandler {
     const url = this.basePath;
 
     const response = await this.httpClient.get(url, requestInit);
+
+    if (isError(response)) return response;
 
     const data = await response.json();
 
@@ -45,6 +50,8 @@ export class ApiKeyHandler {
     const response = await this.httpClient.delete(`${url}/${id}`, {
       ...requestInit,
     });
+
+    if (isError(response)) return response;
 
     const status = response.status;
 

@@ -2,6 +2,7 @@ import { AsyncResult } from '../../../modules/types/result.ts';
 import { validateResponse } from '../../../modules/infrapsp/validate_response.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
 import type { z } from 'npm:@hono/zod-openapi@1.1.0';
+import { isError } from '../../../modules/errors/is_error.ts';
 import { FindTransactionChargebackQuerySchema } from '../../../modules/types/transaction_chargeback/find_transaction_chargeback_request.ts';
 import { RestrictUpdateTransactionChargebackBodySchema } from '../../../modules/types/transaction_chargeback/update_transaction_chargeback_request.ts';
 import { TransactionChargebackResponseDto } from '../../../modules/types/transaction_chargeback/transaction_chargeback_response.ts';
@@ -17,6 +18,8 @@ export class TransactionChargebackHandler {
     const url = this.basePath;
 
     const response = await this.httpClient.get(`${url}/${transactionId}/chargebacks/${id}`, requestInit);
+
+    if (isError(response)) return response;
 
     const data = await response.json();
     const status = response.status;
@@ -39,6 +42,8 @@ export class TransactionChargebackHandler {
 
     const response = await this.httpClient.get(url, requestInit);
 
+    if (isError(response)) return response;
+
     const data = await response.json();
 
     return validateResponse({ data, status: response.status });
@@ -60,6 +65,8 @@ export class TransactionChargebackHandler {
         'Content-Type': 'application/json',
       },
     });
+
+    if (isError(response)) return response;
 
     const data = await response.json();
     const status = response.status;
@@ -85,6 +92,8 @@ export class TransactionChargebackHandler {
         ...requestInit.headers,
       },
     });
+
+    if (isError(response)) return response;
 
     const status = response.status;
 

@@ -45,6 +45,16 @@ export const TransactionMethodDataResponseSchema = TransactionPixMethodDataRespo
 
 export const TransactionPixPaidDataResponseSchema = z.object({
   endToEndId: z.string(),
+  payer: z.object({
+    name: z.string(),
+    documentType: z.enum(DocumentType),
+    documentNumber: z.string(),
+    ispb: z.string(),
+    bankName: z.string(),
+    accountNumber: z.string(),
+    accountDigit: z.string(),
+    bankBranch: z.string(),
+  }).optional(),
 });
 
 export const TransactionCreditCardPaidDataResponseSchema = z.object({

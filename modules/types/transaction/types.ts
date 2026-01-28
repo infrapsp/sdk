@@ -1,4 +1,5 @@
 import { EmptyObject } from '../../../modules/types/base/types.ts';
+import { DocumentType } from '../../../modules/types/merchant/types.ts';
 
 export enum TransactionStatus {
   CREATED = 'created',
@@ -39,8 +40,20 @@ export type PixMethodData = {
   url: string;
 };
 
+export type PixPaidDataPayer = {
+  name: string;
+  documentType: DocumentType;
+  documentNumber: string;
+  ispb: string;
+  bankName: string;
+  accountNumber: string;
+  accountDigit: string;
+  bankBranch: string;
+};
+
 export type PixPaidData = {
   endToEndId: string;
+  payer?: PixPaidDataPayer;
 };
 
 export type CreditCardMethodSettings = {

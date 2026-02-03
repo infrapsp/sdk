@@ -27,6 +27,7 @@ export enum AnalysisStatus {
 }
 
 export enum AnalysisRiskLevel {
+  NONE = 'none',
   LOW = 'low',
   MEDIUM = 'medium',
   HIGH = 'high',

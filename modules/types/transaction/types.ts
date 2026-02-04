@@ -85,6 +85,12 @@ export type TransactionAntifraudData = EmptyObject | {
   status?: string;
 };
 
+export type TransactionContext = EmptyObject | {
+  deviceFingerprint?: string;
+  ip?: string;
+  userAgent?: string;
+};
+
 export type TransactionMethodSettings = EmptyObject | PixMethodSettings | CreditCardMethodSettings;
 
 export type TransactionMethodData = EmptyObject | PixMethodData | CreditCardMethodData;

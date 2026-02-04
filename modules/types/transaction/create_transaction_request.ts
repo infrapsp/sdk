@@ -1,7 +1,7 @@
 import { z } from 'npm:@hono/zod-openapi@1.1.0';
 import { PaymentMethod } from '../../../modules/types/transaction/types.ts';
 import { DocumentType, Gender } from '../../../modules/types/merchant/types.ts';
-import { ZodRefines, ZodSchemas } from '../../../modules/types/zod.ts';
+import { ZodHelpers, ZodRefines, ZodSchemas } from '../../../modules/types/zod.ts';
 import { CreateAddressBodySchema } from '../../../modules/types/address/create_address_request.ts';
 import { BaseParamsSchema } from '../../../modules/types/base/requests.ts';
 
@@ -61,8 +61,15 @@ export const CreateTransactionCustomerBodySchema = z.object({
   return dto;
 });
 
+export const CreateTransactionContextBodySchema = z.object({
+  deviceFingerprint: z.string().max(256).optional(),
+  ip: z.string().optional(),
+  userAgent: z.string().max(512).optional(),
+});
+
 export const BaseCreateTransactionBodySchema = z.object({
   method: z.enum(PaymentMethod),
+  context: CreateTransactionContextBodySchema.optional(),
   methodSettings: CreateTransactionMethodSettingsBodySchema,
   items: z.array(CreateTransactionItemBodySchema),
   shipping: CreateTransactionShippingBodySchema.optional().nullable(),
@@ -70,6 +77,12 @@ export const BaseCreateTransactionBodySchema = z.object({
   externalId: z.string().max(128).optional(),
   externalSaleChannel: z.string().regex(/^[^\s]+$/).max(128).optional().nullable(),
   metadata: z.record(z.string(), z.string()).optional(),
+}).transform((dto, ctx) => {
+  if (dto.method === PaymentMethod.CREDIT_CARD && !dto.context?.deviceFingerprint) {
+    ZodHelpers.issue(ctx, 'context.deviceFingerprint', 'Required for method credit_card.');
+  }
+
+  return dto;
 });
 
 export const CreateTransactionCheckoutBodySchema = BaseCreateTransactionBodySchema.and(z.object({

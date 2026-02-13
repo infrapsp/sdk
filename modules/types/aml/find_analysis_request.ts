@@ -18,6 +18,7 @@ export const FindAnalysisQuerySchema = BaseQuerySchema.and(
     notEntity: ZodSchemas.stringArray(z.enum(AmlEntity)).optional(),
     isNotified: ZodSchemas.stringBoolean().optional(),
     assigneeId: ZodSchemas.stringArray(z.string()).optional(),
+    assigneeIdIsNull: ZodSchemas.stringBoolean().optional(),
     scoreGte: z.coerce.number().min(0).optional(),
     scoreLte: z.coerce.number().min(0).optional(),
     sortField: z.enum(['createdAt', 'paymentDate']).default('createdAt'),

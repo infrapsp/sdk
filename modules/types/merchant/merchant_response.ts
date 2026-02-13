@@ -31,7 +31,7 @@ export const MerchantSettingsResponseSchema = z.object({
 });
 
 export const MerchantStatusHistoryResponseSchema = z.object({
-  status: z.nativeEnum(MerchantStatus),
+  status: z.enum(MerchantStatus),
   message: z.string(),
   createdAt: z.date(),
 });
@@ -39,6 +39,13 @@ export const MerchantStatusHistoryResponseSchema = z.object({
 export const MerchantBillingResponseSchema = z.object({
   email: z.email().max(128),
   address: AddressResponseSchema,
+});
+
+export const MerchantSegmentResponseSchema = z.object({
+  mccCode: z.string(),
+  cnaeCode: z.string(),
+  description: z.string(),
+  isHighRisk: z.boolean(),
 });
 
 export const MerchantResponseSchema = z.object({
@@ -51,6 +58,7 @@ export const MerchantResponseSchema = z.object({
   personName: z.string(),
   personEmail: z.email(),
   segmentId: ZodSchemas.nanoid(),
+  segment: MerchantSegmentResponseSchema,
   status: z.enum(MerchantStatus),
   statusMessage: z.string(),
   statusHistory: z.array(MerchantStatusHistoryResponseSchema),

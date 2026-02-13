@@ -59,7 +59,9 @@ export type CafProviderConfig = {
 };
 
 export type B3ProviderConfig = {
-  certificatePem: string;
+  authCertificateKey: string;
+  certificateKey: string;
+  certificateCrt: string;
   tenantId: string;
   tokenIssuer: string;
   documentNumber: string;

@@ -25,7 +25,7 @@ export const ZodSchemas = {
   alphanumericWithDash: () => z.string().regex(/^[0-9a-zA-Z-]+$/),
   numeric: () => z.string().regex(/^[0-9]+$/),
   phone: () => z.string().regex(/^\+[0-9]{3,15}$/),
-  stringArray: <T extends z.ZodType>(e: T) => z.preprocess((val: T) => val ? String(val).split(',') : [], z.array(e)),
+  stringArray: <T extends z.ZodType>(e: T) => z.preprocess((val) => val ? String(val).split(',') : [], z.array(e)),
   stringBoolean: () => z.string().transform((data) => JSON.parse(data)).pipe(z.boolean()),
 };
 

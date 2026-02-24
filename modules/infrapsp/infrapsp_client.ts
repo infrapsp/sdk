@@ -12,6 +12,7 @@ import { TransactionRefundHandler } from '../../modules/infrapsp/handlers/transa
 import { ZipCodeHandler } from '../../modules/infrapsp/handlers/zip_code_handler.ts';
 import { InvoiceHandler } from '../../modules/infrapsp/handlers/invoice_handler.ts';
 import { FeeRuleHandler } from '../../modules/infrapsp/handlers/fee_rule_handler.ts';
+import { FeeProposalHandler } from '../../modules/infrapsp/handlers/fee_proposal_handler.ts';
 import { OperationHandler } from '../../modules/infrapsp/handlers/operation_handler.ts';
 import { TierHandler } from '../../modules/infrapsp/handlers/tier_handler.ts';
 import { WebhookHandler } from '../../modules/infrapsp/handlers/webhook_handler.ts';
@@ -37,6 +38,7 @@ export class InfraPSPClient {
   public readonly checkout: CheckoutHandler;
   public readonly dashboard: DashboardHandler;
   public readonly externalAuth: ExternalAuthHandler;
+  public readonly feeProposal: FeeProposalHandler;
   public readonly feeRule: FeeRuleHandler;
   public readonly impersonate: ImpersonateHandler;
   public readonly invoices: InvoiceHandler;
@@ -71,6 +73,7 @@ export class InfraPSPClient {
     this.balance = new BalanceHandler(this.httpClient);
     this.checkout = new CheckoutHandler(this.httpClient);
     this.dashboard = new DashboardHandler(this.httpClient);
+    this.feeProposal = new FeeProposalHandler(this.httpClient);
     this.externalAuth = new ExternalAuthHandler(this.httpClient);
     this.feeRule = new FeeRuleHandler(this.httpClient);
     this.impersonate = new ImpersonateHandler(this.httpClient);

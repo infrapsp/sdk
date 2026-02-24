@@ -4,7 +4,7 @@ import { FeeRuleEntity, FeeRuleMethod } from '../../../modules/types/fee_rule/ty
 import { ZodHelpers } from '../../../modules/types/zod.ts';
 import { EmptySchema } from '../../../modules/types/base/requests.ts';
 
-export const CreateFeeRuleCreditCardBodySchema = z.object({
+export const CreateFeeProposalCreditCardBodySchema = z.object({
   anticipation: z.number().int().nonnegative(),
   chargebackGuarantee: z.number().int().nonnegative(),
   mdr: z.array(z.object({
@@ -13,19 +13,20 @@ export const CreateFeeRuleCreditCardBodySchema = z.object({
   })).length(12),
 }).or(EmptySchema);
 
-export const CreateFeeRuleBodySchema = z.object({
-  merchantId: ZodSchemas.nanoid().optional(),
-  amountValue: z.number().int(),
-  percentValue: z.number().int(),
-  name: z.string(),
-  minAmount: z.number().int().min(0),
-  maxAmount: z.number().int().max(999999999),
+export const RestrictCreateFeeProposalBodySchema = z.object({
+  merchantId: ZodSchemas.nanoid(),
+  author: z.string().min(1).max(128),
+  expirationDate: ZodSchemas.datetime(),
+  period: z.number().int().min(1),
   method: z.enum(FeeRuleMethod),
   triggerEntity: z.enum(FeeRuleEntity),
-  fundSchedule: z.number(),
-  startDate: ZodSchemas.datetime(),
-  endDate: ZodSchemas.datetime(),
-  creditCard: CreateFeeRuleCreditCardBodySchema,
+  fundSchedule: z.number().nonnegative(),
+  amountValue: z.number().int(),
+  percentValue: z.number().int(),
+  minAmount: z.number().int().min(0),
+  maxAmount: z.number().int().max(999999999),
+  creditCard: CreateFeeProposalCreditCardBodySchema,
+  name: z.string().max(255),
 }).transform((dto, ctx) => {
   if (dto.maxAmount < dto.minAmount) {
     ZodHelpers.issue(ctx, 'maxAmount', 'Must be greater than minAmount.');
@@ -38,4 +39,4 @@ export const CreateFeeRuleBodySchema = z.object({
   return dto;
 });
 
-export type CreateFeeRuleBodyDto = z.infer<typeof CreateFeeRuleBodySchema>;
+export type CreateFeeProposalBodyDto = z.infer<typeof RestrictCreateFeeProposalBodySchema>;

@@ -14,7 +14,6 @@ export type DatabaseConfig = {
 export type YenteConfig = {
   baseUrl: string;
   threshold?: number;
-  cutoff?: number;
   algorithm?: string;
 };
 
@@ -36,6 +35,7 @@ export enum AnalysisRiskLevel {
 export enum AmlEntity {
   TRANSACTION = 'transaction',
   TRANSFER = 'transfer',
+  MERCHANT = 'merchant',
 }
 
 // Threshold settings structure

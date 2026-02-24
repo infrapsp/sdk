@@ -45,9 +45,8 @@ export type RedeProviderConfig = {
   paymentFacilitatorId: { [key: string]: string };
 };
 
-export type ClearsaleProviderConfig = {
-  name: string;
-  password: string;
+export type KondutoProviderConfig = {
+  apiKey: string;
 };
 
 export type CafProviderConfig = {

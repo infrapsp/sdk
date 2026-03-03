@@ -59,6 +59,7 @@ export const MerchantResponseSchema = z.object({
   personEmail: z.email(),
   segmentId: ZodSchemas.nanoid(),
   segment: MerchantSegmentResponseSchema,
+  phoneNumber: ZodSchemas.phone().nullable().optional(),
   status: z.enum(MerchantStatus),
   statusMessage: z.string(),
   statusHistory: z.array(MerchantStatusHistoryResponseSchema),

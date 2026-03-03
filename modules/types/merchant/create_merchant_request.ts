@@ -61,6 +61,7 @@ export const CreateMerchantBodySchema = z.object({
   documentType: z.enum(DocumentType),
   externalId: z.string().max(128).optional(),
   segmentId: ZodSchemas.nanoid(),
+  phoneNumber: ZodSchemas.phone(),
   companyName: z.string().max(320).optional(),
   personName: z.string().min(1).max(50),
   personEmail: z.email().max(128),

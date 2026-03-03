@@ -8,6 +8,7 @@ export const PayableSummaryResponseSchema = z.object({
   status: z.enum(PayableStatus),
   amount: z.number().int(),
   fee: z.number().int(),
+  anticipationFee: z.number().int(),
 });
 
 export type PayableSummaryResponseDto = z.infer<typeof PayableSummaryResponseSchema>;

@@ -7,6 +7,7 @@ export const TransactionSplitDetailPayableResponseSchema = z.object({
   status: z.enum(PayableStatus),
   amount: z.number().int(),
   fee: z.number().int(),
+  anticipationFee: z.number().int(),
   paymentDate: z.date(),
   method: z.enum(PayableMethod),
   type: z.enum(PayableType),

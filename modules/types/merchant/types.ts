@@ -27,6 +27,11 @@ export enum MerchantPaymentMethodStatus {
   BLOCKED = 'blocked',
 }
 
+export enum MerchantPaymentMethod {
+  PIX = 'pix',
+  CREDIT_CARD = 'creditCard',
+}
+
 export type MerchantAutoTransferSettings = { isEnabled: false } | {
   isEnabled: true;
   frequency: MerchantAutoTransferFrequency;

@@ -2,7 +2,6 @@ import { z } from 'npm:@hono/zod-openapi@1.1.0';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
 import { DocumentType, MerchantAutoTransferFrequency, MerchantPaymentMethodStatus } from '../../../modules/types/merchant/types.ts';
 import { ZodHelpers, ZodRefines } from '../../../modules/types/zod.ts';
-import { PaymentMethod } from '../../../modules/types/transaction/types.ts';
 
 export const CreateMerchantAutoTransferSettingsBodySchema = z.object({
   isEnabled: z.literal(false),
@@ -31,8 +30,8 @@ export const CreateMerchantEmailSettingsBodySchema = z.object({
 });
 
 export const CreateMerchantPaymentMethodsSettingsSchema = z.object({
-  [PaymentMethod.PIX]: z.enum(MerchantPaymentMethodStatus),
-  [PaymentMethod.CREDIT_CARD]: z.enum(MerchantPaymentMethodStatus),
+  pix: z.enum(MerchantPaymentMethodStatus),
+  creditCard: z.enum(MerchantPaymentMethodStatus),
 });
 
 export const CreateMerchantSettingsBodySchema = z.object({

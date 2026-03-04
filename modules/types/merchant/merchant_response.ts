@@ -1,6 +1,6 @@
 import { z } from 'npm:@hono/zod-openapi@1.1.0';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
-import { DocumentType, MerchantAutoTransferFrequency, MerchantStatus } from '../../../modules/types/merchant/types.ts';
+import { DocumentType, MerchantAutoTransferFrequency, MerchantPaymentMethodStatus, MerchantStatus } from '../../../modules/types/merchant/types.ts';
 import { AddressResponseSchema } from '../../../modules/types/address/address_response.ts';
 
 export const MerchantAutoTransferSettingsResponseSchema = z.object({
@@ -19,12 +19,18 @@ export const MerchantEmailSettingsResponseSchema = z.object({
   isEnabled: z.boolean(),
 });
 
+export const MerchantPaymentMethodsSettingsSchema = z.object({
+  pix: z.enum(MerchantPaymentMethodStatus),
+  creditCard: z.enum(MerchantPaymentMethodStatus),
+});
+
 export const MerchantSettingsResponseSchema = z.object({
   emailSettings: MerchantEmailSettingsResponseSchema,
   autoTransferSettings: MerchantAutoTransferSettingsResponseSchema,
   primaryColor: z.string().max(7).regex(/^#[0-9A-F]{6}$/).optional().nullable(),
   secondaryColor: z.string().max(7).regex(/^#[0-9A-F]{6}$/).optional().nullable(),
   softDescriptor: z.string().regex(/^[A-Z0-9]*$/).max(18).optional().nullable(),
+  paymentMethods: MerchantPaymentMethodsSettingsSchema,
   logoUrl: z.string().nullable().optional(),
   createdAt: z.date(),
   updatedAt: z.date(),
@@ -59,7 +65,7 @@ export const MerchantResponseSchema = z.object({
   personEmail: z.email(),
   segmentId: ZodSchemas.nanoid(),
   segment: MerchantSegmentResponseSchema,
-  phoneNumber: ZodSchemas.phone().nullable().optional(),
+  phoneNumber: z.string().nullable().optional(),
   status: z.enum(MerchantStatus),
   statusMessage: z.string(),
   statusHistory: z.array(MerchantStatusHistoryResponseSchema),

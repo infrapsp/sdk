@@ -1,6 +1,7 @@
 export enum PayableMethod {
   PIX = 'pix',
   CREDIT_CARD = 'credit_card',
+  INTER = 'inter',
 }
 
 export enum PayableStatus {

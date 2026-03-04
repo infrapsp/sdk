@@ -3,7 +3,6 @@ import { BaseParamsSchema } from '../../../modules/types/base/requests.ts';
 import { ZodHelpers, ZodSchemas } from '../../../modules/types/zod.ts';
 import { MerchantAutoTransferFrequency, MerchantPaymentMethodStatus, MerchantStatus } from '../../../modules/types/merchant/types.ts';
 import { UpdateAddressBodySchema } from '../../../modules/types/address/update_address_request.ts';
-import { PaymentMethod } from '../../../modules/types/transaction/types.ts';
 
 export const UpdateMerchantParamsSchema = BaseParamsSchema;
 
@@ -65,8 +64,8 @@ export const UpdateMerchantBodySchema = z.object({
 });
 
 export const RestrictMerchantPaymentMethodsSettingsSchema = z.object({
-  [PaymentMethod.PIX]: z.enum(MerchantPaymentMethodStatus),
-  [PaymentMethod.CREDIT_CARD]: z.enum(MerchantPaymentMethodStatus),
+  pix: z.enum(MerchantPaymentMethodStatus),
+  creditCard: z.enum(MerchantPaymentMethodStatus),
 }).partial();
 
 export const RestrictUpdateMerchantSettingsBodySchema = z.object({

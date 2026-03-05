@@ -50,6 +50,7 @@ export * from './types/transaction/transaction_checkout_response.ts';
 export * from './types/transaction/transaction_response.ts';
 export * from './types/transaction/types.ts';
 export * from './types/balance/balance_response.ts';
+export * from './types/balance/types.ts';
 export * from './types/merchant/create_merchant_request.ts';
 export * from './types/merchant/delete_merchant_logo_request.ts';
 export * from './types/merchant/find_merchant_request.ts';

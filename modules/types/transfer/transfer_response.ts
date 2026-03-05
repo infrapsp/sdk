@@ -2,6 +2,7 @@ import { z } from 'npm:@hono/zod-openapi@1.1.0';
 import { TransferMethod, TransferStatus } from '../../../modules/types/transfer/types.ts';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
 import { DocumentType } from '../../../modules/types/merchant/types.ts';
+import { BalanceAccountType } from '../../../modules/types/balance/types.ts';
 
 export const TransferPixMethodDestinationResponseSchema = z.object({
   pixKey: z.string(),
@@ -27,6 +28,7 @@ export const TransferResponseSchema = z.object({
   id: ZodSchemas.nanoid(),
   merchantId: ZodSchemas.nanoid(),
   provider: z.string().nullable().optional(),
+  account: z.enum(BalanceAccountType),
   method: z.enum(TransferMethod),
   methodDestination: TransferMethodDestinationResponseSchema,
   isAutoTransfer: z.boolean(),

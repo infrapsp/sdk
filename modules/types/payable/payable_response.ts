@@ -1,6 +1,7 @@
 import { z } from 'npm:@hono/zod-openapi@1.1.0';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
 import { PayableMethod, PayableStatus, PayableType } from '../../../modules/types/payable/types.ts';
+import { BalanceAccountType } from '../../../modules/types/balance/types.ts';
 
 export const PayableResponseSchema = z.object({
   id: ZodSchemas.nanoid(),
@@ -15,6 +16,7 @@ export const PayableResponseSchema = z.object({
   fee: z.number().int(),
   anticipationFee: z.number().int(),
   paymentDate: z.date(),
+  account: z.enum(BalanceAccountType),
   method: z.enum(PayableMethod),
   type: z.enum(PayableType),
   installment: z.number().int(),

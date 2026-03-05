@@ -1,10 +1,12 @@
 import { z } from 'npm:@hono/zod-openapi@1.1.0';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
 import { AdjustmentStatus } from '../../../modules/types/adjustment/types.ts';
+import { BalanceAccountType } from '../../../modules/types/balance/types.ts';
 
 export const CreateAdjustmentBodySchema = z.object({
   tenantId: ZodSchemas.nanoid(),
   merchantId: ZodSchemas.nanoid(),
+  account: z.enum(BalanceAccountType),
   status: z.enum(AdjustmentStatus),
   amount: z.number(),
   description: z.string().max(320),

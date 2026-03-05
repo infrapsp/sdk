@@ -1,6 +1,7 @@
 import { z } from 'npm:@hono/zod-openapi@1.1.0';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
 import { OperationStatus, OriginEntity, OriginMethod } from '../../../modules/types/operation/types.ts';
+import { BalanceAccountType } from '../../../modules/types/balance/types.ts';
 
 export const OperationResponseSchema = z.object({
   id: ZodSchemas.nanoid(),
@@ -10,6 +11,7 @@ export const OperationResponseSchema = z.object({
   amount: z.number().int(),
   paymentDate: z.date(),
   entity: z.enum(OriginEntity),
+  account: z.enum(BalanceAccountType),
   method: z.enum(OriginMethod),
   description: z.string(),
   createdAt: z.date(),

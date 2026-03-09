@@ -23,7 +23,7 @@ export const TransactionChargebackResponseSchema = z.object({
   reason: z.enum(TransactionChargebackReason),
   requiredDocuments: z.array(z.enum(TransactionChargebackRequiredDocument)),
   documentUrl: z.string().optional().nullable(),
-  providerData: z.record(z.string(), z.string()), // chargebackReasonCode e chargebackReasonDescription
+  providerData: z.record(z.string(), z.unknown()),
   maximumAttendanceDate: z.date(),
   isGuaranteePaid: z.boolean(),
   createdAt: z.date(),

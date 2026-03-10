@@ -2,6 +2,7 @@ import { z } from 'npm:@hono/zod-openapi@1.1.0';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
 import { DocumentType, MerchantAutoTransferFrequency, MerchantPaymentMethodStatus, MerchantStatus } from '../../../modules/types/merchant/types.ts';
 import { AddressResponseSchema } from '../../../modules/types/address/address_response.ts';
+import { RegistrationStatus } from '../../../modules/types/registration/types.ts';
 
 export const MerchantAutoTransferSettingsResponseSchema = z.object({
   isEnabled: z.literal(false),
@@ -54,6 +55,21 @@ export const MerchantSegmentResponseSchema = z.object({
   isHighRisk: z.boolean(),
 });
 
+export const MerchantRegistrationResponseSchema = z.object({
+  id: ZodSchemas.nanoid(),
+  status: z.enum(RegistrationStatus),
+  statusMessage: z.string(),
+  providerData: z.object({
+    companyName: z.string().optional(),
+    personName: z.string().optional(),
+    onboardingUrl: z.string(),
+    tradingName: z.string().optional(),
+    previousTierId: ZodSchemas.nanoid().optional(),
+  }),
+  createdAt: z.date(),
+  updatedAt: z.date(),
+});
+
 export const MerchantResponseSchema = z.object({
   id: ZodSchemas.nanoid(),
   tierId: ZodSchemas.nanoid(),
@@ -65,6 +81,7 @@ export const MerchantResponseSchema = z.object({
   personEmail: z.email(),
   segmentId: ZodSchemas.nanoid(),
   segment: MerchantSegmentResponseSchema,
+  registrations: z.array(MerchantRegistrationResponseSchema).optional(),
   phoneNumber: z.string().nullable().optional(),
   status: z.enum(MerchantStatus),
   statusMessage: z.string(),

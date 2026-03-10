@@ -5,3 +5,8 @@ export enum RegistrationStatus {
   PENDING = 'pending',
   REFUSED = 'refused',
 }
+
+export enum RegistrationType {
+  ONBOARDING = 'onboarding',
+  REGULARIZATION = 'regularization',
+}

@@ -135,4 +135,26 @@ export class MerchantHandler {
 
     return validateResponse({ data: undefined, status });
   }
+
+  async createRegistration(
+    id: string,
+    requestInit: RequestInit = {},
+  ): AsyncResult<{ onboardingUrl: string }> {
+    const url = `${this.basePath}/${id}/registrations`;
+
+    const response = await this.httpClient.post(url, {
+      ...requestInit,
+      headers: {
+        ...requestInit.headers,
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (isError(response)) return response;
+
+    const data = await response.json();
+    const status = response.status;
+
+    return validateResponse({ data, status });
+  }
 }

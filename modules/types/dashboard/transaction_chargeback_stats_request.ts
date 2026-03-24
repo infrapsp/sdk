@@ -6,6 +6,7 @@ import { TransactionChargebackStatus } from '../../../modules/types/transaction_
 export const FindTransactionChargebackStatsQuerySchema = BaseDashboardQuerySchema.and(z.object({
   id: ZodSchemas.nanoid().optional(),
   status: ZodSchemas.stringArray(z.enum(TransactionChargebackStatus)).optional(),
+  merchantId: ZodSchemas.nanoid().optional(),
   notStatus: ZodSchemas.stringArray(z.enum(TransactionChargebackStatus)).optional(),
   timeGranularity: z.enum(['date', 'hour']).default('date'),
   groupBy: ZodSchemas.stringArray(z.enum(['timeKey', 'status'])).default(

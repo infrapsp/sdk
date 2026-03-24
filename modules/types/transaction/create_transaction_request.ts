@@ -23,14 +23,14 @@ export const CreateTransactionMethodSettingsBodySchema = CreateTransactionPixMet
 
 export const CreateTransactionItemBodySchema = z.object({
   description: z.string(),
-  amount: z.number().positive().int(),
+  amount: z.number().positive().int().max(10000000),
   quantity: z.number().positive().int(),
   category: z.string(),
   code: z.string(),
 });
 
 export const CreateTransactionShippingBodySchema = z.object({
-  amount: z.number().nonnegative().int(),
+  amount: z.number().nonnegative().int().max(10000000),
   address: CreateAddressBodySchema,
   description: z.string(),
   maxDeliveryDate: ZodSchemas.datetime().optional(),
@@ -41,7 +41,7 @@ export const CreateTransactionShippingBodySchema = z.object({
 
 export const CreateTransactionSplitBodySchema = z.object({
   merchantId: ZodSchemas.nanoid(),
-  amount: z.number().positive().int(),
+  amount: z.number().positive().int().max(10000000),
   isFeePayer: z.boolean(),
 });
 
@@ -90,7 +90,7 @@ export const CreateTransactionCheckoutBodySchema = BaseCreateTransactionBodySche
 }));
 
 export const CreateTransactionBodySchema = BaseCreateTransactionBodySchema.and(z.object({
-  amount: z.number().positive().int(),
+  amount: z.number().positive().int().max(10000000),
   customer: CreateTransactionCustomerBodySchema,
   splits: z.array(CreateTransactionSplitBodySchema).optional().default(() => []),
 }));

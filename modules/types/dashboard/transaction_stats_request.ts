@@ -6,6 +6,7 @@ import { BaseDashboardQuerySchema } from '../../../modules/types/dashboard/base.
 export const FindTransactionStatsQuerySchema = BaseDashboardQuerySchema.and(z.object({
   method: z.enum(PaymentMethod).optional(),
   search: z.string().max(128).optional(),
+  merchantId: ZodSchemas.nanoid().optional(),
   status: ZodSchemas.stringArray(z.enum(TransactionStatus)).optional(),
   notStatus: ZodSchemas.stringArray(z.enum(TransactionStatus)).optional(),
   externalId: z.string().max(128).optional(),

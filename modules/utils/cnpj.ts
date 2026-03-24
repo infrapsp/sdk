@@ -1,7 +1,7 @@
-// Taken from: https://github.com/carvalhoviniciusluiz/cpf-cnpj-validator
+// Taken from: https://github.com/fnando/cnpj
 
-// Blacklist common values.
-const BLACKLIST: Array<string> = [
+// Reject common values.
+const REJECT_LIST = [
   '00000000000000',
   '11111111111111',
   '22222222222222',
@@ -14,60 +14,133 @@ const BLACKLIST: Array<string> = [
   '99999999999999',
 ];
 
-const verifierDigit = (digits: string): number => {
-  let index: number = 2;
-  const reverse: Array<number> = digits.split('').reduce((buffer, number) => {
-    return [parseInt(number, 10)].concat(buffer);
-  }, [] as number[]);
+const STRICT_STRIP_REGEX = /[-\/.]/g;
+const LOOSE_STRIP_REGEX = /[^A-Z\d]/g;
+const CHARS = '01234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
-  const sum: number = reverse.reduce((buffer, number) => {
+/**
+ * Compute the Verifier Digit (or "Dígito Verificador (DV)" in portuguese) for CNPJ.
+ *
+ * You can learn more about this on [wikipedia (pt-br)](https://pt.wikipedia.org/wiki/D%C3%ADgito_verificador)
+ *
+ * @export
+ * @param {string} numbers the CNPJ string with only numbers.
+ * @returns {number} the verifier digit.
+ */
+export function verifierDigit(numbers: number[]): number {
+  let index = 2;
+  const reverse = numbers.reduce(
+    (buffer: number[], number: number) => [number].concat(buffer),
+    [] as number[],
+  );
+
+  const sum = reverse.reduce((buffer: number, number: number) => {
     buffer += number * index;
     index = index === 9 ? 2 : index + 1;
     return buffer;
   }, 0);
 
-  const mod: number = sum % 11;
-  return (mod < 2 ? 0 : 11 - mod);
-};
+  const mod = sum % 11;
+  return mod < 2 ? 0 : 11 - mod;
+}
 
-export const isValidCnpj = (number: string): boolean => {
+/**
+ * Remove some characters from the input.
+ *
+ * Example:
+ * ```
+ * strip('54550[752#0001..$55'); // Result: '54550752000155'
+ * strip('54550[752#0001..$55', true); // Result: '54550[752#0001..$55' - Attention!
+ * ```
+ *
+ * @export
+ * @param {string} cnpj the CNPJ text.
+ * @param {boolean} [isStrict] if `true`, it will remove only `.` and `-` characters.
+ *                             Otherwise, it will remove all non-digit (`[^A-Z\d]`) characters. Optional.
+ * @returns {string} the stripped CNPJ.
+ */
+function strip(cnpj: string, isStrict: boolean = false): string {
+  const regex = isStrict ? STRICT_STRIP_REGEX : LOOSE_STRIP_REGEX;
+  return (cnpj || '').toString().toUpperCase().replace(regex, '');
+}
+
+/**
+ * Transform the input into a pretty CNPJ format.
+ *
+ * Example:
+ * ```
+ * format('54550752000155');
+ * // Result: '54.550.752/0001-55'
+ * ```
+ *
+ * @export
+ * @param {string} cnpj the CNPJ.
+ * @returns {string} the formatted CNPJ.
+ */
+function format(cnpj: string): string {
+  return strip(cnpj.toUpperCase()).replace(
+    /^([A-Z\d]{2})([A-Z\d]{3})([A-Z\d]{3})([A-Z\d]{4})(\d{2})$/,
+    '$1.$2.$3/$4-$5',
+  );
+}
+
+/**
+ * Validate the CNPJ.
+ *
+ * @export
+ * @param {string} cnpj the CNPJ number.
+ * @param {boolean} [isStrict] if `true`, it will accept only `digits`, `.` and `-` characters. Optional.
+ * @returns {boolean} `true` if CNPJ is valid. Otherwise, `false`.
+ */
+export function isValidCnpj(cnpj: string, isStrict: boolean = true): boolean {
+  const stripped = strip(cnpj, isStrict);
+
+  // CNPJ must be defined
+  if (!stripped) {
+    return false;
+  }
+
   // CNPJ must have 14 chars
-  if (number.length !== 14) {
+  if (stripped.length !== 14) {
     return false;
   }
 
-  // CNPJ can't be blacklisted
-  if (BLACKLIST.includes(number)) {
+  if (REJECT_LIST.includes(stripped)) {
     return false;
   }
 
-  let numbers: string = number.substring(0, 12);
-  numbers += verifierDigit(numbers);
-  numbers += verifierDigit(numbers);
+  const digits = stripped.substring(0, 12).split('');
+  const numbers = digits.map((digit) => digit.charCodeAt(0) - 48);
+  numbers.push(verifierDigit(numbers));
+  numbers.push(verifierDigit(numbers));
 
-  return numbers.substring(-2) === number.substring(-2);
-};
+  return numbers.slice(12).join('') === stripped.slice(-2);
+}
 
-export function generateCnpj(): string {
-  const randomDigits = () => Math.floor(Math.random() * 9);
+/**
+ * Generate a random CNPJ.
+ *
+ * @export
+ * @param {boolean} [useFormat] if `true`, it will format using `.` and `-`. Optional.
+ * @returns {string} the CNPJ.
+ */
+export function generateCnpj(useFormat: boolean = false): string {
+  const digits: string[] = [];
 
-  const cnpjArray = Array.from({ length: 12 }, () => randomDigits());
+  for (let i = 0; i < 12; i += 1) {
+    digits.push(CHARS[Math.floor(Math.random() * CHARS.length)]);
+  }
 
-  const calculateDigit = (cnpjArray: number[], factors: number[]) => {
-    const total = cnpjArray.reduce((sum, digit, index) => sum + digit * factors[index], 0);
-    const remainder = total % 11;
-    return remainder < 2 ? 0 : 11 - remainder;
-  };
+  const numbers = digits.map((digit) => digit.charCodeAt(0) - 48);
 
-  const firstFactors = [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
-  const secondFactors = [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
+  numbers.push(verifierDigit(numbers));
+  numbers.push(verifierDigit(numbers));
 
-  const firstDigit = calculateDigit(cnpjArray, firstFactors);
-  const secondDigit = calculateDigit([...cnpjArray, firstDigit], secondFactors);
+  const cnpj = digits.concat(numbers.slice(12).map(String)).join('');
 
-  return [...cnpjArray, firstDigit, secondDigit].join('');
+  return useFormat ? format(cnpj) : cnpj;
 }
 
 export function formatCnpj(cnpj: string): string {
-  return cnpj.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, '$1.$2.$3/$4-$5');
+  return cnpj.replace(/^([A-Z\d]{2})([A-Z\d]{3})([A-Z\d]{3})([A-Z\d]{4})(\d{2})$/, '$1.$2.$3/$4-$5');
 }

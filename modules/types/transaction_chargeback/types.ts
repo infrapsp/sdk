@@ -6,6 +6,7 @@ export enum TransactionChargebackStatus {
   WON = 'won',
   LOST = 'lost',
   CANCELED = 'canceled',
+  GUARANTEED = 'guaranteed',
 }
 
 export enum TransactionChargebackRequiredDocument {

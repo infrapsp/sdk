@@ -6,6 +6,7 @@ export const BalanceResponseSchema = z.record(
     amountAvailable: z.number(),
     amountWaitingFunds: z.number(),
     amountAvailableToTransfer: z.number(),
+    amountAvailableToRefund: z.number(),
   }),
 );
 

@@ -21,6 +21,9 @@ export type TransferPixMethodDestination = {
   receipt?: string;
   accountType?: string;
   documentType?: DocumentType;
+  bankBranch?: string;
+  accountNumber?: string;
+  accountDigit?: string;
 };
 
 export type TransferMethodDestination = EmptyObject | TransferPixMethodDestination;

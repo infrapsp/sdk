@@ -6,7 +6,7 @@ export const CreateTransferBodySchema = z.object({
   amount: z.number().int().positive(),
   metadata: z.record(z.string(), z.string().or(z.number())).optional(),
   method: z.enum(TransferMethod),
-  account: z.enum(BalanceAccountType),
+  account: z.enum([BalanceAccountType.TENANT]),
 });
 
 export type CreateTransferBodyDto = z.infer<typeof CreateTransferBodySchema>;

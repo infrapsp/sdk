@@ -25,11 +25,12 @@ export class CommonError<TDetail = Record<string, unknown>> {
 export type ErrorObject<T> = Omit<T, '_isError' | 'internal'> & { internal?: { message?: string; code?: string } | undefined };
 
 // Common Errors
-export const InternalServerError = () =>
+export const InternalServerError = (partial?: Partial<CommonError>) =>
   new CommonError({
     message: 'internal server error',
     code: 'INTERNAL_SERVER_ERROR',
     status: 500,
+    ...partial,
   });
 
 export const BadRequestError = () =>
@@ -62,7 +63,7 @@ export const UnauthorizedError = () =>
 
 export const ForbiddenError = () =>
   new CommonError({
-    message: 'forbbiden',
+    message: 'forbidden',
     code: 'FORBIDDEN',
     status: 403,
   });

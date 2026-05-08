@@ -70,3 +70,15 @@ export type B3ProviderConfig = {
   accountNumber: string;
   branchNumber: string;
 };
+
+export type SlcProviderConfig = {
+  certificateKey: string;
+  tokenSerialHex: string;
+  tokenThumbprint: string;
+  tokenIssuer: string;
+  documentNumber: string;
+  accountNumber: string;
+  branchNumber: string;
+  ispb: string;
+  accountName: string;
+};

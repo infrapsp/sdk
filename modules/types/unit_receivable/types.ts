@@ -5,6 +5,7 @@ export enum UnitReceivableRegistryStatus {
   CREATED = 'created',
   UPDATED = 'updated',
   LIQUIDATED = 'liquidated',
+  NOT_LIQUIDATED = 'not_liquidated',
 }
 
 export enum UnitReceivableSlcStatus {

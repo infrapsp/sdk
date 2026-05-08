@@ -3,6 +3,7 @@ import { z } from 'npm:@hono/zod-openapi@1.1.0';
 import { MerchantStatus } from '../../../modules/types/merchant/types.ts';
 import { SortOrder } from '../../../modules/types/base/types.ts';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
+import { RegistrationStatus } from '../../../modules/types/registration/types.ts';
 
 export const FindMerchantQuerySchema = z.object({
   createdAtLte: ZodSchemas.datetime().optional(),
@@ -12,6 +13,9 @@ export const FindMerchantQuerySchema = z.object({
   status: ZodSchemas.stringArray(z.enum(MerchantStatus)).optional(),
   notStatus: ZodSchemas.stringArray(z.enum(MerchantStatus)).optional(),
   tierIds: ZodSchemas.stringArray(ZodSchemas.nanoid()).optional(),
+  registrationStatus: ZodSchemas.stringArray(z.enum(RegistrationStatus)).optional(),
+  registrationStartedAtLte: ZodSchemas.datetime().optional(),
+  registrationStartedAtGte: ZodSchemas.datetime().optional(),
   merchantIds: z.string().transform((v) => (v ?? '').split(',')).optional(),
   sortField: z.enum(['createdAt', 'updatedAt']).default('createdAt'),
   sortOrder: z.enum(SortOrder).default(SortOrder.DESC),

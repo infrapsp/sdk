@@ -11,6 +11,7 @@ export const TransferPixMethodDestinationResponseSchema = z.object({
   ispb: z.string().optional().nullable(),
   documentNumber: z.string().optional().nullable(),
   accountType: z.string().optional().nullable(),
+  paymentArrangement: z.string().optional().nullable(),
   documentType: z.enum(DocumentType).optional().nullable(),
 });
 

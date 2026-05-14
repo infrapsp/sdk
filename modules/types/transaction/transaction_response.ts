@@ -6,6 +6,12 @@ import { AddressResponseSchema } from '../../../modules/types/address/address_re
 import { TransactionRefundResponseSchema } from '../../../modules/types/transaction_refund/transaction_refund_response.ts';
 import { TransactionChargebackResponseSchema } from '../../../modules/types/transaction_chargeback/transaction_chargeback_response.ts';
 
+export const TransactionBoletoMethodSettingsResponseSchema = z.object({
+  expirationDate: ZodSchemas.futureDateString(),
+  documentKind: z.enum(['DM', 'FS']),
+  ourNumber: z.string(),
+});
+
 export const TransactionPixMethodSettingsResponseSchema = z.object({
   expiresIn: z.number().positive().int(),
   additionalInfo: z.array(z.object({ key: z.string(), value: z.string() })),
@@ -25,7 +31,15 @@ export const TransactionCreditCardMethodSettingsResponseSchema = z.object({
 
 export const TransactionMethodSettingsResponseSchema = TransactionPixMethodSettingsResponseSchema.or(
   TransactionCreditCardMethodSettingsResponseSchema,
-).or(z.object({}));
+).or(TransactionBoletoMethodSettingsResponseSchema).or(z.object({}));
+
+export const TransactionBoletoMethodDataResponseSchema = z.object({
+  pixQrCode: z.string(),
+  pixBase64: z.string(),
+  pixTxid: z.string(),
+  digitableLine: z.string(),
+  barcode: z.string(),
+});
 
 export const TransactionPixMethodDataResponseSchema = z.object({
   qrCode: z.string(),
@@ -40,8 +54,25 @@ export const TransactionCreditCardMethodDataResponseSchema = z.object({
 });
 
 export const TransactionMethodDataResponseSchema = TransactionPixMethodDataResponseSchema.or(TransactionCreditCardMethodDataResponseSchema).or(
+  TransactionBoletoMethodDataResponseSchema,
+).or(
   z.object({}),
 );
+
+export const TransactionBoletoPaidDataResponseSchema = z.object({
+  paymentOrigin: z.enum(['boleto', 'pix']),
+  pixEndToEndId: z.string().optional(),
+  payer: z.object({
+    name: z.string().optional(),
+    documentType: z.enum(DocumentType).optional(),
+    documentNumber: z.string().optional(),
+    ispb: z.string().optional(),
+    bankName: z.string().optional(),
+    accountNumber: z.string().optional(),
+    accountDigit: z.string().optional(),
+    bankBranch: z.string().optional(),
+  }).optional(),
+});
 
 export const TransactionPixPaidDataResponseSchema = z.object({
   endToEndId: z.string(),
@@ -63,6 +94,8 @@ export const TransactionCreditCardPaidDataResponseSchema = z.object({
 });
 
 export const TransactionPaidDataResponseSchema = TransactionPixPaidDataResponseSchema.or(TransactionCreditCardPaidDataResponseSchema).or(
+  TransactionBoletoPaidDataResponseSchema,
+).or(
   z.object({}),
 );
 

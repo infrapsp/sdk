@@ -27,6 +27,12 @@ export const ZodSchemas = {
   phone: () => z.string().regex(/^\+[0-9]{3,15}$/),
   stringArray: <T extends z.ZodType>(e: T) => z.preprocess((val) => val ? String(val).split(',') : [], z.array(e)),
   stringBoolean: () => z.string().transform((data) => JSON.parse(data)).pipe(z.boolean()),
+  futureDateString: () =>
+    z.string().regex(/^\d{4}-\d{2}-\d{2}$/).refine((date) => {
+      const today = new Date();
+      const expiration = new Date(date);
+      return expiration > today;
+    }, 'Expiration date must be in the future and in the format YYYY-MM-DD'),
 };
 
 export const ZodHelpers = {

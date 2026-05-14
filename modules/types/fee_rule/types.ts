@@ -8,6 +8,7 @@ export enum FeeRuleEntity {
 export enum FeeRuleMethod {
   PIX = 'pix',
   CREDIT_CARD = 'credit_card',
+  BOLETO = 'boleto',
 }
 
 export enum FeeRulePayer {

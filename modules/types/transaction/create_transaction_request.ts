@@ -5,6 +5,11 @@ import { ZodHelpers, ZodRefines, ZodSchemas } from '../../../modules/types/zod.t
 import { CreateAddressBodySchema } from '../../../modules/types/address/create_address_request.ts';
 import { BaseParamsSchema } from '../../../modules/types/base/requests.ts';
 
+export const CreateTransactionBoletoMethodSettingsBodySchema = z.object({
+  expirationDate: ZodSchemas.futureDateString(),
+  documentKind: z.enum(['DM', 'FS']),
+}).transform((dto) => ({ ...dto, ourNumber: '' }));
+
 export const CreateTransactionPixMethodSettingsBodySchema = z.object({
   expiresIn: z.number().positive().int(),
   additionalInfo: z.array(z.object({ key: z.string(), value: z.string() })),
@@ -17,9 +22,9 @@ export const CreateTransactionCreditCardMethodSettingsBodySchema = z.object({
   cvvToken: z.string().max(128),
 });
 
-export const CreateTransactionMethodSettingsBodySchema = CreateTransactionPixMethodSettingsBodySchema.or(
-  CreateTransactionCreditCardMethodSettingsBodySchema,
-);
+export const CreateTransactionMethodSettingsBodySchema = CreateTransactionPixMethodSettingsBodySchema
+  .or(CreateTransactionCreditCardMethodSettingsBodySchema)
+  .or(CreateTransactionBoletoMethodSettingsBodySchema);
 
 export const CreateTransactionItemBodySchema = z.object({
   description: z.string(),

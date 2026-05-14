@@ -26,8 +26,8 @@ export enum PaymentMethod {
   PIX = 'pix',
   CREDIT_CARD = 'credit_card',
   UNKNOWN = 'unknown',
+  BOLETO = 'boleto',
 }
-
 export type PixMethodSettings = {
   expiresIn: number;
   additionalInfo: { key: string; value: string }[];
@@ -91,8 +91,39 @@ export type TransactionContext = EmptyObject | {
   userAgent?: string;
 };
 
-export type TransactionMethodSettings = EmptyObject | PixMethodSettings | CreditCardMethodSettings;
+export type BoletoMethodSettings = {
+  expirationDate: string;
+  documentKind: 'DM' | 'FS';
+  ourNumber: string;
+};
 
-export type TransactionMethodData = EmptyObject | PixMethodData | CreditCardMethodData;
+export type BoletoMethodData = {
+  pixBase64: string;
+  pixQrCode: string;
+  pixTxid: string;
+  digitableLine: string;
+  barcode: string;
+};
 
-export type TransactionPaidData = EmptyObject | PixPaidData | CreditCardPaidData;
+export type BoletoPaidDataPayer = {
+  name?: string;
+  documentType?: DocumentType;
+  documentNumber?: string;
+  ispb?: string;
+  bankName?: string;
+  accountNumber?: string;
+  accountDigit?: string;
+  bankBranch?: string;
+};
+
+export type BoletoPaidData = {
+  paymentOrigin: 'boleto' | 'pix';
+  pixEndToEndId?: string;
+  payer?: BoletoPaidDataPayer;
+};
+
+export type TransactionMethodSettings = EmptyObject | PixMethodSettings | CreditCardMethodSettings | BoletoMethodSettings;
+
+export type TransactionMethodData = EmptyObject | PixMethodData | CreditCardMethodData | BoletoMethodData;
+
+export type TransactionPaidData = EmptyObject | PixPaidData | CreditCardPaidData | BoletoPaidData;

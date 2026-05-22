@@ -32,6 +32,7 @@ export const CreateMerchantEmailSettingsBodySchema = z.object({
 export const CreateMerchantPaymentMethodsSettingsSchema = z.object({
   pix: z.enum(MerchantPaymentMethodStatus),
   creditCard: z.enum(MerchantPaymentMethodStatus),
+  boleto: z.enum(MerchantPaymentMethodStatus),
 });
 
 export const CreateMerchantSettingsBodySchema = z.object({

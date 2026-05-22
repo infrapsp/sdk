@@ -30,6 +30,7 @@ export enum MerchantPaymentMethodStatus {
 export enum MerchantPaymentMethod {
   PIX = 'pix',
   CREDIT_CARD = 'creditCard',
+  BOLETO = 'boleto',
 }
 
 export type MerchantAutoTransferSettings = { isEnabled: false } | {

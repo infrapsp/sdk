@@ -66,6 +66,7 @@ export const UpdateMerchantBodySchema = z.object({
 export const RestrictMerchantPaymentMethodsSettingsSchema = z.object({
   pix: z.enum(MerchantPaymentMethodStatus),
   creditCard: z.enum(MerchantPaymentMethodStatus),
+  boleto: z.enum(MerchantPaymentMethodStatus),
 }).partial();
 
 export const RestrictUpdateMerchantSettingsBodySchema = z.object({

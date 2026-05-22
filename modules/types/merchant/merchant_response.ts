@@ -23,6 +23,7 @@ export const MerchantEmailSettingsResponseSchema = z.object({
 export const MerchantPaymentMethodsSettingsSchema = z.object({
   pix: z.enum(MerchantPaymentMethodStatus),
   creditCard: z.enum(MerchantPaymentMethodStatus),
+  boleto: z.enum(MerchantPaymentMethodStatus),
 });
 
 export const MerchantSettingsResponseSchema = z.object({

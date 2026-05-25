@@ -5,7 +5,7 @@ import { isError } from '../../../modules/errors/is_error.ts';
 import { TransactionResponseDto } from '../../../modules/types/transaction/transaction_response.ts';
 import { FindTransactionQuerySchema } from '../../../modules/types/transaction/find_transaction_request.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
-import type { z } from 'npm:@hono/zod-openapi@1.1.0';
+import type { z } from 'npm:@hono/zod-openapi@1.4.0';
 
 export class TransactionHandler {
   private readonly basePath = '/v1/transactions';

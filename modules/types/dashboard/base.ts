@@ -1,5 +1,5 @@
 import { ZodRefines, ZodSchemas } from '../../../modules/types/zod.ts';
-import { z } from 'npm:@hono/zod-openapi@1.1.0';
+import { z } from 'npm:@hono/zod-openapi@1.4.0';
 
 export const BaseDashboardQuerySchema = z.object({
   createdAtLte: ZodSchemas.datetime().default(() => new Date()),

@@ -1,4 +1,4 @@
-import { z } from 'npm:@hono/zod-openapi@1.1.0';
+import { z } from 'npm:@hono/zod-openapi@1.4.0';
 import { ZodHelpers, ZodSchemas } from '../../../modules/types/zod.ts';
 
 export const CreateNotificationBodySchema = z.object({

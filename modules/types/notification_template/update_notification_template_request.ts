@@ -1,4 +1,4 @@
-import { z } from 'npm:@hono/zod-openapi@1.1.0';
+import { z } from 'npm:@hono/zod-openapi@1.4.0';
 import { NotificationTemplateFieldType } from '../../../modules/types/notification_template/types.ts';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
 

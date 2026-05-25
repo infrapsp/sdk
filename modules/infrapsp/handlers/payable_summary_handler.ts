@@ -4,7 +4,7 @@ import { PayableSummaryResponseDto } from '../../../modules/types/payable_summar
 import { isError } from '../../../modules/errors/is_error.ts';
 import { FindPayableSummaryQuerySchema } from '../../../modules/types/payable_summary/find_payable_summary_request.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
-import type { z } from 'npm:@hono/zod-openapi@1.1.0';
+import type { z } from 'npm:@hono/zod-openapi@1.4.0';
 
 export class PayableSummaryHandler {
   private readonly basePath = '/v1/payable-summary';

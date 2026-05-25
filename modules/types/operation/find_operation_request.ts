@@ -1,5 +1,5 @@
 import { BaseParamsSchema, BaseQuerySchema } from '../../../modules/types/base/requests.ts';
-import { z } from 'npm:@hono/zod-openapi@1.1.0';
+import { z } from 'npm:@hono/zod-openapi@1.4.0';
 import { ZodHelpers, ZodRefines, ZodSchemas } from '../../../modules/types/zod.ts';
 import { SortOrder } from '../../../modules/types/base/types.ts';
 import { OperationStatus, OriginEntity, OriginMethod } from '../../../modules/types/operation/types.ts';

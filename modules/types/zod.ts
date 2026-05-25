@@ -1,4 +1,4 @@
-import { z } from 'npm:@hono/zod-openapi@1.1.0';
+import { z } from 'npm:@hono/zod-openapi@1.4.0';
 import { isValidCpf } from '../../modules/utils/cpf.ts';
 import { isValidCnpj } from '../../modules/utils/cnpj.ts';
 import { DocumentType } from '../../modules/types/merchant/types.ts';

@@ -1,4 +1,4 @@
-import { z } from 'npm:@hono/zod-openapi@1.1.0';
+import { z } from 'npm:@hono/zod-openapi@1.4.0';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
 import { FeeRuleEntity, FeeRuleMethod } from '../../../modules/types/fee_rule/types.ts';
 import { ZodHelpers } from '../../../modules/types/zod.ts';

@@ -6,7 +6,7 @@ import { FeeRuleResponseDto } from '../../../modules/types/fee_rule/fee_rule_res
 import { CreateFeeRuleBodySchema } from '../../../modules/types/fee_rule/create_fee_rule_request.ts';
 import { UpdateFeeRuleBodySchema } from '../../../modules/types/fee_rule/update_fee_rule_request.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
-import type { z } from 'npm:@hono/zod-openapi@1.1.0';
+import type { z } from 'npm:@hono/zod-openapi@1.4.0';
 
 export class FeeRuleHandler {
   private readonly basePath = '/v1/fee-rules';

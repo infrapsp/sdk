@@ -4,7 +4,7 @@ import { PayableResponseDto } from '../../../modules/types/payable/payable_respo
 import { isError } from '../../../modules/errors/is_error.ts';
 import { FindPayableQuerySchema } from '../../../modules/types/payable/find_payable_request.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
-import type { z } from 'npm:@hono/zod-openapi@1.1.0';
+import type { z } from 'npm:@hono/zod-openapi@1.4.0';
 
 export class PayableHandler {
   private readonly basePath = '/v1/payables';

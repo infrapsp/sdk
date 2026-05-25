@@ -1,5 +1,5 @@
 import { Role } from '../../../modules/types/auth/types.ts';
-import { z } from 'npm:@hono/zod-openapi@1.1.0';
+import { z } from 'npm:@hono/zod-openapi@1.4.0';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
 
 export const CreateApiKeyBodySchema = z.object({

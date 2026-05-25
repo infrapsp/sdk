@@ -1,4 +1,4 @@
-import { z } from 'npm:@hono/zod-openapi@1.1.0';
+import { z } from 'npm:@hono/zod-openapi@1.4.0';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
 import { BaseDashboardQuerySchema } from '../../../modules/types/dashboard/base.ts';
 import { TransactionChargebackStatus } from '../../../modules/types/transaction_chargeback/types.ts';

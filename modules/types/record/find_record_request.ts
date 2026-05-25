@@ -1,5 +1,5 @@
 import { ZodSchemas } from '../../../modules/types/zod.ts';
-import { z } from 'npm:@hono/zod-openapi@1.1.0';
+import { z } from 'npm:@hono/zod-openapi@1.4.0';
 import { BaseQuerySchema } from '../../../modules/types/base/requests.ts';
 import { RecordEntity, RecordStatus } from '../../../modules/types/record/types.ts';
 import { SortOrder } from '../../../modules/types/base/types.ts';

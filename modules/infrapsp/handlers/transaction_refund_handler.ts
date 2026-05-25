@@ -4,7 +4,7 @@ import { CreateTransactionRefundBodySchema } from '../../../modules/types/transa
 import { isError } from '../../../modules/errors/is_error.ts';
 import { TransactionRefundResponseDto } from '../../../modules/types/transaction_refund/transaction_refund_response.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
-import type { z } from 'npm:@hono/zod-openapi@1.1.0';
+import type { z } from 'npm:@hono/zod-openapi@1.4.0';
 
 export class TransactionRefundHandler {
   private readonly basePath = '/v1/transactions';

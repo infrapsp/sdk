@@ -1,4 +1,4 @@
-import { z } from 'npm:@hono/zod-openapi@1.1.0';
+import { z } from 'npm:@hono/zod-openapi@1.4.0';
 import { ZodRefines, ZodSchemas } from '../../../modules/types/zod.ts';
 import { FileFormat } from '../../../modules/types/base/types.ts';
 

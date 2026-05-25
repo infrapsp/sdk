@@ -5,7 +5,7 @@ import { isError } from '../../../modules/errors/is_error.ts';
 import { UpdateAnalysisBodySchema } from '../../../modules/types/aml/update_analysis_request.ts';
 import { FindAnalysisQuerySchema } from '../../../modules/types/aml/find_analysis_request.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
-import type { z } from 'npm:@hono/zod-openapi@1.1.0';
+import type { z } from 'npm:@hono/zod-openapi@1.4.0';
 
 export class AnalysisHandler {
   private readonly basePath = '/v1/aml/analyses';

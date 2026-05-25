@@ -5,7 +5,7 @@ import { isError } from '../../../modules/errors/is_error.ts';
 import { WebhookResponseDto } from '../../../modules/types/webhook/webhook_response.ts';
 import { UpdateWebhookBodySchema } from '../../../modules/types/webhook/update_webhook_request.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
-import type { z } from 'npm:@hono/zod-openapi@1.1.0';
+import type { z } from 'npm:@hono/zod-openapi@1.4.0';
 
 export class WebhookHandler {
   private readonly basePath = '/v1/webhooks';

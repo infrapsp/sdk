@@ -1,5 +1,5 @@
 import { BaseParamsSchema } from '../../../modules/types/base/requests.ts';
-import { z } from 'npm:@hono/zod-openapi@1.1.0';
+import { z } from 'npm:@hono/zod-openapi@1.4.0';
 import { MerchantStatus } from '../../../modules/types/merchant/types.ts';
 import { SortOrder } from '../../../modules/types/base/types.ts';
 import { ZodSchemas } from '../../../modules/types/zod.ts';

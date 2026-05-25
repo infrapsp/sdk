@@ -1,4 +1,4 @@
-import { z } from 'npm:@hono/zod-openapi@1.1.0';
+import { z } from 'npm:@hono/zod-openapi@1.4.0';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
 import { AdjustmentStatus } from '../../../modules/types/adjustment/types.ts';
 import { BalanceAccountType } from '../../../modules/types/balance/types.ts';

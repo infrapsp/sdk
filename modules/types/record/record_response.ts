@@ -1,4 +1,4 @@
-import { z } from 'npm:@hono/zod-openapi@1.1.0';
+import { z } from 'npm:@hono/zod-openapi@1.4.0';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
 import { DocumentType, MerchantStatus } from '../../../modules/types/merchant/types.ts';
 import { RecordEntity, RecordRequestType, RecordStatus } from '../../../modules/types/record/types.ts';

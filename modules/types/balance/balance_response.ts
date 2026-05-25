@@ -1,4 +1,4 @@
-import { z } from 'npm:@hono/zod-openapi@1.1.0';
+import { z } from 'npm:@hono/zod-openapi@1.4.0';
 
 export const BalanceResponseSchema = z.record(
   z.enum(['tenant', 'slc']),

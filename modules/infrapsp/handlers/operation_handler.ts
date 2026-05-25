@@ -3,7 +3,7 @@ import { GenerateStatementQuerySchema } from '../../../modules/types/operation/g
 import { CommonError } from '../../../modules/errors/common_error.ts';
 import { isError } from '../../../modules/errors/is_error.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
-import type { z } from 'npm:@hono/zod-openapi@1.1.0';
+import type { z } from 'npm:@hono/zod-openapi@1.4.0';
 
 export class OperationHandler {
   private readonly basePath = '/v1/operations';

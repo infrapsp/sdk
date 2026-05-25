@@ -6,7 +6,7 @@ import { FindRecordQuerySchema } from '../../../modules/types/record/find_record
 import { CreateRecordBodySchema, RestrictCreateRecordBodySchema } from '../../../modules/types/record/create_record_request.ts';
 import { UpdateRecordBodySchema } from '../../../modules/types/record/update_record_request.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
-import type { z } from 'npm:@hono/zod-openapi@1.1.0';
+import type { z } from 'npm:@hono/zod-openapi@1.4.0';
 
 export class RecordHandler {
   private readonly restrictBasePath = '/v1/admin/records';

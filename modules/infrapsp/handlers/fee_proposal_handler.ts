@@ -6,7 +6,7 @@ import { FeeProposalResponseDto } from '../../../modules/types/fee_proposal/fee_
 import { RestrictCreateFeeProposalBodySchema } from '../../../modules/types/fee_proposal/create_fee_proposal_request.ts';
 import { UpdateFeeProposalBodySchema } from '../../../modules/types/fee_proposal/update_fee_proposal_request.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
-import type { z } from 'npm:@hono/zod-openapi@1.1.0';
+import type { z } from 'npm:@hono/zod-openapi@1.4.0';
 
 export class FeeProposalHandler {
   private readonly basePath = '/v1/fee-proposals';

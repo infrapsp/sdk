@@ -5,7 +5,7 @@ import { isError } from '../../../modules/errors/is_error.ts';
 import { PreTransactionResponseDto } from '../../../modules/types/pre_transaction/pre_transaction_response.ts';
 import { FindPreTransactionQuerySchema } from '../../../modules/types/pre_transaction/find_pre_transaction_request.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
-import type { z } from 'npm:@hono/zod-openapi@1.1.0';
+import type { z } from 'npm:@hono/zod-openapi@1.4.0';
 
 export class PreTransactionHandler {
   private readonly basePath = '/v1/pre-transactions';

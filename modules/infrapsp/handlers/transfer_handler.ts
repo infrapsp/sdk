@@ -5,7 +5,7 @@ import { isError } from '../../../modules/errors/is_error.ts';
 import { TransferResponseDto } from '../../../modules/types/transfer/transfer_response.ts';
 import { FindTransferQuerySchema } from '../../../modules/types/transfer/find_transfer_request.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
-import type { z } from 'npm:@hono/zod-openapi@1.1.0';
+import type { z } from 'npm:@hono/zod-openapi@1.4.0';
 import { TransferSummaryResponseDto } from '../../../modules/types/transfer/transfer_summary_response.ts';
 
 export class TransferHandler {

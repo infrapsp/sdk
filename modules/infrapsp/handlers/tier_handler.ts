@@ -5,7 +5,7 @@ import { isError } from '../../../modules/errors/is_error.ts';
 import { CreateTierBodySchema } from '../../../modules/types/tier/create_tier_request.ts';
 import { UpdateTierBodySchema } from '../../../modules/types/tier/update_tier_request.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
-import type { z } from 'npm:@hono/zod-openapi@1.1.0';
+import type { z } from 'npm:@hono/zod-openapi@1.4.0';
 
 export class TierHandler {
   private readonly basePath = '/v1/tiers';

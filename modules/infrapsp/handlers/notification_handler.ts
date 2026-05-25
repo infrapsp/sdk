@@ -4,7 +4,7 @@ import type { HttpClient } from '../../../modules/http/http_client.ts';
 import { isError } from '../../../modules/errors/is_error.ts';
 import { CreateBulkNotificationCsvBodySchema, CreateNotificationBodyDto } from '../../../modules/types/notification/create_notification_request.ts';
 import { NotificationResponseDto } from '../../../modules/types/notification/notification_response.ts';
-import { z } from 'npm:@hono/zod-openapi@1.1.0';
+import { z } from 'npm:@hono/zod-openapi@1.4.0';
 
 export class NotificationHandler {
   private readonly restrictBasePath = '/v1/admin/notifications';

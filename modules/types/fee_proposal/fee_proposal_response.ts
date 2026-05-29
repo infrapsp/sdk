@@ -29,6 +29,8 @@ export const FeeProposalResponseSchema = z.object({
   maxAmount: z.number().int().max(999999999),
   creditCard: FeeProposalCreditCardResponseSchema,
   status: z.enum(FeeProposalStatus),
+  createdAt: z.date(),
+  updatedAt: z.date(),
   name: z.string().max(255),
 });
 

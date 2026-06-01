@@ -55,7 +55,7 @@ export class FeeProposalHandler {
   }
 
   async delete(id: string, requestInit: RequestInit = {}): AsyncResult<void> {
-    const url = this.basePath;
+    const url = this.restrictBasePath;
 
     const response = await this.httpClient.delete(`${url}/${id}`, requestInit);
 

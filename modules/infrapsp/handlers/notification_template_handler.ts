@@ -6,6 +6,7 @@ import { isError } from '../../../modules/errors/is_error.ts';
 import { NotificationTemplateResponseDto } from '../../../modules/types/notification_template/notification_template_response.ts';
 import { FindNotificationTemplateQuerySchema } from '../../../modules/types/notification_template/find_notification_template_request.ts';
 import { UpdateNotificationTemplateBodySchema } from '../../../modules/types/notification_template/update_notification_template_request.ts';
+import { CreateNotificationTemplateBodySchema } from '../../../modules/types/notification_template/create_notification_template_request.ts';
 
 export class NotificationTemplateHandler {
   private readonly restrictBasePath = '/v1/admin/notification-templates';
@@ -84,5 +85,28 @@ export class NotificationTemplateHandler {
     const status = response.status;
 
     return validateResponse({ data: undefined, status });
+  }
+
+  async create(
+    body: z.input<typeof CreateNotificationTemplateBodySchema>,
+    requestInit: RequestInit = {},
+  ): AsyncResult<NotificationTemplateResponseDto> {
+    const url = this.restrictBasePath;
+
+    const response = await this.httpClient.post(url, {
+      ...requestInit,
+      body: JSON.stringify(body),
+      headers: {
+        ...requestInit.headers,
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (isError(response)) return response;
+
+    const data = await response.json();
+    const status = response.status;
+
+    return validateResponse({ data, status });
   }
 }

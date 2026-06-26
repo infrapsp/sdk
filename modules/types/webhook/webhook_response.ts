@@ -1,5 +1,6 @@
 import { z } from 'npm:@hono/zod-openapi@1.4.0';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
+import { WebhookEvent } from '../../../modules/types/webhook/types.ts';
 
 export const WebhookResponseSchema = z.object({
   id: ZodSchemas.nanoid(),
@@ -7,6 +8,7 @@ export const WebhookResponseSchema = z.object({
   description: z.string().max(128),
   url: z.url(),
   isEnabled: z.boolean(),
+  events: z.array(z.enum(WebhookEvent)),
   createdAt: z.date(),
   updatedAt: z.date(),
 });

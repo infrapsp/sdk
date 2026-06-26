@@ -8,6 +8,7 @@ export const FindTransactionStatsQuerySchema = BaseDashboardQuerySchema.and(z.ob
   search: z.string().max(128).optional(),
   merchantId: ZodSchemas.nanoid().optional(),
   status: ZodSchemas.stringArray(z.enum(TransactionStatus)).optional(),
+  statusMessage: ZodSchemas.stringArray(z.string().max(128)).optional(),
   notStatus: ZodSchemas.stringArray(z.enum(TransactionStatus)).optional(),
   externalId: z.string().max(128).optional(),
   externalSaleChannel: ZodSchemas.alphanumericWithDash().max(128).optional(),

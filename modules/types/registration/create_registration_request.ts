@@ -6,6 +6,7 @@ import { ZodRefines } from '../../../modules/types/zod.ts';
 export const CreateRegistrationBodySchema = z.object({
   documentNumber: ZodSchemas.document(),
   documentType: z.enum(DocumentType),
+  variables: z.record(z.string(), z.string()).optional(),
 }).transform((dto, ctx) => {
   ZodRefines.matchDocument(ctx, dto.documentNumber, dto.documentType);
   return dto;

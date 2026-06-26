@@ -36,6 +36,9 @@ export enum AmlEntity {
   TRANSACTION = 'transaction',
   TRANSFER = 'transfer',
   MERCHANT = 'merchant',
+  DAILY_METRICS = 'daily_metrics',
+  MONTHLY_METRICS = 'monthly_metrics',
+  WEEKLY_METRICS = 'weekly_metrics',
 }
 
 // Threshold settings structure

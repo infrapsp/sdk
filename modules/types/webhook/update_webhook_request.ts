@@ -4,7 +4,7 @@ import { WebhookEvent } from '../../../modules/types/webhook/types.ts';
 
 export const UpdateWebhookBodySchema = z.object({
   description: z.string().max(128).optional(),
-  url: z.url(),
+  url: z.url().optional(),
   isEnabled: z.boolean().default(true),
   events: z.array(z.enum(WebhookEvent)).optional(),
 });

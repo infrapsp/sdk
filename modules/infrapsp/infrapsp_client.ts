@@ -27,6 +27,7 @@ import { DashboardHandler } from '../../modules/infrapsp/handlers/dashboard_hand
 import { AnalysisHandler } from '../../modules/infrapsp/handlers/analysis_handler.ts';
 import { TransactionChargebackHandler } from '../../modules/infrapsp/handlers/transaction_chargeback_handler.ts';
 import { RecordHandler } from '../../modules/infrapsp/handlers/record_handler.ts';
+import { RegistrationHandler } from '../../modules/infrapsp/handlers/registration_handler.ts';
 import { TagHandler } from '../../modules/infrapsp/handlers/tag_handler.ts';
 import { PolicyViolationHandler } from '../../modules/infrapsp/handlers/policy_violation_handler.ts';
 
@@ -51,6 +52,7 @@ export class InfraPSPClient {
   public readonly payableSummary: PayableSummaryHandler;
   public readonly policyViolations: PolicyViolationHandler;
   public readonly records: RecordHandler;
+  public readonly registrations: RegistrationHandler;
   public readonly preTransactions: PreTransactionHandler;
   public readonly tags: TagHandler;
   public readonly transactions: TransactionHandler;
@@ -99,5 +101,6 @@ export class InfraPSPClient {
     this.webhooks = new WebhookHandler(this.httpClient);
     this.policyViolations = new PolicyViolationHandler(this.httpClient);
     this.records = new RecordHandler(this.httpClient);
+    this.registrations = new RegistrationHandler(this.httpClient);
   }
 }

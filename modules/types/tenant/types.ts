@@ -56,6 +56,7 @@ export type CafProviderConfig = {
   pfTemplateId: string;
   pjTransactionTemplateId: string;
   pfTransactionTemplateId: string;
+  maxRegistrationsPerUser: number;
 };
 
 export type B3ProviderConfig = {

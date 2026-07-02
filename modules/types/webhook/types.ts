@@ -3,6 +3,8 @@ export enum WebhookEvent {
   PRE_TRANSACTION = 'pre_transaction',
   TRANSFER = 'transfer',
   FEE_RULE = 'fee_rule',
+  MERCHANT = 'merchant',
+  REGISTRATION = 'registration',
 }
 
 export interface WebhookInPayload<T> {

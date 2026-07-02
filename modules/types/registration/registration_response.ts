@@ -9,6 +9,7 @@ export const RegistrationResponseSchema = z.object({
   documentType: z.enum(DocumentType),
   status: z.enum(RegistrationStatus),
   statusMessage: z.string(),
+  externalUserId: z.string(),
   providerData: z.object({
     companyName: z.string().optional(),
     personName: z.string().optional(),

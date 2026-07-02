@@ -14,6 +14,9 @@ export class RegistrationHandler {
   async findMany(query?: z.input<typeof FindRegistrationQuerySchema>, requestInit: RequestInit = {}): AsyncResult<RegistrationResponseDto[]> {
     const queryPath = new URLSearchParams(query as unknown as Record<string, string>);
 
+    if (query?.createdAtGte) queryPath.set('createdAtGte', new Date(query.createdAtGte).toISOString());
+    if (query?.createdAtLte) queryPath.set('createdAtLte', new Date(query.createdAtLte).toISOString());
+
     const url = query ? this.basePath + '?' + queryPath : this.basePath;
 
     const response = await this.httpClient.get(url, requestInit);

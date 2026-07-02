@@ -6,6 +6,8 @@ import { RegistrationStatus, RegistrationType } from '../../../modules/types/reg
 import { DocumentType } from '../../../modules/types/merchant/types.ts';
 
 export const FindRegistrationQuerySchema = z.object({
+  createdAtLte: ZodSchemas.datetime().optional(),
+  createdAtGte: ZodSchemas.datetime().optional(),
   page: z.coerce.number().positive().int().default(1),
   pageSize: z.coerce.number().positive().int().max(1000).default(10),
   merchantId: ZodSchemas.nanoid().optional(),

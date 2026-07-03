@@ -9,6 +9,7 @@ export enum RecordStatus {
 }
 
 export enum RecordEntity {
+  EXTERNAL_AUTH_USER = 'external_auth_user',
   MERCHANT = 'merchant',
   ANALYSIS = 'analysis',
   UNIT_RECEIVABLE = 'unit_receivable',

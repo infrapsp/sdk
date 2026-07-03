@@ -24,14 +24,14 @@ export const RecordResponseSchema = z.object({
   request: z.enum(RecordRequestType).nullable().optional(),
   status: z.enum(RecordStatus),
   entity: z.enum(RecordEntity),
-  entityId: ZodSchemas.nanoid(),
+  entityId: z.string(),
   attachments: z.array(z.object({
     path: z.string(),
   })),
   externalUserId: z.string().nullable().optional(),
   createdAt: z.date(),
   updatedAt: z.date(),
-  merchant: RecordMerchantResponseSchema,
+  merchant: RecordMerchantResponseSchema.nullable().optional(),
 });
 
 export type RecordResponseDto = z.infer<typeof RecordResponseSchema>;

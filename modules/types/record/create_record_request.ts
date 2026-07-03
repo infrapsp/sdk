@@ -4,7 +4,7 @@ import { ZodSchemas } from '../../../modules/types/zod.ts';
 
 export const BaseCreateRecordBodySchema = z.object({
   entity: z.enum(RecordEntity),
-  entityId: ZodSchemas.nanoid(),
+  entityId: z.string(),
 });
 
 export const CreateRecordBodySchema = BaseCreateRecordBodySchema.and(z.object({
@@ -13,7 +13,7 @@ export const CreateRecordBodySchema = BaseCreateRecordBodySchema.and(z.object({
 
 export const RestrictCreateRecordBodySchema = BaseCreateRecordBodySchema.and(z.object({
   title: z.string(),
-  merchantId: ZodSchemas.nanoid(),
+  merchantId: ZodSchemas.nanoid().optional(),
   comment: z.string().optional(),
   attachments: z.array(z.instanceof(File)).or(z.instanceof(File)).transform((obj) => Array.isArray(obj) ? obj : [obj]).default(() => []),
 }));

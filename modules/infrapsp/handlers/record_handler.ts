@@ -50,7 +50,8 @@ export class RecordHandler {
     form.append('entity', body.entity);
     form.append('entityId', body.entityId);
     form.append('title', body.title);
-    form.append('merchantId', body.merchantId);
+
+    if (body.merchantId) form.append('merchantId', body.merchantId);
 
     if (body.comment) form.append('comment', body.comment);
 

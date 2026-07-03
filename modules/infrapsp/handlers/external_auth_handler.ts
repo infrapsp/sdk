@@ -9,6 +9,7 @@ import { ExternalAuthUserResponseDto } from '../../../modules/types/external_aut
 import { CreateExternalAuthBodySchema } from '../../../modules/types/external_auth/create_external_auth_request.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
 import type { z } from 'npm:@hono/zod-openapi@1.4.0';
+import { FindExternalAuthMerchantQuerySchema } from '../../../modules/types/external_auth/find_external_auth_merchant_request.ts';
 
 export class ExternalAuthHandler {
   private readonly basePath = '/v1/auth/external-auth';
@@ -47,8 +48,13 @@ export class ExternalAuthHandler {
     return validateResponse({ data, status: response.status });
   }
 
-  async findManyMerchant(requestInit: RequestInit = {}): AsyncResult<ExternalAuthMerchantResponseDto[]> {
-    const url = `${this.basePath}/merchants`;
+  async findManyMerchant(
+    query: z.input<typeof FindExternalAuthMerchantQuerySchema>,
+    requestInit: RequestInit = {},
+  ): AsyncResult<ExternalAuthMerchantResponseDto[]> {
+    const queryPath = new URLSearchParams(query);
+
+    const url = `${this.basePath}/merchants?${queryPath}`;
 
     const response = await this.httpClient.get(url, requestInit);
 

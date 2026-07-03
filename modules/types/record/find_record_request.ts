@@ -15,7 +15,7 @@ export const FindRecordQuerySchema = BaseQuerySchema.and(
     merchantTierIds: ZodSchemas.stringArray(ZodSchemas.nanoid()).optional(),
     search: z.string().optional(),
     entity: ZodSchemas.stringArray(z.enum(RecordEntity)).optional(),
-    entityId: ZodSchemas.nanoid().optional(),
+    entityId: z.string().optional(),
     request: z.string().optional(),
     sortField: z.enum(['createdAt', 'updatedAt']).default('createdAt'),
     sortOrder: z.enum(SortOrder).default(SortOrder.DESC),

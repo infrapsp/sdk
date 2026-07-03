@@ -49,7 +49,7 @@ export class ExternalAuthHandler {
   }
 
   async findManyMerchant(
-    query: z.input<typeof FindExternalAuthMerchantQuerySchema>,
+    query?: z.input<typeof FindExternalAuthMerchantQuerySchema>,
     requestInit: RequestInit = {},
   ): AsyncResult<ExternalAuthMerchantResponseDto[]> {
     const queryPath = new URLSearchParams(query);

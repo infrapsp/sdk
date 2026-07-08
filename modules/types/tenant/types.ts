@@ -47,6 +47,7 @@ export type RedeProviderConfig = {
 
 export type KondutoProviderConfig = {
   apiKey: string;
+  segment?: string | null;
   segments?: Record<string, { apiKey: string }>;
 };
 

@@ -81,6 +81,7 @@ export type CreditCardPaidData = {
 };
 
 export type TransactionAntifraudData = EmptyObject | {
+  segment?: string;
   score?: number;
   status?: string;
 };

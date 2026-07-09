@@ -13,6 +13,7 @@ export enum RecordEntity {
   MERCHANT = 'merchant',
   ANALYSIS = 'analysis',
   UNIT_RECEIVABLE = 'unit_receivable',
+  TRANSACTION_CHARGEBACK = 'transaction_chargeback',
 }
 
 export enum RecordRequestType {

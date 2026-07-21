@@ -39,6 +39,7 @@ export const TransactionBoletoMethodDataResponseSchema = z.object({
   pixTxid: z.string(),
   digitableLine: z.string(),
   barcode: z.string(),
+  url: z.string(),
 });
 
 export const TransactionPixMethodDataResponseSchema = z.object({
@@ -51,10 +52,17 @@ export const TransactionCreditCardMethodDataResponseSchema = z.object({
   nsu: z.string(),
   authorizationCode: z.string(),
   brandId: z.string(),
+  threeDSUrl: z.string().optional(),
+});
+
+export const TransactionThreeDSMethodDataResponseSchema = z.object({
+  threeDSUrl: z.string(),
 });
 
 export const TransactionMethodDataResponseSchema = TransactionPixMethodDataResponseSchema.or(TransactionCreditCardMethodDataResponseSchema).or(
   TransactionBoletoMethodDataResponseSchema,
+).or(
+  TransactionThreeDSMethodDataResponseSchema,
 ).or(
   z.object({}),
 );

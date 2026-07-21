@@ -16,10 +16,25 @@ export const CreateTransactionPixMethodSettingsBodySchema = z.object({
   payerRequest: z.string().max(140).nullable().optional(),
 });
 
+export const CreateTransactionThreeDSDeviceBodySchema = z.object({
+  colorDepth: z.number().int(),
+  deviceType3ds: z.enum(['BROWSER', 'DEVICE']),
+  javaEnabled: z.boolean(),
+  language: z.string().regex(/^[a-z]{2}-[A-Z]{2}$/),
+  screenHeight: z.number().int().positive(),
+  screenWidth: z.number().int().positive(),
+  timeZoneOffset: z.number().int().min(-12).max(12).transform((n) => String(n)),
+});
+
+export const CreateTransactionThreeDSBodySchema = z.object({
+  device: CreateTransactionThreeDSDeviceBodySchema,
+});
+
 export const CreateTransactionCreditCardMethodSettingsBodySchema = z.object({
   installments: z.number().positive().int().min(1).max(12),
   cardToken: z.string().max(128),
   cvvToken: z.string().max(128),
+  threeDS: CreateTransactionThreeDSBodySchema.optional(),
 });
 
 export const CreateTransactionMethodSettingsBodySchema = CreateTransactionPixMethodSettingsBodySchema
@@ -111,3 +126,4 @@ export type CreateTransactionCustomerBodyDto = z.infer<typeof CreateTransactionC
 export type CreateTransactionCheckoutBodyDto = z.infer<typeof CreateTransactionCheckoutBodySchema>;
 export type CreateTransactionMethodSettingsBodyDto = z.infer<typeof CreateTransactionMethodSettingsBodySchema>;
 export type CreateTransactionCreditCardMethodSettingsBodyDto = z.infer<typeof CreateTransactionCreditCardMethodSettingsBodySchema>;
+export type CreateTransactionThreeDSBodyDto = z.infer<typeof CreateTransactionThreeDSBodySchema>;

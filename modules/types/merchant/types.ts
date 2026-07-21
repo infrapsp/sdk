@@ -45,3 +45,12 @@ export type MerchantEmailSettings = {
   transactionFieldName: string;
   isEnabled: boolean;
 };
+
+export type MerchantCreditCardSettings = {
+  threeDS: {
+    mode: 'off' | 'optional' | 'required';
+    optionalThreshold: {
+      minAmount: number;
+    };
+  };
+};

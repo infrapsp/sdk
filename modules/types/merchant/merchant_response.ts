@@ -26,6 +26,15 @@ export const MerchantPaymentMethodsSettingsSchema = z.object({
   boleto: z.enum(MerchantPaymentMethodStatus),
 });
 
+export const MerchantCreditCardSettingsResponseSchema = z.object({
+  threeDS: z.object({
+    mode: z.enum(['off', 'optional', 'required']),
+    optionalThreshold: z.object({
+      minAmount: z.number().int(),
+    }),
+  }),
+});
+
 export const MerchantSettingsResponseSchema = z.object({
   emailSettings: MerchantEmailSettingsResponseSchema,
   autoTransferSettings: MerchantAutoTransferSettingsResponseSchema,
@@ -33,6 +42,7 @@ export const MerchantSettingsResponseSchema = z.object({
   secondaryColor: z.string().max(7).regex(/^#[0-9A-F]{6}$/).optional().nullable(),
   softDescriptor: z.string().regex(/^[A-Z0-9]*$/).max(18).optional().nullable(),
   paymentMethods: MerchantPaymentMethodsSettingsSchema,
+  creditCardSettings: MerchantCreditCardSettingsResponseSchema,
   logoUrl: z.string().nullable().optional(),
   createdAt: z.date(),
   updatedAt: z.date(),
@@ -94,7 +104,7 @@ export const MerchantResponseSchema = z.object({
   updatedAt: z.date(),
   billing: MerchantBillingResponseSchema,
   settings: MerchantSettingsResponseSchema,
-  metadata: z.record(z.string(), z.string().or(z.number().or(z.boolean()))),
+  metadata: z.record(z.string(), z.string().or(z.number().or(z.boolean().or(z.date())))),
 });
 
 export type MerchantSettingsResponseDto = z.infer<typeof MerchantSettingsResponseSchema>;

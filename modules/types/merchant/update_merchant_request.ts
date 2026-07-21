@@ -32,9 +32,19 @@ export const UpdateMerchantEmailSettingsBodySchema = z.object({
   isEnabled: z.boolean().optional(),
 });
 
+export const UpdateMerchantCreditCardSettingsBodySchema = z.object({
+  threeDS: z.object({
+    mode: z.enum(['off', 'optional', 'required']),
+    optionalThreshold: z.object({
+      minAmount: z.number().int().nonnegative(),
+    }),
+  }),
+});
+
 export const UpdateMerchantSettingsBodySchema = z.object({
   emailSettings: UpdateMerchantEmailSettingsBodySchema.optional(),
   autoTransferSettings: UpdateMerchantAutoTransferSettingsBodySchema.optional(),
+  creditCardSettings: UpdateMerchantCreditCardSettingsBodySchema.optional(),
   softDescriptor: z.string().regex(/^[A-Z0-9]*$/).max(18).optional(),
   primaryColor: z.string().max(7).regex(/^#[0-9A-F]{6}$/).optional(),
   secondaryColor: z.string().max(7).regex(/^#[0-9A-F]{6}$/).optional(),

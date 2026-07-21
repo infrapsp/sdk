@@ -13,6 +13,7 @@ export enum TransactionStatus {
   PRE_AUTHORIZED = 'pre_authorized',
   CHARGEDBACK = 'chargedback',
   UNDER_REVIEW = 'under_review',
+  WAITING_THREE_DS = 'waiting_three_ds',
 }
 
 export enum TransactionRefundStatus {
@@ -56,6 +57,22 @@ export type PixPaidData = {
   payer?: PixPaidDataPayer;
 };
 
+export type ThreeDSDevice = {
+  colorDepth: number;
+  deviceType3ds: 'BROWSER' | 'DEVICE';
+  javaEnabled: boolean;
+  language: string;
+  screenHeight: number;
+  screenWidth: number;
+  timeZoneOffset: string;
+};
+
+export type ThreeDS = {
+  device: ThreeDSDevice;
+  ip: string;
+  userAgent: string;
+};
+
 export type CreditCardMethodSettings = {
   installments: number;
   cardToken: string;
@@ -67,12 +84,18 @@ export type CreditCardMethodSettings = {
   bin: string;
   last4: string;
   hasChargebackGuarantee?: boolean;
+  threeDS?: ThreeDS;
 };
 
 export type CreditCardMethodData = {
   nsu: string;
   authorizationCode: string;
   brandId: string;
+  threeDSUrl?: string;
+};
+
+export type ThreeDSMethodData = {
+  threeDSUrl: string;
 };
 
 export type CreditCardPaidData = {
@@ -104,6 +127,7 @@ export type BoletoMethodData = {
   pixTxid: string;
   digitableLine: string;
   barcode: string;
+  url: string;
 };
 
 export type BoletoPaidDataPayer = {
@@ -125,6 +149,6 @@ export type BoletoPaidData = {
 
 export type TransactionMethodSettings = EmptyObject | PixMethodSettings | CreditCardMethodSettings | BoletoMethodSettings;
 
-export type TransactionMethodData = EmptyObject | PixMethodData | CreditCardMethodData | BoletoMethodData;
+export type TransactionMethodData = EmptyObject | PixMethodData | CreditCardMethodData | BoletoMethodData | ThreeDSMethodData;
 
 export type TransactionPaidData = EmptyObject | PixPaidData | CreditCardPaidData | BoletoPaidData;

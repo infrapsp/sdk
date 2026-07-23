@@ -12,12 +12,27 @@ export const TransactionChargebackStatusHistoryResponseSchema = z.object({
   createdAt: z.date(),
 });
 
+export const RelatedTransactionChargebackResponseSchema = z.object({
+  id: ZodSchemas.nanoid(),
+  parentId: ZodSchemas.nanoid().nullable(),
+  amount: z.number(),
+  wonAmount: z.number(),
+  holdAmount: z.number(),
+  status: z.enum(TransactionChargebackStatus),
+  reason: z.enum(TransactionChargebackReason),
+  isGuaranteePaid: z.boolean(),
+  maximumAttendanceDate: z.date(),
+  createdAt: z.date(),
+  updatedAt: z.date(),
+});
+
 export const TransactionChargebackResponseSchema = z.object({
   id: ZodSchemas.nanoid(),
   transactionId: ZodSchemas.nanoid(),
   parentId: ZodSchemas.nanoid().nullable(),
   amount: z.number(),
   wonAmount: z.number(),
+  holdAmount: z.number(),
   status: z.enum(TransactionChargebackStatus),
   statusMessage: z.string(),
   statusHistory: z.array(TransactionChargebackStatusHistoryResponseSchema),
@@ -29,6 +44,7 @@ export const TransactionChargebackResponseSchema = z.object({
   isGuaranteePaid: z.boolean(),
   createdAt: z.date(),
   updatedAt: z.date(),
+  relatedChargebacks: z.array(RelatedTransactionChargebackResponseSchema).optional(),
 });
 
 export type TransactionChargebackResponseDto = z.infer<typeof TransactionChargebackResponseSchema>;

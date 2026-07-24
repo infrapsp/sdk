@@ -18,6 +18,21 @@ export const TransactionPixMethodSettingsResponseSchema = z.object({
   payerRequest: z.string().max(140).nullable().optional(),
 });
 
+export const TransactionThreeDSDeviceResponseSchema = z.object({
+  colorDepth: z.number().int(),
+  deviceType3ds: z.enum(['BROWSER', 'DEVICE']),
+  javaEnabled: z.boolean(),
+  language: z.string(),
+  screenHeight: z.number().int(),
+  screenWidth: z.number().int(),
+  timeZoneOffset: z.string(),
+});
+
+export const TransactionThreeDSResponseSchema = z.object({
+  device: TransactionThreeDSDeviceResponseSchema,
+  redirectUrl: z.string(),
+});
+
 export const TransactionCreditCardMethodSettingsResponseSchema = z.object({
   installments: z.number().positive().int(),
   expirationYear: ZodSchemas.numeric(),
@@ -27,6 +42,7 @@ export const TransactionCreditCardMethodSettingsResponseSchema = z.object({
   bin: z.string(),
   last4: z.string(),
   hasChargebackGuarantee: z.boolean(),
+  threeDS: TransactionThreeDSResponseSchema.optional(),
 });
 
 export const TransactionMethodSettingsResponseSchema = TransactionPixMethodSettingsResponseSchema.or(

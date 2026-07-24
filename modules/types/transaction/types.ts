@@ -69,6 +69,7 @@ export type ThreeDSDevice = {
 
 export type ThreeDS = {
   device: ThreeDSDevice;
+  redirectUrl: string;
   ip: string;
   userAgent: string;
 };

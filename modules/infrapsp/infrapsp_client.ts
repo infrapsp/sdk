@@ -8,6 +8,7 @@ import { ImpersonateHandler } from '../../modules/infrapsp/handlers/impersonate_
 import { BalanceHandler } from '../../modules/infrapsp/handlers/balance_handler.ts';
 import { PayableHandler } from '../../modules/infrapsp/handlers/payable_handler.ts';
 import { PayableSummaryHandler } from '../../modules/infrapsp/handlers/payable_summary_handler.ts';
+import { CompensationHandler } from '../../modules/infrapsp/handlers/compensation_handler.ts';
 import { TransactionRefundHandler } from '../../modules/infrapsp/handlers/transaction_refund_handler.ts';
 import { ZipCodeHandler } from '../../modules/infrapsp/handlers/zip_code_handler.ts';
 import { InvoiceHandler } from '../../modules/infrapsp/handlers/invoice_handler.ts';
@@ -50,6 +51,7 @@ export class InfraPSPClient {
   public readonly notificationTemplate: NotificationTemplateHandler;
   public readonly payables: PayableHandler;
   public readonly payableSummary: PayableSummaryHandler;
+  public readonly compensations: CompensationHandler;
   public readonly policyViolations: PolicyViolationHandler;
   public readonly records: RecordHandler;
   public readonly registrations: RegistrationHandler;
@@ -88,6 +90,7 @@ export class InfraPSPClient {
     this.notificationTemplate = new NotificationTemplateHandler(this.httpClient);
     this.payables = new PayableHandler(this.httpClient);
     this.payableSummary = new PayableSummaryHandler(this.httpClient);
+    this.compensations = new CompensationHandler(this.httpClient);
     this.preTransactions = new PreTransactionHandler(this.httpClient);
     this.tags = new TagHandler(this.httpClient);
     this.transactions = new TransactionHandler(this.httpClient);

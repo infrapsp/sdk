@@ -11,7 +11,7 @@ export const FindTransactionStatsQuerySchema = BaseDashboardQuerySchema.and(z.ob
   statusMessage: ZodSchemas.stringArray(z.string().max(128)).optional(),
   notStatus: ZodSchemas.stringArray(z.enum(TransactionStatus)).optional(),
   externalId: z.string().max(128).optional(),
-  externalSaleChannel: ZodSchemas.alphanumericWithDash().max(128).optional(),
+  externalSaleChannel: z.string().regex(/^[^\s]+$/).max(128).optional(),
   preTransactionId: ZodSchemas.nanoid().optional(),
   amountRefundedGte: z.coerce.number().min(0).optional(),
   amountRefundedLte: z.coerce.number().min(0).optional(),

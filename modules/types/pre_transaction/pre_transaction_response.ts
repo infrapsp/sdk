@@ -16,6 +16,12 @@ export const PreTransactionTransactionResponseSchema = z.object({
 
 export const PreTransactionCreditCardSettingsResponseSchema = z.object({
   maxInstallments: z.number().int().max(12).positive(),
+  threeDS: z.object({
+    mode: z.enum(['off', 'optional', 'required']),
+    optionalThreshold: z.object({
+      minAmount: z.number().int(),
+    }),
+  }),
 }).partial();
 
 export const PreTransactionResponseSchema = z.object({

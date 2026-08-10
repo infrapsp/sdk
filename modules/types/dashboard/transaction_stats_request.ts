@@ -4,7 +4,7 @@ import { ZodSchemas } from '../../../modules/types/zod.ts';
 import { BaseDashboardQuerySchema } from '../../../modules/types/dashboard/base.ts';
 
 export const FindTransactionStatsQuerySchema = BaseDashboardQuerySchema.and(z.object({
-  method: z.enum(PaymentMethod).optional(),
+  method: ZodSchemas.stringArray(z.enum(PaymentMethod)).optional(),
   search: z.string().max(128).optional(),
   merchantId: ZodSchemas.nanoid().optional(),
   status: ZodSchemas.stringArray(z.enum(TransactionStatus)).optional(),

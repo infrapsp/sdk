@@ -6,6 +6,7 @@ export enum UnitReceivableRegistryStatus {
   UPDATED = 'updated',
   LIQUIDATED = 'liquidated',
   NOT_LIQUIDATED = 'not_liquidated',
+  WAITING_CANCEL = 'waiting_cancel',
 }
 
 export enum UnitReceivableSlcStatus {

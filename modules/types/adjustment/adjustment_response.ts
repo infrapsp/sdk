@@ -7,6 +7,7 @@ export const AdjustmentResponseSchema = z.object({
   id: ZodSchemas.nanoid(),
   tenantId: ZodSchemas.nanoid(),
   merchantId: ZodSchemas.nanoid(),
+  unitReceivableId: ZodSchemas.nanoid().nullable(),
   account: z.enum(BalanceAccountType),
   status: z.enum(AdjustmentStatus),
   amount: z.number(),

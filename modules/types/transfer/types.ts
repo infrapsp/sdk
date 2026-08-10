@@ -24,6 +24,7 @@ export type TransferPixMethodDestination = {
   bankBranch?: string;
   accountNumber?: string;
   accountDigit?: string;
+  unitReceivableId?: string;
 };
 
 export type TransferMethodDestination = EmptyObject | TransferPixMethodDestination;

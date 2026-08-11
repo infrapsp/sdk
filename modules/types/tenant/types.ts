@@ -52,7 +52,8 @@ export type KondutoProviderConfig = {
 };
 
 export type CafProviderConfig = {
-  apiKey: string;
+  clientId: string;
+  clientSecret: string;
   pjTemplateId: string;
   pfTemplateId: string;
   pjTransactionTemplateId: string;

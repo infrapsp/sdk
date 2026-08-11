@@ -22,7 +22,7 @@ export enum InfraPSPErrorCode {
   // transfer related errors
   TRF_PIX_KEY_NOT_FOUND = 'TRF_PIX_KEY_NOT_FOUND',
 
-  REG_HIGH_RISK = 'REGISTRATION_HIGH_RISK',
+  REG_ZIP_CODE_NOT_FOUND = 'REGISTRATION_ZIP_CODE_NOT_FOUND',
 
   // default
   UNKNOWN = '',

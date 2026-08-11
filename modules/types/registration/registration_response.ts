@@ -13,7 +13,7 @@ export const RegistrationResponseSchema = z.object({
   providerData: z.object({
     companyName: z.string().optional(),
     personName: z.string().optional(),
-    onboardingUrl: z.string(),
+    onboardingUrl: z.string().optional(),
     tradingName: z.string().optional(),
   }),
   createdAt: z.date(),

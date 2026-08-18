@@ -13,7 +13,7 @@ export enum TransferStatus {
 }
 
 export type TransferPixMethodDestination = {
-  pixKey: string;
+  pixKey?: string;
   name?: string;
   bank?: string;
   ispb?: string;

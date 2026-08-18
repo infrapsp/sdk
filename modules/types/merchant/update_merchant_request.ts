@@ -1,7 +1,12 @@
 import { z } from 'npm:@hono/zod-openapi@1.4.0';
 import { BaseParamsSchema } from '../../../modules/types/base/requests.ts';
 import { ZodHelpers, ZodSchemas } from '../../../modules/types/zod.ts';
-import { MerchantAutoTransferFrequency, MerchantPaymentMethodStatus, MerchantStatus } from '../../../modules/types/merchant/types.ts';
+import {
+  MerchantAutoTransferFrequency,
+  MerchantBankAccountType,
+  MerchantPaymentMethodStatus,
+  MerchantStatus,
+} from '../../../modules/types/merchant/types.ts';
 import { UpdateAddressBodySchema } from '../../../modules/types/address/update_address_request.ts';
 
 export const UpdateMerchantParamsSchema = BaseParamsSchema;
@@ -50,6 +55,14 @@ export const UpdateMerchantSettingsBodySchema = z.object({
   secondaryColor: z.string().max(7).regex(/^#[0-9A-F]{6}$/).optional(),
 });
 
+export const UpdateMerchantBankAccountBodySchema = z.object({
+  ispb: z.string().min(1).max(8),
+  bankBranch: z.string().min(1).max(4),
+  accountNumber: z.string().min(1).max(15),
+  accountDigit: z.string().min(1).max(1),
+  accountType: z.enum(MerchantBankAccountType),
+});
+
 export const UpdateMerchantBillingBodySchema = z.object({
   email: z.email().max(128),
   address: UpdateAddressBodySchema,
@@ -64,6 +77,7 @@ export const UpdateMerchantBodySchema = z.object({
   externalId: z.string().max(128),
   settings: UpdateMerchantSettingsBodySchema,
   billing: UpdateMerchantBillingBodySchema,
+  bankAccount: UpdateMerchantBankAccountBodySchema,
   metadata: z.record(z.string(), z.string().or(z.number().or(z.boolean()))),
 }).partial().transform((dto, ctx) => {
   if (Object.keys(dto).length === 0) {

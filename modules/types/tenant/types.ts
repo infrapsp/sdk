@@ -56,6 +56,7 @@ export type CafProviderConfig = {
   clientSecret: string;
   pjTemplateId: string;
   pfTemplateId: string;
+  apiKey?: string;
   pjTransactionTemplateId: string;
   pfTransactionTemplateId: string;
   maxRegistrationsPerUser: number;

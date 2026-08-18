@@ -46,6 +46,20 @@ export type MerchantEmailSettings = {
   isEnabled: boolean;
 };
 
+export enum MerchantBankAccountType {
+  CHECKING = 'Conta Corrente',
+  PAYMENT = 'Conta Pagamento',
+  SAVINGS = 'Conta Poupanca',
+}
+
+export type MerchantBankAccount = {
+  ispb: string;
+  bankBranch: string;
+  accountNumber: string;
+  accountDigit: string;
+  accountType: MerchantBankAccountType;
+};
+
 export type MerchantCreditCardSettings = {
   threeDS: {
     mode: 'off' | 'optional' | 'required';

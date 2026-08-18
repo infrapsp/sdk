@@ -29,6 +29,7 @@ export const CreateTransactionThreeDSDeviceBodySchema = z.object({
 export const CreateTransactionThreeDSBodySchema = z.object({
   device: CreateTransactionThreeDSDeviceBodySchema,
   redirectUrl: z.url(),
+  redirectUrlFailure: z.url().optional(),
 });
 
 export const CreateTransactionCreditCardMethodSettingsBodySchema = z.object({

@@ -1,6 +1,12 @@
 import { z } from 'npm:@hono/zod-openapi@1.4.0';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
-import { DocumentType, MerchantAutoTransferFrequency, MerchantPaymentMethodStatus, MerchantStatus } from '../../../modules/types/merchant/types.ts';
+import {
+  DocumentType,
+  MerchantAutoTransferFrequency,
+  MerchantBankAccountType,
+  MerchantPaymentMethodStatus,
+  MerchantStatus,
+} from '../../../modules/types/merchant/types.ts';
 import { AddressResponseSchema } from '../../../modules/types/address/address_response.ts';
 import { RegistrationStatus } from '../../../modules/types/registration/types.ts';
 
@@ -59,6 +65,14 @@ export const MerchantBillingResponseSchema = z.object({
   address: AddressResponseSchema,
 });
 
+export const MerchantBankAccountResponseSchema = z.object({
+  ispb: z.string(),
+  bankBranch: z.string(),
+  accountNumber: z.string(),
+  accountDigit: z.string(),
+  accountType: z.enum(MerchantBankAccountType),
+});
+
 export const MerchantSegmentResponseSchema = z.object({
   mccCode: z.string(),
   cnaeCode: z.string(),
@@ -104,6 +118,7 @@ export const MerchantResponseSchema = z.object({
   updatedAt: z.date(),
   billing: MerchantBillingResponseSchema,
   settings: MerchantSettingsResponseSchema,
+  bankAccount: MerchantBankAccountResponseSchema.nullable().optional(),
   metadata: z.record(z.string(), z.string().or(z.number().or(z.boolean().or(z.date())))),
 });
 

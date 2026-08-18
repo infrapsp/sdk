@@ -31,6 +31,7 @@ export const TransactionThreeDSDeviceResponseSchema = z.object({
 export const TransactionThreeDSResponseSchema = z.object({
   device: TransactionThreeDSDeviceResponseSchema,
   redirectUrl: z.string(),
+  redirectUrlFailure: z.string().optional(),
 });
 
 export const TransactionCreditCardMethodSettingsResponseSchema = z.object({

@@ -5,10 +5,13 @@ import { DocumentType } from '../../../modules/types/merchant/types.ts';
 import { BalanceAccountType } from '../../../modules/types/balance/types.ts';
 
 export const TransferPixMethodDestinationResponseSchema = z.object({
-  pixKey: z.string(),
+  pixKey: z.string().optional().nullable(),
   name: z.string().optional().nullable(),
   bank: z.string().optional().nullable(),
   ispb: z.string().optional().nullable(),
+  bankBranch: z.string().optional().nullable(),
+  accountNumber: z.string().optional().nullable(),
+  accountDigit: z.string().optional().nullable(),
   documentNumber: z.string().optional().nullable(),
   accountType: z.string().optional().nullable(),
   paymentArrangement: z.string().optional().nullable(),

@@ -5,7 +5,6 @@ import { RegistrationStatus } from '../../../modules/types/registration/types.ts
 
 export const RegistrationProviderDataSchema = z.object({
   onboardingUrl: z.string().optional(),
-  tradingName: z.string().optional(),
 });
 
 export const RegistrationMerchantDataSchema = z.object({
@@ -36,6 +35,7 @@ export const RegistrationResponseSchema = z.object({
   status: z.enum(RegistrationStatus),
   statusMessage: z.string(),
   externalUserId: z.string(),
+  assigneeId: z.string().nullable().optional(),
   providerData: RegistrationProviderDataSchema,
   merchantData: RegistrationMerchantDataSchema,
   createdAt: z.date(),

@@ -29,6 +29,7 @@ export const RecordResponseSchema = z.object({
     path: z.string(),
   })),
   externalUserId: z.string().nullable().optional(),
+  assigneeId: z.string().nullable().optional(),
   createdAt: z.date(),
   updatedAt: z.date(),
   merchant: RecordMerchantResponseSchema.nullable().optional(),

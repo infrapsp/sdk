@@ -1,12 +1,10 @@
 import { z } from 'npm:@hono/zod-openapi@1.4.0';
 import { BaseParamsSchema } from '../../../modules/types/base/requests.ts';
 import { ZodHelpers } from '../../../modules/types/zod.ts';
-import { RecordStatus } from '../../../modules/types/record/types.ts';
 
-export const UpdateRecordParamsSchema = BaseParamsSchema;
+export const UpdateRegistrationParamsSchema = BaseParamsSchema;
 
-export const UpdateRecordBodySchema = z.object({
-  status: z.enum(RecordStatus),
+export const UpdateRegistrationBodySchema = z.object({
   assigneeId: z.string().nullable(),
 }).partial().transform((dto, ctx) => {
   if (Object.keys(dto).length === 0) {
@@ -16,4 +14,4 @@ export const UpdateRecordBodySchema = z.object({
   return dto;
 });
 
-export type UpdateRecordBodyDto = z.infer<typeof UpdateRecordBodySchema>;
+export type UpdateRegistrationBodyDto = z.infer<typeof UpdateRegistrationBodySchema>;

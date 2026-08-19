@@ -14,6 +14,7 @@ export enum RecordEntity {
   ANALYSIS = 'analysis',
   UNIT_RECEIVABLE = 'unit_receivable',
   TRANSACTION_CHARGEBACK = 'transaction_chargeback',
+  REGISTRATION = 'registration',
 }
 
 export enum RecordRequestType {

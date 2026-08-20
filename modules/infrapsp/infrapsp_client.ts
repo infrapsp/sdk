@@ -31,6 +31,7 @@ import { RecordHandler } from '../../modules/infrapsp/handlers/record_handler.ts
 import { RegistrationHandler } from '../../modules/infrapsp/handlers/registration_handler.ts';
 import { TagHandler } from '../../modules/infrapsp/handlers/tag_handler.ts';
 import { PolicyViolationHandler } from '../../modules/infrapsp/handlers/policy_violation_handler.ts';
+import { InterTransferHandler } from '../../modules/infrapsp/handlers/inter_transfer_handler.ts';
 
 export class InfraPSPClient {
   private readonly httpClient: HttpClient;
@@ -44,6 +45,7 @@ export class InfraPSPClient {
   public readonly feeProposal: FeeProposalHandler;
   public readonly feeRule: FeeRuleHandler;
   public readonly impersonate: ImpersonateHandler;
+  public readonly interTransfers: InterTransferHandler;
   public readonly invoices: InvoiceHandler;
   public readonly merchants: MerchantHandler;
   public readonly notification: NotificationHandler;
@@ -83,6 +85,7 @@ export class InfraPSPClient {
     this.externalAuth = new ExternalAuthHandler(this.httpClient);
     this.feeRule = new FeeRuleHandler(this.httpClient);
     this.impersonate = new ImpersonateHandler(this.httpClient);
+    this.interTransfers = new InterTransferHandler(this.httpClient);
     this.invoices = new InvoiceHandler(this.httpClient);
     this.merchants = new MerchantHandler(this.httpClient);
     this.notification = new NotificationHandler(this.httpClient);

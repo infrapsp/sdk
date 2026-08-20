@@ -101,6 +101,7 @@ export const MerchantResponseSchema = z.object({
   documentNumber: z.string(),
   documentType: z.enum(DocumentType),
   externalId: z.string().nullable().optional(),
+  registrationId: ZodSchemas.nanoid().nullable().optional(),
   companyName: z.string().nullable().optional(),
   personName: z.string(),
   personEmail: z.email(),

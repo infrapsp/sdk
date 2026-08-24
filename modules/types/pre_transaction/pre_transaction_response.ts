@@ -22,6 +22,10 @@ export const PreTransactionCreditCardSettingsResponseSchema = z.object({
       minAmount: z.number().int(),
     }),
   }),
+  wallets: z.object({
+    googlePay: z.object({ isEnabled: z.boolean() }),
+    applePay: z.object({ isEnabled: z.boolean() }),
+  }),
 }).partial();
 
 export const PreTransactionResponseSchema = z.object({

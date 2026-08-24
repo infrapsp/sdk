@@ -46,9 +46,17 @@ export const TransactionCreditCardMethodSettingsResponseSchema = z.object({
   threeDS: TransactionThreeDSResponseSchema.optional(),
 });
 
+export const TransactionWalletMethodSettingsResponseSchema = z.object({
+  installments: z.number().positive().int(),
+  brand: z.string(),
+  bin: z.string().optional(),
+  last4: z.string().optional(),
+  hasChargebackGuarantee: z.boolean(),
+});
+
 export const TransactionMethodSettingsResponseSchema = TransactionPixMethodSettingsResponseSchema.or(
   TransactionCreditCardMethodSettingsResponseSchema,
-).or(TransactionBoletoMethodSettingsResponseSchema).or(z.object({}));
+).or(TransactionBoletoMethodSettingsResponseSchema).or(TransactionWalletMethodSettingsResponseSchema).or(z.object({}));
 
 export const TransactionBoletoMethodDataResponseSchema = z.object({
   pixQrCode: z.string(),

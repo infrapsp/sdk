@@ -16,6 +16,10 @@ export type PreTransactionCreditCardSettings = {
       minAmount: number;
     };
   };
+  wallets?: {
+    googlePay: { isEnabled: boolean };
+    applePay: { isEnabled: boolean };
+  };
 };
 
 export type PreTransactionCustomer = {

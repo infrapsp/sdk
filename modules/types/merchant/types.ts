@@ -60,6 +60,11 @@ export type MerchantBankAccount = {
   accountType: MerchantBankAccountType;
 };
 
+export type MerchantWalletsSettings = {
+  googlePay: { isEnabled: boolean };
+  applePay: { isEnabled: boolean };
+};
+
 export type MerchantCreditCardSettings = {
   threeDS: {
     mode: 'off' | 'optional' | 'required';
@@ -67,4 +72,5 @@ export type MerchantCreditCardSettings = {
       minAmount: number;
     };
   };
+  wallets?: MerchantWalletsSettings;
 };

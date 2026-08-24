@@ -89,6 +89,34 @@ export type CreditCardMethodSettings = {
   threeDS?: ThreeDS;
 };
 
+export type GooglePayWalletSettings = {
+  signature: string;
+  data: string;
+  intermediateSigningKey: {
+    signingKey: string;
+    signature: string[];
+  };
+};
+
+export type ApplePayWalletSettings = {
+  merchantId: string;
+  clientTransactionCode: string;
+  data: string;
+  ephemeralPublicKey: string;
+  publicKey: string;
+  signature: string;
+};
+
+export type WalletMethodSettings = {
+  installments: number;
+  brand: string;
+  googlePay?: GooglePayWalletSettings;
+  applePay?: ApplePayWalletSettings;
+  bin?: string;
+  last4?: string;
+  hasChargebackGuarantee?: boolean;
+};
+
 export type CreditCardMethodData = {
   nsu: string;
   authorizationCode: string;
@@ -149,7 +177,7 @@ export type BoletoPaidData = {
   payer?: BoletoPaidDataPayer;
 };
 
-export type TransactionMethodSettings = EmptyObject | PixMethodSettings | CreditCardMethodSettings | BoletoMethodSettings;
+export type TransactionMethodSettings = EmptyObject | PixMethodSettings | CreditCardMethodSettings | BoletoMethodSettings | WalletMethodSettings;
 
 export type TransactionMethodData = EmptyObject | PixMethodData | CreditCardMethodData | BoletoMethodData | ThreeDSMethodData;
 

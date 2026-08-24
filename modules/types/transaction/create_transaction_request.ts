@@ -39,9 +39,35 @@ export const CreateTransactionCreditCardMethodSettingsBodySchema = z.object({
   threeDS: CreateTransactionThreeDSBodySchema.optional(),
 });
 
+export const CreateTransactionGooglePayBodySchema = z.object({
+  signature: z.string(),
+  data: z.string(),
+  intermediateSigningKey: z.object({
+    signingKey: z.string(),
+    signature: z.array(z.string()).nonempty(),
+  }),
+});
+
+export const CreateTransactionApplePayBodySchema = z.object({
+  merchantId: z.string(),
+  clientTransactionCode: z.string(),
+  data: z.string(),
+  ephemeralPublicKey: z.string(),
+  publicKey: z.string(),
+  signature: z.string(),
+});
+
+export const CreateTransactionWalletMethodSettingsBodySchema = z.object({
+  installments: z.number().positive().int().min(1).max(12),
+  brand: z.string().transform((brand) => brand.toLowerCase()),
+  googlePay: CreateTransactionGooglePayBodySchema.optional(),
+  applePay: CreateTransactionApplePayBodySchema.optional(),
+});
+
 export const CreateTransactionMethodSettingsBodySchema = CreateTransactionPixMethodSettingsBodySchema
   .or(CreateTransactionCreditCardMethodSettingsBodySchema)
-  .or(CreateTransactionBoletoMethodSettingsBodySchema);
+  .or(CreateTransactionBoletoMethodSettingsBodySchema)
+  .or(CreateTransactionWalletMethodSettingsBodySchema);
 
 export const CreateTransactionItemBodySchema = z.object({
   description: z.string(),
@@ -100,8 +126,26 @@ export const BaseCreateTransactionBodySchema = z.object({
   externalSaleChannel: z.string().regex(/^[^\s]+$/).max(128).optional().nullable(),
   metadata: z.record(z.string(), z.string()).optional(),
 }).transform((dto, ctx) => {
-  if (dto.method === PaymentMethod.CREDIT_CARD && !dto.context?.deviceFingerprint) {
+  const { method, methodSettings } = dto;
+  const isWallet = 'brand' in methodSettings;
+
+  if (method === PaymentMethod.CREDIT_CARD && !dto.context?.deviceFingerprint) {
     ZodHelpers.issue(ctx, 'context.deviceFingerprint', 'Required for method credit_card.');
+  }
+
+  const settingsMatchMethod: Record<PaymentMethod, boolean> = {
+    [PaymentMethod.PIX]: 'expiresIn' in methodSettings,
+    [PaymentMethod.BOLETO]: 'documentKind' in methodSettings,
+    [PaymentMethod.CREDIT_CARD]: 'cardToken' in methodSettings || isWallet,
+    [PaymentMethod.UNKNOWN]: true,
+  };
+
+  if (!settingsMatchMethod[method]) {
+    ZodHelpers.issue(ctx, 'methodSettings', `Does not match method ${method}.`);
+  }
+
+  if (isWallet && ['googlePay', 'applePay'].filter((wallet) => wallet in methodSettings).length !== 1) {
+    ZodHelpers.issue(ctx, 'methodSettings', 'Exactly one of googlePay or applePay is required.');
   }
 
   return dto;
@@ -128,4 +172,5 @@ export type CreateTransactionCustomerBodyDto = z.infer<typeof CreateTransactionC
 export type CreateTransactionCheckoutBodyDto = z.infer<typeof CreateTransactionCheckoutBodySchema>;
 export type CreateTransactionMethodSettingsBodyDto = z.infer<typeof CreateTransactionMethodSettingsBodySchema>;
 export type CreateTransactionCreditCardMethodSettingsBodyDto = z.infer<typeof CreateTransactionCreditCardMethodSettingsBodySchema>;
+export type CreateTransactionWalletMethodSettingsBodyDto = z.infer<typeof CreateTransactionWalletMethodSettingsBodySchema>;
 export type CreateTransactionThreeDSBodyDto = z.infer<typeof CreateTransactionThreeDSBodySchema>;

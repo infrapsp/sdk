@@ -32,6 +32,11 @@ export const MerchantPaymentMethodsSettingsSchema = z.object({
   boleto: z.enum(MerchantPaymentMethodStatus),
 });
 
+export const MerchantWalletsSettingsResponseSchema = z.object({
+  googlePay: z.object({ isEnabled: z.boolean() }),
+  applePay: z.object({ isEnabled: z.boolean() }),
+});
+
 export const MerchantCreditCardSettingsResponseSchema = z.object({
   threeDS: z.object({
     mode: z.enum(['off', 'optional', 'required']),
@@ -39,6 +44,7 @@ export const MerchantCreditCardSettingsResponseSchema = z.object({
       minAmount: z.number().int(),
     }),
   }),
+  wallets: MerchantWalletsSettingsResponseSchema.optional(),
 });
 
 export const MerchantSettingsResponseSchema = z.object({

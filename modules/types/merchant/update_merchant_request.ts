@@ -43,7 +43,11 @@ export const UpdateMerchantCreditCardSettingsBodySchema = z.object({
     optionalThreshold: z.object({
       minAmount: z.number().int().nonnegative(),
     }),
-  }),
+  }).optional(),
+  wallets: z.object({
+    googlePay: z.object({ isEnabled: z.boolean() }),
+    applePay: z.object({ isEnabled: z.boolean() }),
+  }).optional(),
 });
 
 export const UpdateMerchantSettingsBodySchema = z.object({

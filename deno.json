@@ -1,6 +1,6 @@
 {
   "name": "@infrapsp/sdk",
-  "version": "1.0.130",
+  "version": "1.0.131",
   "license": "MIT",
   "exports": "./modules/mod.ts",
   "compilerOptions": {

@@ -7,6 +7,7 @@ export const RestrictUpdateTransactionChargebackBodySchema = z.object({
     TransactionChargebackStatus.WON,
     TransactionChargebackStatus.LOST,
     TransactionChargebackStatus.GUARANTEED,
+    TransactionChargebackStatus.CANCELED,
   ]),
 });
 

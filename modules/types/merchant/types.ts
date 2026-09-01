@@ -54,6 +54,7 @@ export enum MerchantBankAccountType {
 
 export type MerchantBankAccount = {
   ispb: string;
+  bank: string;
   bankBranch: string;
   accountNumber: string;
   accountDigit: string;

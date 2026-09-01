@@ -73,6 +73,7 @@ export const MerchantBillingResponseSchema = z.object({
 
 export const MerchantBankAccountResponseSchema = z.object({
   ispb: z.string(),
+  bank: z.string(),
   bankBranch: z.string(),
   accountNumber: z.string(),
   accountDigit: z.string(),

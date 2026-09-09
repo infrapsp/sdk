@@ -25,6 +25,7 @@ export type TransferPixMethodDestination = {
   accountNumber?: string;
   accountDigit?: string;
   unitReceivableId?: string;
+  urContractEffectId?: string;
 };
 
 export type TransferMethodDestination = EmptyObject | TransferPixMethodDestination;

@@ -45,6 +45,19 @@ export class TransactionHandler {
     return validateResponse({ data, status });
   }
 
+  async cancel(id: string, requestInit: RequestInit = {}): AsyncResult<Record<string, unknown>> {
+    const url = `${this.basePath}/${id}/cancel`;
+
+    const response = await this.httpClient.post(url, requestInit);
+
+    if (isError(response)) return response;
+
+    const data = await response.json();
+    const status = response.status;
+
+    return validateResponse({ data, status });
+  }
+
   async findMany(query?: z.input<typeof FindTransactionQuerySchema>, requestInit: RequestInit = {}): AsyncResult<TransactionResponseDto[]> {
     const queryPath = new URLSearchParams(query as unknown as Record<string, string>);
 

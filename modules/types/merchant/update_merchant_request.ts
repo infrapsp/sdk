@@ -65,6 +65,11 @@ export const UpdateMerchantBankAccountBodySchema = z.object({
   accountNumber: z.string().min(1).max(15),
   accountDigit: z.string().min(1).max(1),
   accountType: z.enum(MerchantBankAccountType),
+}).transform((dto, ctx) => {
+  if ([MerchantBankAccountType.CHECKING, MerchantBankAccountType.SAVINGS].includes(dto.accountType) && dto.accountNumber.length > 13) {
+    ZodHelpers.issue(ctx, 'accountNumber', 'Account number must be at most 13 characters for checking and savings accounts.');
+  }
+  return dto;
 });
 
 export const UpdateMerchantBillingBodySchema = z.object({

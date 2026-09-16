@@ -14,6 +14,8 @@ export const TransactionSplitDetailPayableResponseSchema = z.object({
   installment: z.number().int(),
   createdAt: z.date(),
   updatedAt: z.date(),
+  transactionChargebackId: z.string().nullable(),
+  transactionRefundId: z.string().nullable(),
 });
 
 export const TransactionSplitDetailResponseSchema = z.object({

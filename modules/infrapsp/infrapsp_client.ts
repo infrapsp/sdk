@@ -30,6 +30,7 @@ import { TransactionChargebackHandler } from '../../modules/infrapsp/handlers/tr
 import { RecordHandler } from '../../modules/infrapsp/handlers/record_handler.ts';
 import { RegistrationHandler } from '../../modules/infrapsp/handlers/registration_handler.ts';
 import { BankHandler } from '../../modules/infrapsp/handlers/bank_handler.ts';
+import { FeatureFlagHandler } from '../../modules/infrapsp/handlers/feature_flag_handler.ts';
 import { TagHandler } from '../../modules/infrapsp/handlers/tag_handler.ts';
 import { PolicyViolationHandler } from '../../modules/infrapsp/handlers/policy_violation_handler.ts';
 import { InterTransferHandler } from '../../modules/infrapsp/handlers/inter_transfer_handler.ts';
@@ -60,6 +61,7 @@ export class InfraPSPClient {
   public readonly registrations: RegistrationHandler;
   public readonly preTransactions: PreTransactionHandler;
   public readonly banks: BankHandler;
+  public readonly featureFlags: FeatureFlagHandler;
   public readonly tags: TagHandler;
   public readonly transactions: TransactionHandler;
   public readonly transactionChargebacks: TransactionChargebackHandler;
@@ -98,6 +100,7 @@ export class InfraPSPClient {
     this.compensations = new CompensationHandler(this.httpClient);
     this.preTransactions = new PreTransactionHandler(this.httpClient);
     this.banks = new BankHandler(this.httpClient);
+    this.featureFlags = new FeatureFlagHandler(this.httpClient);
     this.tags = new TagHandler(this.httpClient);
     this.transactions = new TransactionHandler(this.httpClient);
     this.transactionChargebacks = new TransactionChargebackHandler(this.httpClient);

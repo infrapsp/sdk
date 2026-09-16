@@ -128,6 +128,7 @@ export const MerchantResponseSchema = z.object({
   settings: MerchantSettingsResponseSchema,
   bankAccount: MerchantBankAccountResponseSchema.nullable().optional(),
   metadata: z.record(z.string(), z.string().or(z.number().or(z.boolean().or(z.date())))),
+  featureFlags: z.record(z.string(), z.boolean()),
 });
 
 export type MerchantSettingsResponseDto = z.infer<typeof MerchantSettingsResponseSchema>;

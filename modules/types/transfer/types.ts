@@ -3,6 +3,7 @@ import { DocumentType } from '../../../modules/types/merchant/types.ts';
 
 export enum TransferMethod {
   PIX = 'pix',
+  SLC = 'slc',
 }
 
 export enum TransferStatus {
@@ -27,6 +28,8 @@ export type TransferPixMethodDestination = {
   unitReceivableId?: string;
   urContractEffectId?: string;
   urContractEffectProviderId?: string;
+  numCtrlCip?: string;
+  nuLiquid?: string;
 };
 
 export type TransferMethodDestination = EmptyObject | TransferPixMethodDestination;

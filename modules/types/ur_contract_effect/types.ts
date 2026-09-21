@@ -14,6 +14,8 @@ export enum UrContractEffectSlcStatus {
   WAITING_INFORM = 'waiting_inform',
   INFORMED = 'informed',
   NOT_INFORMED = 'not_informed',
+  LIQUIDATED = 'liquidated',
+  NOT_LIQUIDATED = 'not_liquidated',
 }
 
 export type UrContractEffectBankAccount = {

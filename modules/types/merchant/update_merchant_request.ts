@@ -88,7 +88,6 @@ export const UpdateMerchantBodySchema = z.object({
   billing: UpdateMerchantBillingBodySchema,
   bankAccount: UpdateMerchantBankAccountBodySchema,
   metadata: z.record(z.string(), z.string().or(z.number().or(z.boolean()))),
-  featureFlags: z.record(z.string(), z.boolean()),
 }).partial().transform((dto, ctx) => {
   if (Object.keys(dto).length === 0) {
     ZodHelpers.issue(ctx, 'body', 'At least one field must be provided');
@@ -120,6 +119,7 @@ export const RestrictUpdateMerchantBodySchema = z.object({
   settings: RestrictUpdateMerchantSettingsBodySchema,
   tags: z.array(z.string().regex(/^[a-zA-Z0-9-]+$/).max(32)).max(5),
   metadata: z.record(z.string(), z.string().or(z.number().or(z.boolean()))),
+  featureFlags: z.record(z.string(), z.boolean()),
 }).partial().transform((dto, ctx) => {
   if (Object.keys(dto).length === 0) {
     ZodHelpers.issue(ctx, 'body', 'At least one field must be provided');

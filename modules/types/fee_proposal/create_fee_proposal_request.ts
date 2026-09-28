@@ -3,6 +3,7 @@ import { ZodSchemas } from '../../../modules/types/zod.ts';
 import { FeeRuleEntity, FeeRuleMethod } from '../../../modules/types/fee_rule/types.ts';
 import { ZodHelpers } from '../../../modules/types/zod.ts';
 import { EmptySchema } from '../../../modules/types/base/requests.ts';
+import { FeeProposalStatus } from '../../../modules/types/fee_proposal/types.ts';
 
 export const CreateFeeProposalCreditCardBodySchema = z.object({
   anticipation: z.number().int().nonnegative(),
@@ -27,6 +28,7 @@ export const RestrictCreateFeeProposalBodySchema = z.object({
   maxAmount: z.number().int().max(999999999),
   creditCard: CreateFeeProposalCreditCardBodySchema,
   name: z.string().max(255),
+  status: z.enum([FeeProposalStatus.CREATED, FeeProposalStatus.ACCEPTED]).optional(),
 }).transform((dto, ctx) => {
   if (dto.maxAmount < dto.minAmount) {
     ZodHelpers.issue(ctx, 'maxAmount', 'Must be greater than minAmount.');

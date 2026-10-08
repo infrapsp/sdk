@@ -5,5 +5,5 @@ import { ZodSchemas } from '../../../modules/types/zod.ts';
 export const FindNotificationTemplateQuerySchema = BaseQuerySchema;
 
 export const FindNotificationTemplateParamsSchema = z.object({
-  id: ZodSchemas.alphanumericWithDash(),
+  id: ZodSchemas.alphanumericWithDash().openapi({ description: 'unique identifier' }),
 });

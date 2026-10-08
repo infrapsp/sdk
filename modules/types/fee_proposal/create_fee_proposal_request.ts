@@ -12,22 +12,32 @@ export const CreateFeeProposalCreditCardBodySchema = z.object({
     installment: z.number().int().min(1).max(12),
     percent: z.number().int().min(0).max(10000),
   })).length(12),
-}).or(EmptySchema);
+}).openapi({ title: 'Credit card fees' }).or(EmptySchema.openapi({ title: 'Empty' }));
 
 export const RestrictCreateFeeProposalBodySchema = z.object({
-  merchantId: ZodSchemas.nanoid(),
-  author: z.string().min(1).max(128),
-  expirationDate: ZodSchemas.datetime(),
-  period: z.number().int().min(1),
-  method: z.enum(FeeRuleMethod),
-  triggerEntity: z.enum(FeeRuleEntity),
-  fundSchedule: z.number().nonnegative(),
-  amountValue: z.number().int(),
-  percentValue: z.number().int(),
-  minAmount: z.number().int().min(0),
-  maxAmount: z.number().int().max(999999999),
-  creditCard: CreateFeeProposalCreditCardBodySchema,
-  name: z.string().max(255),
+  merchantId: ZodSchemas.nanoid().openapi({ example: 'upNWAg3eC8apERUqJx6yp' }),
+  author: z.string().min(1).max(128).openapi({ example: 'John Doe', description: 'the person creating this proposal' }),
+  expirationDate: ZodSchemas.datetime().openapi({ example: '2026-12-31T23:59:59Z', description: 'when this proposal expires' }),
+  period: z.number().int().min(1).openapi({ example: 30, description: 'the number of days the fee rule will be active if accepted' }),
+  method: z.enum(FeeRuleMethod).openapi({ example: FeeRuleMethod.PIX, description: 'the payment method this proposal applies to' }),
+  triggerEntity: z.enum(FeeRuleEntity).openapi({ example: FeeRuleEntity.TRANSACTION, description: 'the entity this proposal is applied to' }),
+  fundSchedule: z.number().nonnegative().openapi({ example: 0, description: 'determines when funds will be available to the merchant' }),
+  amountValue: z.number().int().openapi({ example: 30, description: 'the fixed amount value charged in cents' }),
+  percentValue: z.number().int().openapi({ example: 99, description: 'the percentage value charged in base points (1,00% = 100)' }),
+  minAmount: z.number().int().min(0).openapi({ example: 0, description: 'minimum amount charged' }),
+  maxAmount: z.number().int().max(999999999).openapi({ example: 999999999, description: 'the maximum amount charged' }),
+  creditCard: CreateFeeProposalCreditCardBodySchema.openapi({
+    example: {
+      anticipation: 150,
+      chargebackGuarantee: 200,
+      mdr: Array.from({ length: 12 }, (_, i) => ({
+        installment: i + 1,
+        percent: 250 + (i * 30),
+      })),
+    },
+    description: 'credit card specific fees (required for credit card method)',
+  }),
+  name: z.string().max(255).openapi({ example: 'Q1 2026 Fee Proposal', description: 'the name of the fee proposal' }),
   status: z.enum([FeeProposalStatus.CREATED, FeeProposalStatus.ACCEPTED]).optional(),
 }).transform((dto, ctx) => {
   if (dto.maxAmount < dto.minAmount) {

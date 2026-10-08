@@ -6,8 +6,8 @@ import { RecordStatus } from '../../../modules/types/record/types.ts';
 export const UpdateRecordParamsSchema = BaseParamsSchema;
 
 export const UpdateRecordBodySchema = z.object({
-  status: z.enum(RecordStatus),
-  assigneeId: z.string().nullable(),
+  status: z.enum(RecordStatus).openapi({ example: RecordStatus.APPROVED }),
+  assigneeId: z.string().nullable().openapi({ example: 'EngmKkhbAo' }),
 }).partial().transform((dto, ctx) => {
   if (Object.keys(dto).length === 0) {
     ZodHelpers.issue(ctx, 'body', 'At least one field must be provided');

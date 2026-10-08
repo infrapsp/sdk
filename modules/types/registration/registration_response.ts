@@ -26,20 +26,39 @@ export const RegistrationMerchantDataSchema = z.object({
       number: z.string(),
     }),
   }),
-}).or(z.object({}));
+}).openapi({ title: 'Merchant data' }).or(z.object({}).openapi({ title: 'Empty' }));
 
 export const RegistrationResponseSchema = z.object({
-  id: ZodSchemas.nanoid(),
-  documentNumber: z.string(),
-  documentType: z.enum(DocumentType),
-  status: z.enum(RegistrationStatus),
-  statusMessage: z.string(),
+  id: ZodSchemas.nanoid().openapi({ example: 'mbWVijmG5JTUSi4PQZVKv' }),
+  documentNumber: z.string().openapi({ description: 'cpf or cnpj number without punctuation', example: '88550339997' }),
+  documentType: z.enum(DocumentType).openapi({ description: 'cpf or cnpj', example: DocumentType.CPF }),
+  status: z.enum(RegistrationStatus).openapi({ example: RegistrationStatus.PENDING }),
+  statusMessage: z.string().openapi({ example: 'status message' }),
   externalUserId: z.string(),
-  assigneeId: z.string().nullable().optional(),
-  providerData: RegistrationProviderDataSchema,
-  merchantData: RegistrationMerchantDataSchema,
-  createdAt: z.date(),
-  updatedAt: z.date(),
+  assigneeId: z.string().nullable().optional().openapi({ example: 'EngmKkhbAo' }),
+  providerData: RegistrationProviderDataSchema.openapi({
+    example: {
+      onboardingUrl: 'https://example.com',
+    },
+  }),
+  merchantData: RegistrationMerchantDataSchema.openapi({
+    example: {
+      url: 'https://www.example.com',
+      personName: 'João da Silva',
+      personEmail: 'joao@example.com',
+      companyName: 'Empresa Exemplo',
+      tradingName: 'Empresa Exemplo LTDA',
+      cnae: '7372',
+      monthlyBilling: 100000,
+      phoneNumber: '+5511999999999',
+      billing: {
+        email: 'billing@example.com',
+        address: { zipCode: '04538132', line1: 'Av. Brigadeiro Faria Lima', line2: '4440', neighborhood: 'Itaim Bibi', number: '4440' },
+      },
+    },
+  }),
+  createdAt: z.date().openapi({ example: '2022-01-01T00:00:00Z' }),
+  updatedAt: z.date().openapi({ example: '2022-01-01T00:00:00Z' }),
 });
 
 export type RegistrationResponseDto = z.infer<typeof RegistrationResponseSchema>;

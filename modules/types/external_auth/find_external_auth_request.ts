@@ -2,7 +2,7 @@ import { z } from 'npm:@hono/zod-openapi@1.4.0';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
 
 export const FindExternalAuthQuerySchema = z.object({
-  merchantId: ZodSchemas.nanoid(),
+  merchantId: ZodSchemas.nanoid().openapi({ example: 'zpBxynBgNCzbdOKmpKG1k' }),
 });
 
 export type FindExternalAuthQueryDto = z.infer<typeof FindExternalAuthQuerySchema>;

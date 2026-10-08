@@ -4,9 +4,14 @@ import { DocumentType } from '../../../modules/types/merchant/types.ts';
 import { ZodRefines } from '../../../modules/types/zod.ts';
 
 export const CreateRegistrationBodySchema = z.object({
-  documentNumber: ZodSchemas.document(),
-  documentType: z.enum(DocumentType),
-  variables: z.record(z.string(), z.string()).optional(),
+  documentNumber: ZodSchemas.document().openapi({ description: 'cpf or cnpj number without punctuation', example: '88550339997', type: 'string' }),
+  documentType: z.enum(DocumentType).openapi({ description: 'cpf or cnpj', example: DocumentType.CPF }),
+  variables: z.record(z.string(), z.string()).optional().openapi({
+    description: 'variables to be used in the onboarding template',
+    example: {
+      redirectTo: 'https://example.com/redirect',
+    },
+  }),
 }).transform((dto, ctx) => {
   ZodRefines.matchDocument(ctx, dto.documentNumber, dto.documentType);
   return dto;

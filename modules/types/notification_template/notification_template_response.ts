@@ -3,14 +3,29 @@ import { ZodSchemas } from '../../../modules/types/zod.ts';
 import { NotificationTemplateFieldType } from '../../../modules/types/notification_template/types.ts';
 
 export const NotificationTemplateResponseSchema = z.object({
-  id: ZodSchemas.alphanumericWithDash(),
-  requiredFields: z.record(z.string(), z.enum(NotificationTemplateFieldType)),
-  bellTemplate: z.string().nullable(),
-  emailTemplate: z.string().nullable(),
-  emailSubjectTemplate: z.string().nullable(),
+  id: ZodSchemas.alphanumericWithDash().openapi({ example: '9d13a0eb48964d5bba23e' }),
+  requiredFields: z.record(z.string(), z.enum(NotificationTemplateFieldType)).openapi({
+    description: 'The fields required to render the template and send the notification',
+    example: {
+      bellTo: NotificationTemplateFieldType.STRING,
+      emailTo: NotificationTemplateFieldType.STRING,
+    },
+  }),
+  bellTemplate: z.string().nullable().openapi({
+    description: 'Vento template to render the bell notification',
+    example: 'Hi, {{bellTo}}, you have a new notification',
+  }),
+  emailTemplate: z.string().nullable().openapi({
+    description: 'Vento template to render the email notification',
+    example: 'Hi, {{emailTo}}, you have a new notification',
+  }),
+  emailSubjectTemplate: z.string().nullable().openapi({
+    description: 'Vento template to render the email subject',
+    example: 'New notification for {{emailTo}}',
+  }),
   slackTemplate: z.string().nullable(),
-  createdAt: z.date(),
-  updatedAt: z.date(),
+  createdAt: z.date().openapi({ example: '2021-09-01T00:00:00.000Z' }),
+  updatedAt: z.date().openapi({ example: '2021-09-01T00:00:00.000Z' }),
 });
 
 export type NotificationTemplateResponseDto = z.infer<typeof NotificationTemplateResponseSchema>;

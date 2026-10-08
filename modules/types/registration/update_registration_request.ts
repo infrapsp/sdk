@@ -5,7 +5,7 @@ import { ZodHelpers } from '../../../modules/types/zod.ts';
 export const UpdateRegistrationParamsSchema = BaseParamsSchema;
 
 export const UpdateRegistrationBodySchema = z.object({
-  assigneeId: z.string().nullable(),
+  assigneeId: z.string().nullable().openapi({ example: 'EngmKkhbAo' }),
 }).partial().transform((dto, ctx) => {
   if (Object.keys(dto).length === 0) {
     ZodHelpers.issue(ctx, 'body', 'At least one field must be provided');

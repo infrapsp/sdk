@@ -2,7 +2,7 @@ import { z } from 'npm:@hono/zod-openapi@1.4.0';
 import { BaseParamsSchema } from '../../../modules/types/base/requests.ts';
 
 export const ReplyExternalAuthInviteBodySchema = z.object({
-  hasAccepted: z.boolean(),
+  hasAccepted: z.boolean().openapi({ example: true }),
 });
 
 export const ReplyExternalAuthInviteParamsSchema = BaseParamsSchema;

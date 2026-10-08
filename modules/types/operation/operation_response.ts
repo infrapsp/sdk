@@ -4,17 +4,20 @@ import { OperationStatus, OriginEntity, OriginMethod } from '../../../modules/ty
 import { BalanceAccountType } from '../../../modules/types/balance/types.ts';
 
 export const OperationResponseSchema = z.object({
-  id: ZodSchemas.nanoid(),
-  merchantId: ZodSchemas.nanoid(),
-  payableId: ZodSchemas.nanoid(),
-  status: z.enum(OperationStatus),
-  amount: z.number().int(),
-  paymentDate: z.date(),
-  entity: z.enum(OriginEntity),
+  id: ZodSchemas.nanoid().openapi({ example: 'zZebjp82qsenXXnu947f6' }),
+  merchantId: ZodSchemas.nanoid().openapi({ example: 'j9cQwAr3KXolCLSYWleOG' }),
+  payableId: ZodSchemas.nanoid().openapi({ example: 'v1vvAMmAePFJdkAU073hc' }),
+  status: z.enum(OperationStatus).openapi({ example: OperationStatus.AVAILABLE }),
+  amount: z.number().int().openapi({ example: 1000 }),
+  paymentDate: z.date().openapi({
+    description: 'date when the operation was liquidated and its amount became available in balance',
+    example: '2021-09-01T00:00:00.000Z',
+  }),
+  entity: z.enum(OriginEntity).openapi({ example: OriginEntity.TRANSACTION }),
   account: z.enum(BalanceAccountType),
-  method: z.enum(OriginMethod),
-  description: z.string(),
-  createdAt: z.date(),
+  method: z.enum(OriginMethod).openapi({ example: OriginMethod.PIX }),
+  description: z.string().openapi({ example: 'TRX 20231231' }),
+  createdAt: z.date().openapi({ example: '2021-09-01T00:00:00.000Z' }),
 });
 
 export type OperationResponseDto = z.infer<typeof OperationResponseSchema>;

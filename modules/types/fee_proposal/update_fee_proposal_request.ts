@@ -3,7 +3,10 @@ import { FeeProposalStatus } from '../../../modules/types/fee_proposal/types.ts'
 import { BaseParamsSchema } from '../../../modules/types/base/requests.ts';
 
 export const UpdateFeeProposalBodySchema = z.object({
-  status: z.enum(FeeProposalStatus),
+  status: z.enum(FeeProposalStatus).openapi({
+    example: FeeProposalStatus.ACCEPTED,
+    description: 'the new status for this proposal (accepted, rejected, or expired)',
+  }),
 });
 
 export const UpdateFeeProposalParamsSchema = BaseParamsSchema;

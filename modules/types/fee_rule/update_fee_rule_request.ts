@@ -3,11 +3,11 @@ import { z } from 'npm:@hono/zod-openapi@1.4.0';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
 
 export const UpdateFeeRuleBodySchema = z.object({
-  isEnabled: z.boolean(),
+  isEnabled: z.boolean().openapi({ example: true, description: 'determines if the rule is enabled' }),
 });
 
 export const UpdateFeeRuleQuerySchema = z.object({
-  merchantId: ZodSchemas.nanoid().optional(),
+  merchantId: ZodSchemas.nanoid().optional().openapi({ example: 'upNWAg3eC8apERUqJx6yp' }),
 });
 
 export const UpdateFeeRuleParamsSchema = BaseParamsSchema;

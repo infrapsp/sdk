@@ -2,5 +2,5 @@ import { z } from 'npm:@hono/zod-openapi@1.4.0';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
 
 export const DeleteRecordParamsSchema = z.object({
-  id: ZodSchemas.nanoid(),
+  id: ZodSchemas.nanoid().openapi({ example: 'EngmKkhbAoJhM0RPUQd6a' }),
 });

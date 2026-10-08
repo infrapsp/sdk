@@ -9,32 +9,32 @@ import {
 } from '../../../modules/types/transaction/transaction_response.ts';
 
 export const TransactionCheckoutShippingResponseSchema = z.object({
-  amount: z.number().nonnegative().int(),
-  recipientName: z.string(),
+  amount: z.number().nonnegative().int().openapi({ example: 1000 }),
+  recipientName: z.string().openapi({ example: 'John Doe' }),
 });
 
 export const TransactionCheckoutCustomerResponseSchema = z.object({
-  companyName: z.string().nullable().optional(),
-  personName: z.string().min(1).max(50),
-  gender: z.enum(Gender),
+  companyName: z.string().nullable().optional().openapi({ example: 'Company John' }),
+  personName: z.string().min(1).max(50).openapi({ example: 'John Doe' }),
+  gender: z.enum(Gender).openapi({ example: Gender.MALE }),
 });
 
 export const TransactionCheckoutResponseSchema = z.object({
-  id: ZodSchemas.nanoid(),
-  merchantId: ZodSchemas.nanoid(),
-  preTransactionId: ZodSchemas.nanoid().nullable().optional(),
-  providerId: z.string().nullable().optional(),
-  status: z.enum(TransactionStatus),
-  method: z.enum(PaymentMethod),
-  methodSettings: TransactionMethodSettingsResponseSchema,
-  items: z.array(TransactionItemResponseSchema),
-  shipping: TransactionCheckoutShippingResponseSchema.optional().nullable(),
-  methodData: TransactionMethodDataResponseSchema,
-  amount: z.number().positive().int(),
-  customer: TransactionCheckoutCustomerResponseSchema.optional().nullable(),
-  externalId: z.string().nullable(),
-  createdAt: z.date(),
-  updatedAt: z.date(),
+  id: ZodSchemas.nanoid().openapi({ example: 'gnQjJatJSrhxaGtXeTuDd' }),
+  merchantId: ZodSchemas.nanoid().openapi({ example: 'CRutyJmJHin46NXnRdCj' }),
+  preTransactionId: ZodSchemas.nanoid().nullable().optional().openapi({ example: 'TN6wQQOoe3Au3CrspWS0r' }),
+  providerId: z.string().nullable().optional().openapi({ example: 'b8d32335507746d381daf2d38db89111c496089b15' }),
+  status: z.enum(TransactionStatus).openapi({ example: TransactionStatus.WAITING_PAYMENT }),
+  method: z.enum(PaymentMethod).openapi({ example: PaymentMethod.PIX }),
+  methodSettings: TransactionMethodSettingsResponseSchema.openapi({ description: 'one of the schemas depending on the payment method' }),
+  items: z.array(TransactionItemResponseSchema).openapi({ description: 'describe the items that compose the transaction' }),
+  shipping: TransactionCheckoutShippingResponseSchema.optional().nullable().openapi({ description: 'shipping information' }),
+  methodData: TransactionMethodDataResponseSchema.openapi({ description: 'one of the schemas depending on the payment method' }),
+  amount: z.number().positive().int().openapi({ example: 1000 }),
+  customer: TransactionCheckoutCustomerResponseSchema.optional().nullable().openapi({ description: 'customer information' }),
+  externalId: z.string().nullable().openapi({ description: 'external id for the transaction', example: 'my_ext_id' }),
+  createdAt: z.date().openapi({ example: '2021-10-25T20:00:00.000Z' }),
+  updatedAt: z.date().openapi({ example: '2021-10-25T20:00:00.000Z' }),
 });
 
 export type TransactionCheckoutResponseDto = z.infer<typeof TransactionCheckoutResponseSchema>;

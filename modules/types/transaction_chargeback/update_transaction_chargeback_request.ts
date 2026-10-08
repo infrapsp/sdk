@@ -8,7 +8,7 @@ export const RestrictUpdateTransactionChargebackBodySchema = z.object({
     TransactionChargebackStatus.LOST,
     TransactionChargebackStatus.GUARANTEED,
     TransactionChargebackStatus.CANCELED,
-  ]),
+  ]).openapi({ description: 'Chargeback status', example: TransactionChargebackStatus.WON }),
 });
 
 export type RestrictUpdateTransactionChargebackBodyDto = z.infer<typeof RestrictUpdateTransactionChargebackBodySchema>;

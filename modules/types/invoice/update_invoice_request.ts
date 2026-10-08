@@ -6,9 +6,9 @@ import { InvoiceStatus } from '../../../modules/types/invoice/types.ts';
 export const UpdateInvoiceParamsSchema = BaseParamsSchema;
 
 export const UpdateInvoiceIssuedDataSchema = z.object({
-  number: z.string().max(128),
-  url: z.string().max(200),
-  checkCode: z.string().max(128),
+  number: z.string().max(128).openapi({ example: '123' }),
+  url: z.string().max(200).openapi({ example: 'https://example.com' }),
+  checkCode: z.string().max(128).openapi({ example: '123' }),
 }).partial().transform((dto, ctx) => {
   if (Object.keys(dto).length === 0) {
     ZodHelpers.issue(ctx, 'body', 'At least one field must be provided');
@@ -18,8 +18,12 @@ export const UpdateInvoiceIssuedDataSchema = z.object({
 });
 
 export const UpdateInvoiceBodySchema = z.object({
-  metadata: z.record(z.string(), z.string().or(z.number())),
-  status: z.enum(InvoiceStatus),
+  metadata: z.record(z.string(), z.string().or(z.number())).openapi({
+    example: {
+      key: 'value',
+    },
+  }),
+  status: z.enum(InvoiceStatus).openapi({ example: InvoiceStatus.ISSUED }),
   issuedData: UpdateInvoiceIssuedDataSchema,
 }).partial().transform((dto, ctx) => {
   if (Object.keys(dto).length === 0) {

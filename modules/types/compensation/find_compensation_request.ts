@@ -4,10 +4,23 @@ import { ZodHelpers, ZodRefines, ZodSchemas } from '../../../modules/types/zod.t
 const MAX_RANGE_MS = 1000 * 60 * 60 * 24 * 45; // 45 days
 
 export const FindCompensationQuerySchema = z.object({
-  payablePaymentDateGte: ZodSchemas.datetime().optional(),
-  payablePaymentDateLte: ZodSchemas.datetime().optional(),
-  urPaymentDateGte: ZodSchemas.datetime().optional(),
-  urPaymentDateLte: ZodSchemas.datetime().optional(),
+  payablePaymentDateGte: ZodSchemas.datetime().optional().openapi({
+    description: 'aggregate by payable payment date — greater than or equal to. Requires payablePaymentDateLte. Takes precedence over urPaymentDate.',
+    example: '2026-07-01T00:00:00.000Z',
+  }),
+  payablePaymentDateLte: ZodSchemas.datetime().optional().openapi({
+    description: 'aggregate by payable payment date — less than or equal to. Requires payablePaymentDateGte. Range must not exceed 45 days.',
+    example: '2026-08-01T00:00:00.000Z',
+  }),
+  urPaymentDateGte: ZodSchemas.datetime().optional().openapi({
+    description:
+      'aggregate by unit receivable payment date — greater than or equal to. Requires urPaymentDateLte. Ignored when payablePaymentDate is informed.',
+    example: '2026-07-01T00:00:00.000Z',
+  }),
+  urPaymentDateLte: ZodSchemas.datetime().optional().openapi({
+    description: 'aggregate by unit receivable payment date — less than or equal to. Requires urPaymentDateGte. Range must not exceed 45 days.',
+    example: '2026-08-01T00:00:00.000Z',
+  }),
 }).transform((dto, ctx) => {
   const hasPayable = Boolean(dto.payablePaymentDateGte || dto.payablePaymentDateLte);
   const hasUr = Boolean(dto.urPaymentDateGte || dto.urPaymentDateLte);

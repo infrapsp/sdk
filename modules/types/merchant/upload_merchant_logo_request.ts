@@ -3,7 +3,11 @@ import { BaseParamsSchema } from '../../../modules/types/base/requests.ts';
 import { ZodHelpers } from '../../../modules/types/zod.ts';
 
 export const UploadMerchantLogoBodySchema = z.object({
-  logo: z.instanceof(File),
+  logo: z.instanceof(File).openapi({
+    type: 'string',
+    format: 'binary',
+    description: 'image to display as the logo. Accepts image/png, image/jpeg, image/jpg only. Max: 5MB',
+  }),
 }).transform((dto, ctx) => {
   if (dto.logo.size > 1024 * 1024 * 5) {
     ZodHelpers.issue(ctx, 'logo', 'File size must be less than 5MB.');

@@ -17,9 +17,11 @@ export const ZodSchemas = {
       } else {
         return false;
       }
-    }, { message: 'Invalid document' }),
-  cpf: () => z.custom<string>((data) => typeof data === 'string' ? isValidCpf(data) : false, { message: 'Invalid document' }),
-  cnpj: () => z.custom<string>((data) => typeof data === 'string' ? isValidCnpj(data) : false, { message: 'Invalid document' }),
+    }, { message: 'Invalid document' }).openapi({ type: 'string' }),
+  cpf: () =>
+    z.custom<string>((data) => typeof data === 'string' ? isValidCpf(data) : false, { message: 'Invalid document' }).openapi({ type: 'string' }),
+  cnpj: () =>
+    z.custom<string>((data) => typeof data === 'string' ? isValidCnpj(data) : false, { message: 'Invalid document' }).openapi({ type: 'string' }),
   alphanumeric: () => z.string().regex(/^[0-9a-zA-Z]+$/),
   alphanumericWithSpace: () => z.string().regex(/^[0-9a-zA-Z ]+$/),
   alphanumericWithDash: () => z.string().regex(/^[0-9a-zA-Z-]+$/),
@@ -27,6 +29,10 @@ export const ZodSchemas = {
   phone: () => z.string().regex(/^\+[0-9]{3,15}$/),
   stringArray: <T extends z.ZodType>(e: T) => z.preprocess((val) => val ? String(val).split(',') : [], z.array(e)),
   stringBoolean: () => z.string().transform((data) => JSON.parse(data)).pipe(z.boolean()),
+  dateString: () =>
+    z.string()
+      .regex(/^\d{4}-\d{2}-\d{2}$/, 'should be in the format YYYY-MM-DD')
+      .refine((date) => !Number.isNaN(new Date(`${date}T00:00:00.000Z`).getTime()), 'should be a valid date'),
   futureDateString: () =>
     z.string().regex(/^\d{4}-\d{2}-\d{2}$/).refine((date) => {
       const today = new Date();

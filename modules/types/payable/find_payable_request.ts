@@ -8,20 +8,35 @@ export const FindPayableParamsSchema = BaseParamsSchema;
 
 export const FindPayableQuerySchema = BaseQuerySchema.and(
   z.object({
-    transactionId: ZodSchemas.nanoid().optional(),
-    transactionRefundId: ZodSchemas.nanoid().optional(),
-    transactionSplitId: ZodSchemas.nanoid().optional(),
-    transferId: ZodSchemas.nanoid().optional(),
-    entity: ZodSchemas.stringArray(z.enum(PayableEntity)).optional(),
+    transactionId: ZodSchemas.nanoid().optional().openapi({ example: 'lgUbH5A1vpg85zikTViBl' }),
+    transactionRefundId: ZodSchemas.nanoid().optional().openapi({ example: 'lgUbH5A1vpg85zikTViBl' }),
+    transactionSplitId: ZodSchemas.nanoid().optional().openapi({ example: 'lgUbH5A1vpg85zikTViBl' }),
+    transferId: ZodSchemas.nanoid().optional().openapi({ example: 'lgUbH5A1vpg85zikTViBl' }),
+    entity: ZodSchemas.stringArray(z.enum(PayableEntity)).optional().openapi({ description: 'entity to be used to filter', example: 'transfer' }),
     notEntity: ZodSchemas.stringArray(z.enum(PayableEntity)).optional(),
-    type: ZodSchemas.stringArray(z.enum(PayableType)).optional(),
-    method: z.enum(PayableMethod).optional(),
-    status: ZodSchemas.stringArray(z.enum(PayableStatus)).optional(),
-    notStatus: ZodSchemas.stringArray(z.enum(PayableStatus)).optional(),
-    sortField: z.enum(['createdAt', 'paymentDate']).default('createdAt'),
-    sortOrder: z.enum(SortOrder).default(SortOrder.DESC),
-    paymentDateLte: ZodSchemas.datetime().optional(),
-    paymentDateGte: ZodSchemas.datetime().optional(),
+    type: ZodSchemas.stringArray(z.enum(PayableType)).optional().openapi({ example: PayableType.CREDIT }),
+    method: z.enum(PayableMethod).optional().openapi({ example: PayableMethod.PIX }),
+    status: ZodSchemas.stringArray(z.enum(PayableStatus)).optional().openapi({
+      description: 'comma-separated list of payable status',
+      example: [PayableStatus.PAID],
+    }),
+    notStatus: ZodSchemas.stringArray(z.enum(PayableStatus)).optional().openapi({
+      description: 'comma-separated list of payable status to not be included',
+      example: PayableStatus.PAID,
+    }),
+    sortField: z.enum(['createdAt', 'paymentDate']).default('createdAt').openapi({
+      description: 'field to be used to sort the results',
+      default: 'createdAt',
+    }),
+    sortOrder: z.enum(SortOrder).default(SortOrder.DESC).openapi({ description: 'sort order', example: SortOrder.DESC }),
+    paymentDateLte: ZodSchemas.datetime().optional().openapi({
+      description: 'paymentDate less than or equal to',
+      example: '2022-01-01T00:00:00.000Z',
+    }),
+    paymentDateGte: ZodSchemas.datetime().optional().openapi({
+      description: 'paymentDate greater than or equal to',
+      example: '2022-01-01T00:00:00.000Z',
+    }),
   }),
 ).transform((dto, ctx) => {
   // paymentDate validation

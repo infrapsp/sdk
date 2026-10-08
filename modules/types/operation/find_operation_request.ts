@@ -6,15 +6,36 @@ import { OperationStatus, OriginEntity, OriginMethod } from '../../../modules/ty
 
 export const FindOperationQuerySchema = BaseQuerySchema.and(
   z.object({
-    payableId: ZodSchemas.nanoid().optional(),
-    method: z.enum(OriginMethod).optional(),
-    entity: z.enum(OriginEntity).optional(),
-    status: ZodSchemas.stringArray(z.enum(OperationStatus)).optional(),
-    notStatus: ZodSchemas.stringArray(z.enum(OperationStatus)).optional(),
-    sortField: z.enum(['createdAt', 'paymentDate']).default('createdAt'),
-    sortOrder: z.enum(SortOrder).default(SortOrder.DESC),
-    paymentDateLte: ZodSchemas.datetime().optional(),
-    paymentDateGte: ZodSchemas.datetime().optional(),
+    payableId: ZodSchemas.nanoid().optional().openapi({
+      description: 'filter the operations related to this payable id',
+      example: 'v1vvAMmAePFJdkAU073hc',
+    }),
+    method: z.enum(OriginMethod).optional().openapi({ description: 'filter by the method that originated the operation', example: OriginMethod.PIX }),
+    entity: z.enum(OriginEntity).optional().openapi({
+      description: 'filter by the entity that originated the operation',
+      example: OriginEntity.TRANSACTION,
+    }),
+    status: ZodSchemas.stringArray(z.enum(OperationStatus)).optional().openapi({
+      description: 'comma-separated list of pre transaction status',
+      example: [OperationStatus.AVAILABLE],
+    }),
+    notStatus: ZodSchemas.stringArray(z.enum(OperationStatus)).optional().openapi({
+      description: 'comma-separated list of pre transaction status to not be included',
+      example: OperationStatus.AVAILABLE,
+    }),
+    sortField: z.enum(['createdAt', 'paymentDate']).default('createdAt').openapi({
+      description: 'field to be used to sort the results',
+      default: 'createdAt',
+    }),
+    sortOrder: z.enum(SortOrder).default(SortOrder.DESC).openapi({ description: 'sort order', example: SortOrder.DESC }),
+    paymentDateLte: ZodSchemas.datetime().optional().openapi({
+      description: 'filter by payment date less than or equal to this date',
+      example: '2021-09-01T00:00:00.000Z',
+    }),
+    paymentDateGte: ZodSchemas.datetime().optional().openapi({
+      description: 'filter by payment date greater than or equal to this date',
+      example: '2021-09-01T00:00:00.000Z',
+    }),
   }),
 ).transform((dto, ctx) => {
   // paymentDate validation

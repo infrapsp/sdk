@@ -6,17 +6,23 @@ import { TransactionChargebackStatus } from '../../../modules/types/transaction_
 
 export const FindTransactionChargebackQuerySchema = BaseQuerySchema.and(
   z.object({
-    id: ZodSchemas.nanoid().optional(),
-    merchantId: ZodSchemas.nanoid().optional(),
-    status: ZodSchemas.stringArray(z.enum(TransactionChargebackStatus)).optional(),
-    notStatus: ZodSchemas.stringArray(z.enum(TransactionChargebackStatus)).optional(),
-    sortField: z.enum(['createdAt']).default('createdAt'),
-    sortOrder: z.enum(SortOrder).default(SortOrder.DESC),
+    id: ZodSchemas.nanoid().optional().openapi({ description: 'transaction chargeback id', example: 'KaEVV7UOJOzB2QH2zPrkz' }),
+    merchantId: ZodSchemas.nanoid().optional().openapi({ description: 'merchant id', example: 'KaEVV7UOJOzB2QH2zPrkz' }),
+    status: ZodSchemas.stringArray(z.enum(TransactionChargebackStatus)).optional().openapi({
+      description: 'comma-separated list of transaction chargeback status',
+      example: [TransactionChargebackStatus.PENDING],
+    }),
+    notStatus: ZodSchemas.stringArray(z.enum(TransactionChargebackStatus)).optional().openapi({
+      description: 'comma-separated list of transaction chargeback status to not be included',
+      example: TransactionChargebackStatus.PENDING,
+    }),
+    sortField: z.enum(['createdAt']).default('createdAt').openapi({ description: 'field to be used to sort the results', default: 'createdAt' }),
+    sortOrder: z.enum(SortOrder).default(SortOrder.DESC).openapi({ description: 'order to be used to sort the results', default: SortOrder.DESC }),
   }),
 );
 
 export const FindTransactionChargebackParamsSchema = BaseParamsSchema.and(z.object({
-  transactionId: ZodSchemas.nanoid(),
+  transactionId: ZodSchemas.nanoid().openapi({ description: 'transaction id', example: 'KaEVV7UOJOzB2QH2zPrkz' }),
 }));
 
 export type FindTransactionChargebackParamsDto = z.infer<typeof FindTransactionChargebackParamsSchema>;

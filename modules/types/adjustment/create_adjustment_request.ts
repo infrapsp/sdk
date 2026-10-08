@@ -17,6 +17,8 @@ const CreateTenantAdjustmentBodySchema = z.object({
   description: z.string().max(320),
 });
 
-export const CreateAdjustmentBodySchema = CreateUnitReceivableAdjustmentBodySchema.or(CreateTenantAdjustmentBodySchema);
+export const CreateAdjustmentBodySchema = CreateUnitReceivableAdjustmentBodySchema.openapi({ title: 'Unit receivable' }).or(
+  CreateTenantAdjustmentBodySchema.openapi({ title: 'Tenant' }),
+);
 
 export type CreateAdjustmentBodyDto = z.infer<typeof CreateAdjustmentBodySchema>;

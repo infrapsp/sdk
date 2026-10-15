@@ -7,6 +7,8 @@ import { TransactionStatsResponseDto } from '../../../modules/types/dashboard/tr
 import { FindTransactionStatsQuerySchema } from '../../../modules/types/dashboard/transaction_stats_request.ts';
 import { FindTransactionChargebackStatsQuerySchema } from '../../../modules/types/dashboard/transaction_chargeback_stats_request.ts';
 import { TransactionChargebackStatsResponseDto } from '../../../modules/types/dashboard/transaction_chargeback_stats_response.ts';
+import { FindTransactionFailureStatsQuerySchema } from '../../../modules/types/dashboard/transaction_failure_stats_request.ts';
+import { TransactionFailureStatsResponseDto } from '../../../modules/types/dashboard/transaction_failure_stats_response.ts';
 
 export class DashboardHandler {
   private readonly basePath = '/v1/dashboard';
@@ -39,6 +41,27 @@ export class DashboardHandler {
     requestInit: RequestInit = {},
   ): AsyncResult<TransactionChargebackStatsResponseDto[]> {
     const base = `${this.basePath}/transaction-chargeback-stats`;
+    const queryPath = new URLSearchParams(query as unknown as Record<string, string>);
+
+    if (query?.createdAtGte) queryPath.set('createdAtGte', new Date(query.createdAtGte).toISOString());
+    if (query?.createdAtLte) queryPath.set('createdAtLte', new Date(query.createdAtLte).toISOString());
+
+    const url = query ? base + '?' + queryPath : base;
+
+    const response = await this.httpClient.get(url, requestInit);
+
+    if (isError(response)) return response;
+
+    const data = await response.json();
+
+    return validateResponse({ data, status: response.status });
+  }
+
+  async findTransactionFailureStats(
+    query?: z.input<typeof FindTransactionFailureStatsQuerySchema>,
+    requestInit: RequestInit = {},
+  ): AsyncResult<TransactionFailureStatsResponseDto[]> {
+    const base = `${this.basePath}/transaction-failure-stats`;
     const queryPath = new URLSearchParams(query as unknown as Record<string, string>);
 
     if (query?.createdAtGte) queryPath.set('createdAtGte', new Date(query.createdAtGte).toISOString());

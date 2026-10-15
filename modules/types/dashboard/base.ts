@@ -11,6 +11,6 @@ export const BaseDashboardQuerySchema = z.object({
     example: '2021-01-01T03:00:00.000Z',
   }), // 3 months
 }).transform((dto, ctx) => {
-  ZodRefines.validDateRange(ctx, dto.createdAtGte, dto.createdAtLte, 1000 * 60 * 60 * 24 * 30 * 3, 'createdAt');
+  ZodRefines.validDateRange(ctx, dto.createdAtGte, dto.createdAtLte, 1000 * 60 * 60 * 24 * 366, 'createdAt'); // 1 ano, cobrindo bissexto
   return dto;
 });

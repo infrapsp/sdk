@@ -39,6 +39,7 @@ export enum AmlEntity {
   DAILY_METRICS = 'daily_metrics',
   MONTHLY_METRICS = 'monthly_metrics',
   WEEKLY_METRICS = 'weekly_metrics',
+  BRAND_MONITORING = 'brand_monitoring',
 }
 
 // Threshold settings structure

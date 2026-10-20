@@ -5,6 +5,7 @@ import { DocumentType } from '../../modules/types/merchant/types.ts';
 
 export const ZodSchemas = {
   datetime: () => z.iso.datetime().pipe(z.coerce.date()).or(z.date()),
+  elasticDate: () => z.iso.datetime({ offset: true }).pipe(z.coerce.date()),
   nanoid: () => z.string().length(21).regex(/^[0-9a-zA-Z_]+$/),
   document: () =>
     z.custom<string>((data) => {

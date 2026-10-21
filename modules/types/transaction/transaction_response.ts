@@ -1,5 +1,5 @@
 import { z } from 'npm:@hono/zod-openapi@1.4.0';
-import { PaymentMethod, TransactionStatus } from '../../../modules/types/transaction/types.ts';
+import { PaymentMethod, TransactionStatus, WalletProvider } from '../../../modules/types/transaction/types.ts';
 import { DocumentType, Gender } from '../../../modules/types/merchant/types.ts';
 import { ZodSchemas } from '../../../modules/types/zod.ts';
 import { AddressResponseSchema } from '../../../modules/types/address/address_response.ts';
@@ -58,6 +58,7 @@ export const TransactionCreditCardMethodSettingsResponseSchema = z.object({
 export const TransactionWalletMethodSettingsResponseSchema = z.object({
   installments: z.number().positive().int().openapi({ description: 'number of installments for the transaction', example: 1 }),
   brand: z.string().openapi({ description: 'card network reported by the wallet', example: 'visa' }),
+  wallet: z.enum(WalletProvider).optional().openapi({ description: 'wallet used to pay the transaction', example: WalletProvider.GOOGLE_PAY }),
   bin: z.string().optional().openapi({
     description: 'first 6 digits of the card, returned by the provider after the authorization',
     example: '489537',
@@ -72,7 +73,7 @@ export const TransactionWalletMethodSettingsResponseSchema = z.object({
 export const TransactionMethodSettingsResponseSchema = TransactionPixMethodSettingsResponseSchema.openapi({ title: 'Pix' })
   .or(TransactionCreditCardMethodSettingsResponseSchema.openapi({ title: 'Credit card' }))
   .or(TransactionBoletoMethodSettingsResponseSchema.openapi({ title: 'Boleto' }))
-  .or(TransactionWalletMethodSettingsResponseSchema.openapi({ title: 'Wallet (Google Pay / Apple Pay)', 'x-internal': true }))
+  .or(TransactionWalletMethodSettingsResponseSchema.openapi({ title: 'Wallet (Google Pay / Apple Pay)' }))
   .or(z.object({}).openapi({ title: 'Empty' }));
 
 export const TransactionBoletoMethodDataResponseSchema = z.object({

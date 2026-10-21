@@ -131,7 +131,7 @@ export const CreateTransactionWalletMethodSettingsBodySchema = z.object({
 export const CreateTransactionMethodSettingsBodySchema = CreateTransactionPixMethodSettingsBodySchema.openapi({ title: 'Pix' })
   .or(CreateTransactionCreditCardMethodSettingsBodySchema.openapi({ title: 'Credit card' }))
   .or(CreateTransactionBoletoMethodSettingsBodySchema.openapi({ title: 'Boleto' }))
-  .or(CreateTransactionWalletMethodSettingsBodySchema.openapi({ title: 'Wallet (Google Pay / Apple Pay)', 'x-internal': true }));
+  .or(CreateTransactionWalletMethodSettingsBodySchema.openapi({ title: 'Wallet (Google Pay / Apple Pay)' }));
 
 export const CreateTransactionItemBodySchema = z.object({
   description: z.string().openapi({ example: 'product description' }),

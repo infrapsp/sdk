@@ -29,6 +29,11 @@ export enum PaymentMethod {
   UNKNOWN = 'unknown',
   BOLETO = 'boleto',
 }
+
+export enum WalletProvider {
+  GOOGLE_PAY = 'googlePay',
+  APPLE_PAY = 'applePay',
+}
 export type PixMethodSettings = {
   expiresIn: number;
   additionalInfo: { key: string; value: string }[];
@@ -110,6 +115,7 @@ export type ApplePayWalletSettings = {
 export type WalletMethodSettings = {
   installments: number;
   brand: string;
+  wallet?: WalletProvider;
   googlePay?: GooglePayWalletSettings;
   applePay?: ApplePayWalletSettings;
   bin?: string;

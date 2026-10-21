@@ -74,6 +74,8 @@ export type B3ProviderConfig = {
   ispb: string;
   accountNumber: string;
   branchNumber: string;
+  contestationClientId?: string;
+  contestationClientSecret?: string;
 };
 
 export type SlcProviderConfig = {

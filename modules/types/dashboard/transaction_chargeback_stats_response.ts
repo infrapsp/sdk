@@ -12,6 +12,10 @@ export const TransactionChargebackStatsResponseSchema = z.object({
     description: 'The sum won amount of all transaction chargebacks for the given time key and status',
     example: 1200,
   }),
+  holdAmount: z.number().openapi({
+    description: 'The sum hold amount of all transaction chargebacks for the given time key and status',
+    example: 1500,
+  }),
   count: z.number().openapi({ description: 'The number of transaction chargebacks for the given time key and status', example: 10 }),
 });
 

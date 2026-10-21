@@ -7,6 +7,8 @@ export enum UrContractEffectRegistryStatus {
   LIQUIDATED = 'liquidated',
   SKIPPED = 'skipped',
   CANCELED = 'canceled',
+  REROUTING = 'rerouting',
+  REROUTED = 'rerouted',
 }
 
 export enum UrContractEffectSlcStatus {
@@ -16,6 +18,7 @@ export enum UrContractEffectSlcStatus {
   NOT_INFORMED = 'not_informed',
   LIQUIDATED = 'liquidated',
   NOT_LIQUIDATED = 'not_liquidated',
+  REROUTED = 'rerouted',
 }
 
 export type UrContractEffectBankAccount = {

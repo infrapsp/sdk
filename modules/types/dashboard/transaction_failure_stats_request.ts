@@ -4,4 +4,5 @@ import { BaseDashboardQuerySchema } from '../../../modules/types/dashboard/base.
 
 export const FindTransactionFailureStatsQuerySchema = BaseDashboardQuerySchema.and(z.object({
   merchantId: ZodSchemas.nanoid().optional(),
+  externalSaleChannel: z.string().regex(/^[^\s]+$/).max(128).optional(),
 }));

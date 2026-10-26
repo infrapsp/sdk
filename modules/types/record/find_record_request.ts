@@ -35,6 +35,10 @@ export const FindRecordQuerySchema = BaseQuerySchema.and(
     }),
     entityId: z.string().optional().openapi({ description: 'entity id to filter the records', example: 'b45c82cb74f5466da1ecb' }),
     request: z.string().optional().openapi({ description: 'request to be used to filter the results', example: RecordRequestType.TIER_UPGRADE }),
+    assigneeId: ZodSchemas.stringArray(z.string()).optional().openapi({
+      description: 'comma-separated list of assignee ids (Logto); empty value filters unassigned records',
+      example: 'EngmKkhbAo',
+    }),
     sortField: z.enum(['createdAt', 'updatedAt']).default('createdAt').openapi({
       description: 'field to be used to sort the results',
       default: 'createdAt',

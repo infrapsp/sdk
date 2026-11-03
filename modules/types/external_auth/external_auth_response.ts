@@ -7,6 +7,10 @@ export const ExternalAuthUserResponseSchema = z.object({
   id: ZodSchemas.nanoid().openapi({ example: 'fn7mz9CCKNyS3FU4dm6bT' }),
   externalUserId: z.string().openapi({ example: 'externalUserId' }),
   overrideRole: z.enum(MerchantRole).openapi({ example: MerchantRole.MERCHANT }),
+  additionalScopes: z.array(z.string()).openapi({
+    description: 'scopes added to the ones granted by the role',
+    example: ['transaction:read', 'transfer:write'],
+  }),
   email: z.email().openapi({ example: 'user@email.com' }),
   name: z.string().optional().nullable().openapi({ example: 'name' }),
   status: z.enum(ExternalAuthStatus).openapi({ example: ExternalAuthStatus.ACTIVE }),

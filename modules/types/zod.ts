@@ -2,6 +2,7 @@ import { z } from 'npm:@hono/zod-openapi@1.4.0';
 import { isValidCpf } from '../../modules/utils/cpf.ts';
 import { isValidCnpj } from '../../modules/utils/cnpj.ts';
 import { DocumentType } from '../../modules/types/merchant/types.ts';
+import { AuthScope } from '../../modules/types/auth/types.ts';
 
 export const ZodSchemas = {
   datetime: () => z.iso.datetime().pipe(z.coerce.date()).or(z.date()),
@@ -28,6 +29,7 @@ export const ZodSchemas = {
   alphanumericWithDash: () => z.string().regex(/^[0-9a-zA-Z-]+$/),
   numeric: () => z.string().regex(/^[0-9]+$/),
   phone: () => z.string().regex(/^\+[0-9]{3,15}$/),
+  authScope: () => z.string().regex(new RegExp(`^(${Object.values(AuthScope).join('|')}):(read|write|all)$`), 'Invalid scope'),
   stringArray: <T extends z.ZodType>(e: T) => z.preprocess((val) => val ? String(val).split(',') : [], z.array(e)),
   stringBoolean: () => z.string().transform((data) => JSON.parse(data)).pipe(z.boolean()),
   dateString: () =>

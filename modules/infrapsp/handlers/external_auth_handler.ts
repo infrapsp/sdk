@@ -7,6 +7,7 @@ import { RegistrationResponseDto } from '../../../modules/types/registration/reg
 import { FindExternalAuthQuerySchema } from '../../../modules/types/external_auth/find_external_auth_request.ts';
 import { ExternalAuthUserResponseDto } from '../../../modules/types/external_auth/external_auth_response.ts';
 import { CreateExternalAuthBodySchema } from '../../../modules/types/external_auth/create_external_auth_request.ts';
+import { UpdateExternalAuthBodySchema } from '../../../modules/types/external_auth/update_external_auth_request.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
 import type { z } from 'npm:@hono/zod-openapi@1.4.0';
 import { FindExternalAuthMerchantQuerySchema } from '../../../modules/types/external_auth/find_external_auth_merchant_request.ts';
@@ -96,6 +97,25 @@ export class ExternalAuthHandler {
     const data = await response.json();
 
     return validateResponse({ data, status: response.status });
+  }
+
+  async update(id: string, body: z.input<typeof UpdateExternalAuthBodySchema>, requestInit: RequestInit = {}): AsyncResult<undefined> {
+    const url = `${this.basePath}/${id}`;
+
+    const response = await this.httpClient.patch(url, {
+      ...requestInit,
+      body: JSON.stringify(body),
+      headers: {
+        ...requestInit.headers,
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (isError(response)) return response;
+
+    const status = response.status;
+
+    return validateResponse({ data: undefined, status });
   }
 
   async delete(id: string, requestInit: RequestInit = {}): AsyncResult<undefined> {

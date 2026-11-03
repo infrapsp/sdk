@@ -73,7 +73,7 @@ export const UpdateMerchantSettingsBodySchema = z.object({
 export const UpdateMerchantBankAccountBodySchema = z.object({
   ispb: z.string().min(1).max(8).openapi({ description: 'ispb of the bank', example: '23527532' }),
   bankBranch: z.string().min(1).max(4).openapi({ example: '3741' }),
-  accountNumber: z.string().min(1).max(15).openapi({ example: '66736' }),
+  accountNumber: z.string().min(1).max(19).openapi({ example: '66736' }),
   accountDigit: z.string().min(1).max(1).openapi({ example: '9' }),
   accountType: z.enum(MerchantBankAccountType).openapi({ example: MerchantBankAccountType.CHECKING }),
 }).transform((dto, ctx) => {

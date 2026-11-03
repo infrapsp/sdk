@@ -4,6 +4,8 @@ import { CreateTransactionBodySchema } from '../../../modules/types/transaction/
 import { isError } from '../../../modules/errors/is_error.ts';
 import { TransactionResponseDto } from '../../../modules/types/transaction/transaction_response.ts';
 import { FindTransactionQuerySchema } from '../../../modules/types/transaction/find_transaction_request.ts';
+import { GenerateTransactionReportQuerySchema } from '../../../modules/types/transaction/generate_transaction_report_request.ts';
+import { CommonError } from '../../../modules/errors/common_error.ts';
 import type { HttpClient } from '../../../modules/http/http_client.ts';
 import type { z } from 'npm:@hono/zod-openapi@1.4.0';
 
@@ -73,5 +75,32 @@ export class TransactionHandler {
     const data = await response.json();
 
     return validateResponse({ data, status: response.status });
+  }
+
+  async generateReport(query: z.input<typeof GenerateTransactionReportQuerySchema>, requestInit: RequestInit = {}): AsyncResult<Blob> {
+    const queryPath = new URLSearchParams(query as unknown as Record<string, string>);
+
+    if (query.createdAtGte) queryPath.set('createdAtGte', new Date(query.createdAtGte).toISOString());
+    if (query.createdAtLte) queryPath.set('createdAtLte', new Date(query.createdAtLte).toISOString());
+
+    const url = `${this.basePath}/report?${queryPath}`;
+
+    const response = await this.httpClient.get(url, requestInit);
+
+    if (isError(response)) return response;
+
+    const status = response.status;
+
+    if (status !== 200) {
+      const data = await response.json();
+
+      return new CommonError({
+        code: 'INFRAPSP_CLIENT_ERROR',
+        status: 500,
+        detail: { data, status },
+      });
+    }
+
+    return response.blob();
   }
 }

@@ -7,6 +7,8 @@ export enum UrContractEffectRegistryStatus {
   LIQUIDATED = 'liquidated',
   SKIPPED = 'skipped',
   CANCELED = 'canceled',
+  CONTESTED = 'contested',
+  UNDER_REVIEW = 'under_review',
   REROUTING = 'rerouting',
   REROUTED = 'rerouted',
 }

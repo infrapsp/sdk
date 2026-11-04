@@ -19,6 +19,11 @@ export const PreTransactionCreditCardSettingsResponseSchema = z.object({
     example: 3,
     description: 'Maximum number of installments allowed for credit card payments',
   }),
+  installmentsWithInterest: z.record(z.coerce.number().int(), z.number().int()).openapi({
+    example: { 5: 6000, 6: 8000 },
+    description: 'Interest in cents added to the total amount, keyed by installment number',
+  }),
+  minInstallmentAmount: z.number().int().positive().openapi({ example: 500, description: 'Minimum amount in cents of each installment' }),
   threeDS: z.object({
     mode: z.enum(['off', 'optional', 'required']),
     optionalThreshold: z.object({

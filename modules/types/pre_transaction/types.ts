@@ -10,6 +10,8 @@ export enum PreTransactionStatus {
 
 export type PreTransactionCreditCardSettings = {
   maxInstallments?: number;
+  installmentsWithInterest?: Record<number, number>;
+  minInstallmentAmount?: number;
   threeDS?: {
     mode: 'off' | 'optional' | 'required';
     optionalThreshold: {

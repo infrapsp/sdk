@@ -12,7 +12,31 @@ export const CreatePreTransactionCreditCardSettingsBodySchema = z.object({
     example: 3,
     description: 'Maximum number of installments allowed for credit card payments',
   }),
-}).partial();
+  installmentsWithInterest: z.record(z.coerce.number().int().min(1).max(12), z.number().int().positive()).openapi({
+    example: { 5: 6000, 6: 8000 },
+    description:
+      'Interest in cents added to the total amount, keyed by installment number. Must cover every installment from the first key up to maxInstallments',
+  }),
+  minInstallmentAmount: z.number().int().min(500).default(500).openapi({
+    example: 500,
+    description: 'Minimum amount in cents of each installment',
+  }),
+}).partial().transform((dto, ctx) => {
+  if (dto.installmentsWithInterest) {
+    const installments = Object.keys(dto.installmentsWithInterest).map(Number);
+
+    if (!installments.length) {
+      ZodHelpers.issue(ctx, 'installmentsWithInterest', 'Installments with interest must not be empty');
+    } else if (Math.max(...installments) > dto.maxInstallments!) {
+      ZodHelpers.issue(ctx, 'installmentsWithInterest', 'Installments with interest must not exceed maxInstallments');
+    } else if (installments.length !== dto.maxInstallments! - Math.min(...installments) + 1) {
+      // Interest must be specified for every installment from the first with interest up to maxInstallments
+      ZodHelpers.issue(ctx, 'installmentsWithInterest', 'Every installment from the first with interest up to maxInstallments must have interest');
+    }
+  }
+
+  return dto;
+});
 
 export const CreatePreTransactionBodySchema = z.object({
   amount: z.number().positive().int().openapi({ description: 'The total amount of the transaction in cents', example: 5000 }),
@@ -42,6 +66,19 @@ export const CreatePreTransactionBodySchema = z.object({
 }).transform((dto, ctx) => {
   if (dto.expirationDate.getTime() > new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).getTime()) {
     ZodHelpers.issue(ctx, 'expirationDate', 'Expiration date is more than 30 days from now');
+  }
+
+  if (dto.creditCardSettings) {
+    const { maxInstallments, minInstallmentAmount, installmentsWithInterest } = dto.creditCardSettings;
+
+    for (let installment = 1; installment <= maxInstallments!; installment++) {
+      const total = dto.amount + (installmentsWithInterest?.[installment] ?? 0);
+
+      if (total < installment * minInstallmentAmount!) {
+        ZodHelpers.issue(ctx, 'creditCardSettings', `Installment ${installment} does not cover minInstallmentAmount`);
+        break;
+      }
+    }
   }
   return dto;
 });

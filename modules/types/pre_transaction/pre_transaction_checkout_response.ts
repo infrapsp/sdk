@@ -11,6 +11,10 @@ import { PaymentMethod } from '../../../modules/types/transaction/types.ts';
 
 export const PreTransactionCheckoutCreditCardSettingsResponseSchema = z.object({
   maxInstallments: z.number().int().max(12).positive(),
+  installmentsWithInterest: z.record(z.coerce.number().int(), z.number().int()).openapi({
+    example: { 5: 6000, 6: 8000 },
+    description: 'Interest in cents added to the total amount, keyed by installment number',
+  }),
   threeDS: z.object({
     mode: z.enum(['off', 'optional', 'required']),
     optionalThreshold: z.object({

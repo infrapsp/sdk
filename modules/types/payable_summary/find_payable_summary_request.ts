@@ -26,6 +26,10 @@ export const FindPayableSummaryQuerySchema = z.object({
     description: 'payment date greater than or equal to',
     example: '2021-09-01T00:00:00.000Z',
   }),
+  aggTimeZone: z.string().regex(/^(\+|-)(0[0-9]|1[0-4]):([0-5][0-9])$/).optional().openapi({
+    description: 'timezone for the aggregation day buckets in ±HH:MM format',
+    example: '-03:00',
+  }),
 }).transform((dto, ctx) => {
   // paymentDate validation
   if ((dto.paymentDateGte && !dto.paymentDateLte) || (dto.paymentDateLte && !dto.paymentDateGte)) {
